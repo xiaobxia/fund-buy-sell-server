@@ -66,11 +66,14 @@ exports.checkCustomer = async function (data) {
         return true
       }
     } else {
-      throw new Error('您的套餐已过期')
+      if (data.type === 'band') {
+        throw new Error('您的套餐已过期')
+      }
+      // throw new Error('您的套餐已过期')
     }
   } else {
     if (data.type === 'fixedInvestment') {
-      throw new Error('您尚未购买定投策略')
+      // throw new Error('您尚未购买定投策略')
     } else {
       throw new Error('您尚未购买波段策略')
     }
