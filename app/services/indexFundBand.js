@@ -3,6 +3,7 @@ const webDataUtil = require('../util/webDataUtil')
 const numberUtil = require('../util/numberUtil')
 const indexList = require('../const/indexList')
 const indexInfoUtilXiong = require('../util/indexInfoUtilXiong')
+const indexInfoUtilJian = require('../util/indexInfoUtilJian')
 const codeList = indexList.list
 
 const IndexFund = Proxy.IndexFund
@@ -12,9 +13,13 @@ const InfoUtil = indexInfoUtilXiong.Util
 const fnMap = indexInfoUtilXiong.fnMap
 const formatData = indexInfoUtilXiong.formatData
 
+const InfoUtilJian = indexInfoUtilJian.Util
+const fnMapJian = indexInfoUtilJian.fnMap
+
 function getIndexFlag (list, item) {
   const info = formatData(list)
   const infoUtil = new InfoUtil(item)
+  const infoUtilJian = new InfoUtilJian(item)
   const recentNetValue = info.list
   let infoList = []
   let classInfo = ''
@@ -26,6 +31,8 @@ function getIndexFlag (list, item) {
     const twoDayRecord = recentNetValue[i + 2]
     let buyFlag = infoUtil[fnMap[item.key + 'Buy']](nowRecord, oneDayRecord, twoDayRecord)
     let sellFlag = infoUtil[fnMap[item.key + 'Sell']](nowRecord, oneDayRecord, twoDayRecord)
+    // let buyFlagJian = infoUtilJian[fnMapJian[item.key + 'Buy']](nowRecord, oneDayRecord, twoDayRecord)
+    let sellFlagJian = infoUtilJian[fnMapJian[item.key + 'Sell']](nowRecord, oneDayRecord, twoDayRecord)
     if (i < 5) {
       if ((buyFlag === true) || (buyFlag !== false && buyFlag.flag === true)) {
         infoList[i] = '买'
@@ -37,7 +44,14 @@ function getIndexFlag (list, item) {
         if (classInfo === '') {
           classInfo = 'sell'
         }
+      } else if ((sellFlagJian === true) || (sellFlagJian !== false && sellFlagJian.flag === true)) {
+        console.log('in')
+        infoList[i] = '卖'
+        if (classInfo === '') {
+          classInfo = 'sell'
+        }
       } else {
+        console.log('in')
         infoList[i] = ''
       }
     } else {
@@ -46,6 +60,10 @@ function getIndexFlag (list, item) {
           classInfo = 'buy'
         }
       } else if ((sellFlag === true) || (sellFlag !== false && sellFlag.flag === true)) {
+        if (classInfo === '') {
+          classInfo = 'sell'
+        }
+      } else if ((sellFlagJian === true) || (sellFlagJian !== false && sellFlagJian.flag === true)) {
         if (classInfo === '') {
           classInfo = 'sell'
         }
