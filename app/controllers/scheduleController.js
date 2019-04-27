@@ -155,6 +155,7 @@ exports.updateFixedInvestment = async function (ctx) {
     if (isOpen) {
       await ctx.services.indexFund.updateFixedInvestment()
     }
+    // await ctx.services.indexFund.updateFixedInvestment()
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
@@ -167,6 +168,7 @@ exports.updateBand = async function (ctx) {
     if (isOpen) {
       await ctx.services.indexFundBand.updateBand()
     }
+    // await ctx.services.indexFundBand.updateBand()
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)

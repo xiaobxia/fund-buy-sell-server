@@ -94,6 +94,7 @@ exports.updateBand = async function () {
         days: 12
       })
       const indexRes = {
+        codeMap: codeMap[codeItem.key],
         ...codeItem,
         ...getIndexFlag(res.list, {
           key: codeItem.key,

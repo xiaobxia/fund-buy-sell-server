@@ -28,9 +28,11 @@ function getIndexFlag (list, item) {
     // let sellFlag = infoUtil[fnMap[item.key + 'Sell']](nowRecord, oneDayRecord, twoDayRecord)
     if (i < 5) {
       if ((buyFlag === true) || (buyFlag !== false && buyFlag.flag === true)) {
-        infoList[i] = '买'
-        if (classInfo === '') {
-          classInfo = 'buy'
+        if (recentNetValue[i].netChangeRatio <= -(2 * item.rate)) {
+          infoList[i] = '买'
+          if (classInfo === '') {
+            classInfo = 'buy'
+          }
         }
       // } else if ((sellFlag === true) || (sellFlag !== false && sellFlag.flag === true)) {
       //   infoList[i] = '卖'
