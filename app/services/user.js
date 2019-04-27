@@ -164,7 +164,7 @@ exports.updateCustomerTodayHistory = async function () {
   }
   let opList = []
   const users = await UserProxy.find(queryOption)
-  for (let i=0;i<users.length;i++) {
+  for (let i = 0; i < users.length; i++) {
     const user = users[i]
     opList.push(
       UserProxy.update({
