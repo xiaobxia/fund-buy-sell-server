@@ -1,0 +1,4 @@
+module.exports = {
+  SESSION_USER_KEY: 'SESSION_USER_KEY',
+  NOT_SYS_ERROR: 'NOT_SYS_ERROR'
+}
