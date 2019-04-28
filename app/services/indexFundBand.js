@@ -7,12 +7,12 @@ const indexInfoUtilJian = require('../util/indexInfoUtilJian')
 const codeList = indexList.list
 
 const IndexFund = Proxy.IndexFund
-
+// 详细
 const codeMap = indexInfoUtilXiong.codeMap
 const InfoUtil = indexInfoUtilXiong.Util
 const fnMap = indexInfoUtilXiong.fnMap
 const formatData = indexInfoUtilXiong.formatData
-
+// 简易版
 const InfoUtilJian = indexInfoUtilJian.Util
 const fnMapJian = indexInfoUtilJian.fnMap
 
@@ -39,19 +39,19 @@ function getIndexFlag (list, item) {
         if (classInfo === '') {
           classInfo = 'buy'
         }
+        // 详细版
       } else if ((sellFlag === true) || (sellFlag !== false && sellFlag.flag === true)) {
         infoList[i] = '卖'
         if (classInfo === '') {
           classInfo = 'sell'
         }
+        // 简易版
       } else if ((sellFlagJian === true) || (sellFlagJian !== false && sellFlagJian.flag === true)) {
-        console.log('in')
         infoList[i] = '卖'
         if (classInfo === '') {
           classInfo = 'sell'
         }
       } else {
-        console.log('in')
         infoList[i] = ''
       }
     } else {
