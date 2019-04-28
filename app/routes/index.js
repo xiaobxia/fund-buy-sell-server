@@ -75,6 +75,8 @@ router.get('/admin/getCustomers', controllers.userController.getCustomers)
 router.get('/admin/getCustomer', controllers.userController.getCustomer)
 router.post('/admin/addCustomer', controllers.userController.addCustomer)
 router.post('/admin/updateCustomer', controllers.userController.updateCustomer)
+router.post('/admin/updateAllContent', controllers.contentController.updateAllContent)
+router.get('/admin/getAllContent', controllers.contentController.getAllContent)
 
 /**
  * 客户端模块
@@ -83,6 +85,8 @@ router.get('/customer/getCustomerByName', controllers.customerController.getCust
 router.get('/customer/getFixedInvestment', controllers.operationController.getFixedInvestment)
 router.get('/customer/getBand', controllers.operationController.getBand)
 router.get('/customer/addTodayQuery', controllers.customerController.addTodayQuery)
+router.get('/customer/getFixedInvestmentContent', controllers.contentController.getFixedInvestmentContent)
+router.get('/customer/getBandContent', controllers.contentController.getBandContent)
 
 /**
  * 定时任务模块
