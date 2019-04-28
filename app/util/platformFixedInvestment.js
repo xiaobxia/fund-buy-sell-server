@@ -387,9 +387,6 @@ const FixedInvestment = {
     let a = (all2 / count2) / 2
     let c = all / count
     let threshold = numberUtil.keepTwoDecimals((a + c) / 2)
-    console.log('wave:  ' + a)
-    console.log('rate:  ' + c)
-    console.log(threshold)
     return { list: listTemp, threshold: threshold, rate: c, wave: a }
   }
 }
