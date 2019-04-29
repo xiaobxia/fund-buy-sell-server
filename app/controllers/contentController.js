@@ -33,9 +33,9 @@ exports.updateAllContent = async function (ctx) {
   const query = ctx.request.body
   try {
     const data = ctx.validateData({
-      fixedInvestmentContent: { required: true, type: 'string' },
-      positionContent: { required: true, type: 'string' },
-      marketWarn: { required: true, type: 'string' }
+      fixedInvestmentContent: { required: false, type: 'string' },
+      positionContent: { required: false, type: 'string' },
+      marketWarn: { required: false, type: 'string' }
     }, query)
     await ctx.services.dictionary.updateAllContent(data)
     ctx.body = ctx.resuccess()
