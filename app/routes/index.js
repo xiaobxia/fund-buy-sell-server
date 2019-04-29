@@ -109,6 +109,7 @@ router.get('/schedule/updateFixedInvestment', controllers.scheduleController.upd
 router.get('/schedule/updateBand', controllers.scheduleController.updateBand)
 router.get('/schedule/updateCustomerTodayHistory', controllers.scheduleController.updateCustomerTodayHistory)
 router.get('/schedule/updateCustomerCanUseDay', controllers.scheduleController.updateCustomerCanUseDay)
+router.get('/schedule/clearToday', controllers.scheduleController.clearToday)
 
 /**
  * 数据

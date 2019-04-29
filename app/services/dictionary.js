@@ -70,3 +70,9 @@ exports.getBandContent = async function () {
     marketWarn: contents[1] && contents[1].value
   }
 }
+
+exports.clearToday = async function () {
+  return Dictionary.update({ key: 'marketWarn' }, {
+    value: ''
+  })
+}

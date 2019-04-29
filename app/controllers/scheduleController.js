@@ -195,3 +195,15 @@ exports.updateCustomerCanUseDay = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+exports.clearToday = async function (ctx) {
+  try {
+    const isOpen = await ctx.services.marketOpen.getTodayMarketOpen()
+    if (isOpen) {
+      await ctx.services.dictionary.clearToday()
+    }
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
