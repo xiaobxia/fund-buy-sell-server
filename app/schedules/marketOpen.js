@@ -18,7 +18,7 @@ let rule = new schedule.RecurrenceRule()
  * 每天的9点40
  */
 rule.hour = 9
-rule.minute = 40
+rule.minute = 32
 
 function marketOpen () {
   return requestLocal.get('schedule/verifyMarketOpening')
