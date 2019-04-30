@@ -202,3 +202,29 @@ exports.updateCustomerCanUseDay = async function () {
   }
   return Promise.all(opList)
 }
+
+exports.addCustomerActive = async function (name) {
+  const user = await UserProxy.findOne({name})
+  console.log(user)
+  if (user.last_active_day) {
+    // 不是同一天，说明在新的一天活跃了
+    if (!moment().isSame(user.last_active_day, 'day')) {
+      return UserProxy.update({name}, {
+        last_active_day: Date.now(),
+        active_days: user.active_days + 1
+      })
+    } else {
+      console.log('in')
+      console.log(name)
+      return UserProxy.update({name}, {
+        last_active_day: Date.now()
+      })
+    }
+  } else {
+    // 新值
+    return UserProxy.update({name}, {
+      last_active_day: Date.now(),
+      active_days: 1
+    })
+  }
+}

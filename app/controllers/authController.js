@@ -142,6 +142,7 @@ exports.checkLogin = async function (ctx) {
     try {
       const tokenRaw = ctx.token.verify(token)
       const user = ctx.formatFields(tokenRes, tokenRaw)
+      await ctx.services.user.addCustomerActive(user.name)
       ctx.body = ctx.resuccess({
         ...user,
         isLogin: true,
