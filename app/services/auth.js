@@ -61,7 +61,7 @@ exports.checkCustomer = async function (data) {
   if (user.buy_type) {
     if (user.can_use_day > 0) {
       if (user.buy_type === '定投' && data.type === 'band') {
-        throw new Error('您尚未购买波段策略')
+        throw new Error('您尚未拥有波段策略')
       } else {
         return true
       }
@@ -73,9 +73,9 @@ exports.checkCustomer = async function (data) {
     }
   } else {
     if (data.type === 'fixedInvestment') {
-      // throw new Error('您尚未购买定投策略')
+      // throw new Error('您尚未拥有定投策略')
     } else {
-      throw new Error('您尚未购买波段策略')
+      throw new Error('您尚未拥有波段策略')
     }
   }
 }
