@@ -188,6 +188,7 @@ exports.updateCustomerCanUseDay = async function (ctx) {
   try {
     const isOpen = await ctx.services.marketOpen.getTodayMarketOpen()
     if (isOpen) {
+      // 在晚上做这事
       await ctx.services.user.updateCustomerCanUseDay()
     }
     ctx.body = ctx.resuccess()

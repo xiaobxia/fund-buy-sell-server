@@ -16,8 +16,9 @@ const requestLocal = reqlib('/app/util/requestLocal')
 let rule = new schedule.RecurrenceRule()
 
 rule.hour = 23
-rule.minute = 56
+rule.minute = 58
 
+// 清除当天的建议
 function clearToday () {
   return requestLocal.get('schedule/clearToday')
 }

@@ -24,6 +24,7 @@ for (let k = 0; k < 60; k += 1) {
 }
 rule.minute = minute
 
+// 更新波段策略
 function updateBand () {
   return requestLocal.get('schedule/updateBand')
 }

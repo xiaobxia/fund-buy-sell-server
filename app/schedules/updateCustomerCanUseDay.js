@@ -15,21 +15,14 @@ const requestLocal = reqlib('/app/util/requestLocal')
  */
 let rule = new schedule.RecurrenceRule()
 
-// 工作日定时更新估值
-rule.dayOfWeek = [new schedule.Range(1, 5)]
-rule.hour = [9, 10, 11, 13, 14, 15]
-let minute = []
-for (let k = 0; k < 60; k += 1) {
-  minute.push(k)
-}
-rule.minute = minute
-rule.second = 30
+rule.hour = 23
+rule.minute = 59
 
-// 更新定投策略
-function updateFixedInvestment () {
-  return requestLocal.get('schedule/updateFixedInvestment')
+// 把用户当天的请求数据，添加到历史上
+function updateCustomerCanUseDay () {
+  return requestLocal.get('schedule/updateCustomerCanUseDay')
 }
 
-const job = schedule.scheduleJob(rule, updateFixedInvestment)
+const job = schedule.scheduleJob(rule, updateCustomerCanUseDay)
 
 module.exports = job

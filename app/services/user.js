@@ -190,12 +190,24 @@ exports.updateCustomerCanUseDay = async function () {
   const users = await UserProxy.find(queryOption)
   for (let i = 0; i < users.length; i++) {
     const user = users[i]
-    if (user.if_count_day && user.can_use_day > 0) {
+    // 需要计算今日
+    if (user.if_count_day) {
+      if (user.can_use_day > 0) {
+        opList.push(
+          UserProxy.update({
+            _id: user._id
+          }, {
+            can_use_day: user.can_use_day - 1
+          })
+        )
+      }
+    } else {
+      // 不需要计算今日
       opList.push(
         UserProxy.update({
           _id: user._id
         }, {
-          can_use_day: user.can_use_day - 1
+          if_count_day: true
         })
       )
     }
@@ -204,25 +216,25 @@ exports.updateCustomerCanUseDay = async function () {
 }
 
 exports.addCustomerActive = async function (name) {
-  const user = await UserProxy.findOne({name})
+  const user = await UserProxy.findOne({ name })
   console.log(user)
   if (user.last_active_day) {
     // 不是同一天，说明在新的一天活跃了
     if (!moment().isSame(user.last_active_day, 'day')) {
-      return UserProxy.update({name}, {
+      return UserProxy.update({ name }, {
         last_active_day: Date.now(),
         active_days: user.active_days + 1
       })
     } else {
       console.log('in')
       console.log(name)
-      return UserProxy.update({name}, {
+      return UserProxy.update({ name }, {
         last_active_day: Date.now()
       })
     }
   } else {
     // 新值
-    return UserProxy.update({name}, {
+    return UserProxy.update({ name }, {
       last_active_day: Date.now(),
       active_days: 1
     })

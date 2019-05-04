@@ -16,8 +16,9 @@ const requestLocal = reqlib('/app/util/requestLocal')
 let rule = new schedule.RecurrenceRule()
 
 rule.hour = 23
-rule.minute = 55
+rule.minute = 58
 
+// 把用户当天的请求数据，添加到历史上
 function updateCustomerTodayHistory () {
   return requestLocal.get('schedule/updateCustomerTodayHistory')
 }
