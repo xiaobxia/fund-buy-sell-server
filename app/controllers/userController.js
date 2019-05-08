@@ -129,3 +129,16 @@ exports.updateCustomer = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+exports.giveCanUseDayToCustomers = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      day: { type: 'int', required: true }
+    }, query)
+    await ctx.services.user.giveCanUseDayToCustomers(data)
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

@@ -43,6 +43,7 @@ const schema = new Schema({
     type: Number,
     default: 0
   },
+  // 是否奖励过
   if_reward: {
     type: Boolean,
     default: false

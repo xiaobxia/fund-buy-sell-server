@@ -217,7 +217,6 @@ exports.updateCustomerCanUseDay = async function () {
 
 exports.addCustomerActive = async function (name) {
   const user = await UserProxy.findOne({ name })
-  console.log(user)
   if (user.last_active_day) {
     // 不是同一天，说明在新的一天活跃了
     if (!moment().isSame(user.last_active_day, 'day')) {
@@ -226,8 +225,6 @@ exports.addCustomerActive = async function (name) {
         active_days: user.active_days + 1
       })
     } else {
-      console.log('in')
-      console.log(name)
       return UserProxy.update({ name }, {
         last_active_day: Date.now()
       })
@@ -239,4 +236,28 @@ exports.addCustomerActive = async function (name) {
       active_days: 1
     })
   }
+}
+
+exports.giveCanUseDayToCustomers = async function (data) {
+  let queryOption = {
+    roles: {
+      $in: ['user']
+    }
+  }
+  let opList = []
+  const users = await UserProxy.find(queryOption)
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i]
+    // 多搞几次，比如一个月送一次
+    opList.push(
+      // 试用的另算，这是特别福利
+      UserProxy.update({
+        _id: user._id
+      }, {
+        buy_type: '波段',
+        can_use_day: user.can_use_day + data.day
+      })
+    )
+  }
+  return Promise.all(opList)
 }

@@ -77,6 +77,7 @@ router.post('/admin/addCustomer', controllers.userController.addCustomer)
 router.post('/admin/updateCustomer', controllers.userController.updateCustomer)
 router.post('/admin/updateAllContent', controllers.contentController.updateAllContent)
 router.get('/admin/getAllContent', controllers.contentController.getAllContent)
+router.post('/admin/giveCanUseDayToCustomers', controllers.userController.giveCanUseDayToCustomers)
 
 /**
  * 客户端模块
