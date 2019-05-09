@@ -248,16 +248,18 @@ exports.giveCanUseDayToCustomers = async function (data) {
   const users = await UserProxy.find(queryOption)
   for (let i = 0; i < users.length; i++) {
     const user = users[i]
-    // 多搞几次，比如一个月送一次
-    opList.push(
-      // 试用的另算，这是特别福利
-      UserProxy.update({
-        _id: user._id
-      }, {
-        buy_type: '波段',
-        can_use_day: user.can_use_day + data.day
-      })
-    )
+    // 奖励过得不奖了, 大的节日可以改代码大家都奖
+    if (!user.if_reward) {
+      opList.push(
+        // 试用的另算，这是特别福利
+        UserProxy.update({
+          _id: user._id
+        }, {
+          buy_type: '波段',
+          can_use_day: user.can_use_day + data.day
+        })
+      )
+    }
   }
   return Promise.all(opList)
 }
