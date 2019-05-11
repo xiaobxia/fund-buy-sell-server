@@ -6,6 +6,7 @@ const MarketOpenProxy = Proxy.MarketOpen
 const tableFields = require('../models/tableFields')
 
 const UserProxy = Proxy.User
+const UserDayProxy = Proxy.UserDay
 
 /**
  * 修改用户密码
@@ -163,6 +164,32 @@ exports.updateCustomerTodayHistory = async function () {
     }
   }
   let opList = []
+  const fetchData = await Promise.all([
+    // 今天注册的用户统计
+    UserProxy.count({
+      roles: {
+        $in: ['user']
+      },
+      create_at: {
+        $gte: moment().format('YYYY-MM-DD')
+      }
+    }),
+    UserProxy.count({
+      roles: {
+        $in: ['user']
+      },
+      today_query: {
+        $gt: 0
+      }
+    })
+  ])
+  await UserDayProxy.newAndSave({
+    detail: {
+      today_register_user: fetchData[0],
+      today_query_user: fetchData[1]
+    },
+    date: moment('YYYY-MM-DD')
+  })
   const users = await UserProxy.find(queryOption)
   for (let i = 0; i < users.length; i++) {
     const user = users[i]
@@ -230,11 +257,19 @@ exports.addCustomerActive = async function (name) {
       })
     }
   } else {
-    // 新值
-    return UserProxy.update({ name }, {
-      last_active_day: Date.now(),
-      active_days: 1
-    })
+    // 不是注册的同一天
+    if (!moment().isSame(user.create_at, 'day')) {
+      // 新值
+      return UserProxy.update({ name }, {
+        last_active_day: Date.now(),
+        active_days: 1
+      })
+    } else {
+      // 同一天不能加天数
+      return UserProxy.update({ name }, {
+        last_active_day: Date.now()
+      })
+    }
   }
 }
 

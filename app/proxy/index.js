@@ -5,3 +5,4 @@ exports.Schedule = require('./schedule')
 
 exports.MarketOpen = require('./market_open')
 exports.IndexFund = require('./index_fund')
+exports.UserDay = require('./user_day')

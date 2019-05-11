@@ -63,7 +63,28 @@ exports.checkCustomer = async function (data) {
       if (user.buy_type === '定投' && data.type === 'band') {
         throw new Error('您尚未拥有波段策略')
       } else {
-        return true
+        // 验证设备id
+        if (user.last_device_id) {
+          if (user.last_device_id === data.device_id) {
+            // 是同一个
+            return true
+          } else {
+            // 不是同一个，5分钟以上没问题
+            if (moment().diff(user.last_device_time, 'minutes') > 5) {
+              return true
+            } else {
+              // 5分钟以内就要求重新登录
+              // throw new Error('')
+              return true
+            }
+          }
+        } else {
+          // 没有设备Id，直接用新的
+          return UserProxy.update({ _id: user._id }, {
+            last_device_id: data.device_id,
+            last_device_time: Date.now()
+          })
+        }
       }
     } else {
       if (data.type === 'band') {

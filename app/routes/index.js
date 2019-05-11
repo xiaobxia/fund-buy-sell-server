@@ -78,6 +78,8 @@ router.post('/admin/updateCustomer', controllers.userController.updateCustomer)
 router.post('/admin/updateAllContent', controllers.contentController.updateAllContent)
 router.get('/admin/getAllContent', controllers.contentController.getAllContent)
 router.post('/admin/giveCanUseDayToCustomers', controllers.userController.giveCanUseDayToCustomers)
+router.get('/admin/getUserStatistics', controllers.statisticsController.getUserStatistics)
+router.get('/admin/getUserDay', controllers.statisticsController.getUserDay)
 
 /**
  * 客户端模块
