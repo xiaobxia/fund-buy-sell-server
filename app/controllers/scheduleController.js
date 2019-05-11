@@ -177,6 +177,7 @@ exports.updateBand = async function (ctx) {
 
 exports.updateCustomerTodayHistory = async function (ctx) {
   try {
+    // 每天都会做
     await ctx.services.user.updateCustomerTodayHistory()
     ctx.body = ctx.resuccess()
   } catch (err) {

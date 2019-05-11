@@ -197,8 +197,8 @@ exports.updateCustomerTodayHistory = async function () {
       UserProxy.update({
         _id: user._id
       }, {
-        history_login: user.history_login + user.today_login,
-        history_query: user.history_query + user.today_query,
+        // history_login: user.history_login + user.today_login,
+        // history_query: user.history_query + user.today_query,
         today_query: 0,
         today_login: 0
       })
@@ -273,6 +273,7 @@ exports.addCustomerActive = async function (name) {
   }
 }
 
+// 活动送时间
 exports.giveCanUseDayToCustomers = async function (data) {
   let queryOption = {
     roles: {
@@ -291,7 +292,9 @@ exports.giveCanUseDayToCustomers = async function (data) {
           _id: user._id
         }, {
           buy_type: '波段',
-          can_use_day: user.can_use_day + data.day
+          can_use_day: user.can_use_day + data.day,
+          // 标记成奖励过
+          if_reward: true
         })
       )
     }
