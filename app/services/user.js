@@ -95,6 +95,9 @@ exports.getCustomers = async function (query, paging) {
   if (query.name) {
     queryOption.name = query.name
   }
+  if (query.wechat) {
+    queryOption.wechat = query.wechat
+  }
   if (query.status) {
     queryOption.status = query.status
   }

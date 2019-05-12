@@ -98,7 +98,8 @@ module.exports = {
       { field: 'status', type: 'number' },
       { field: 'reward', type: 'number' },
       { field: 'if_count_day', type: 'boolean' },
-      { field: 'if_test', type: 'boolean' }
+      { field: 'if_test', type: 'boolean' },
+      { field: 'wechat', type: 'string' }
     ]
   }
 }

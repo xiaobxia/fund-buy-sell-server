@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const schema = new Schema({
-  // 微信id
   name: String,
+  // 微信id
+  wechat: String,
   password: String,
   email: String,
   mobile: String,
