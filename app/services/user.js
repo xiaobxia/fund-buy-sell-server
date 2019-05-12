@@ -188,7 +188,7 @@ exports.updateCustomerTodayHistory = async function () {
       today_register_user: fetchData[0],
       today_query_user: fetchData[1]
     },
-    date: moment('YYYY-MM-DD')
+    date: moment().format('YYYY-MM-DD')
   })
   const users = await UserProxy.find(queryOption)
   for (let i = 0; i < users.length; i++) {
