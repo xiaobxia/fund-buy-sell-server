@@ -12,7 +12,7 @@ exports.getUserStatistics = async function (data) {
         $in: ['user']
       },
       create_at: {
-        $gte: moment().format('YYYY-MM-DD')
+        $gte: moment().format('YYYY-MM-DD') + ' 00:00:00'
       }
     }),
     UserProxy.count({
