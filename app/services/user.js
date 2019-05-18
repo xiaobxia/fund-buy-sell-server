@@ -14,14 +14,14 @@ const UserDayProxy = Proxy.UserDay
  * @returns {Promise<*>}
  */
 exports.newPassword = async function (data) {
-  const user = await UserProxy.findOne({ name: data.name })
+  const user = await UserProxy.findOne({name: data.name})
   if (!user) {
     throw new Error('用户不存在')
   }
   if (user.password !== data.oldPassword) {
     throw new Error('账户名或密码不正确')
   }
-  return UserProxy.update({ name: data.name }, {
+  return UserProxy.update({name: data.name}, {
     password: data.newPassword
   })
 }
@@ -32,7 +32,7 @@ exports.newPassword = async function (data) {
  * @returns {Promise<void>}
  */
 exports.getUserByName = async function (name) {
-  const user = await UserProxy.findOne({ name })
+  const user = await UserProxy.findOne({name})
   if (!user) {
     throw new Error('用户不存在')
   }
@@ -58,7 +58,7 @@ exports.getAdminUsers = async function (paging) {
     UserProxy.count(queryOption)
   ])
   const users = fetchData[0]
-  return { list: users, count: fetchData[1] }
+  return {list: users, count: fetchData[1]}
 }
 
 exports.addAdminUser = async function (data) {
@@ -112,7 +112,7 @@ exports.getCustomers = async function (query, paging) {
     UserProxy.count(queryOption)
   ])
   const list = fetchData[0]
-  return { list: list, count: fetchData[1] }
+  return {list: list, count: fetchData[1]}
 }
 
 exports.addCustomer = async function (data) {
@@ -149,7 +149,7 @@ exports.updateCustomer = async function (data) {
 }
 
 exports.addTodayQuery = async function (data) {
-  const user = await UserProxy.findOne({ name: data.name })
+  const user = await UserProxy.findOne({name: data.name})
   if (!user) {
     throw new Error('此微信号尚未注册账户')
   }
@@ -246,16 +246,16 @@ exports.updateCustomerCanUseDay = async function () {
 }
 
 exports.addCustomerActive = async function (name) {
-  const user = await UserProxy.findOne({ name })
+  const user = await UserProxy.findOne({name})
   if (user.last_active_day) {
     // 不是同一天，说明在新的一天活跃了
     if (!moment().isSame(user.last_active_day, 'day')) {
-      return UserProxy.update({ name }, {
+      return UserProxy.update({name}, {
         last_active_day: Date.now(),
         active_days: user.active_days + 1
       })
     } else {
-      return UserProxy.update({ name }, {
+      return UserProxy.update({name}, {
         last_active_day: Date.now()
       })
     }
@@ -263,21 +263,21 @@ exports.addCustomerActive = async function (name) {
     // 不是注册的同一天
     if (!moment().isSame(user.create_at, 'day')) {
       // 新值
-      return UserProxy.update({ name }, {
+      return UserProxy.update({name}, {
         last_active_day: Date.now(),
         active_days: 1
       })
     } else {
       // 同一天不能加天数
-      return UserProxy.update({ name }, {
+      return UserProxy.update({name}, {
         last_active_day: Date.now()
       })
     }
   }
 }
 
-// 活动送时间
-exports.giveCanUseDayToCustomers = async function (data) {
+// 注册送时间
+exports.giveGiftCanUseDay = async function (data) {
   let queryOption = {
     roles: {
       $in: ['user']
@@ -295,12 +295,35 @@ exports.giveCanUseDayToCustomers = async function (data) {
           _id: user._id
         }, {
           buy_type: '波段',
-          can_use_day: user.can_use_day + data.day,
+          // 奖励10天
+          can_use_day: user.can_use_day + 10,
           // 标记成奖励过
           if_reward: true
         })
       )
     }
+  }
+  return Promise.all(opList)
+}
+
+exports.giveVacationCanUseDay = async function (data) {
+  let queryOption = {
+    roles: {
+      $in: ['user']
+    }
+  }
+  let opList = []
+  const users = await UserProxy.find(queryOption)
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i]
+    opList.push(
+      UserProxy.update({
+        _id: user._id
+      }, {
+        buy_type: '波段',
+        can_use_day: user.can_use_day + data.day
+      })
+    )
   }
   return Promise.all(opList)
 }

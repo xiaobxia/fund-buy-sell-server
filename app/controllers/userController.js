@@ -131,13 +131,22 @@ exports.updateCustomer = async function (ctx) {
   }
 }
 
-exports.giveCanUseDayToCustomers = async function (ctx) {
+exports.giveGiftCanUseDay = async function (ctx) {
+  try {
+    await ctx.services.user.giveGiftCanUseDay()
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+exports.giveVacationCanUseDay = async function (ctx) {
   const query = ctx.request.body
   try {
     const data = ctx.validateData({
       day: { type: 'int', required: true }
     }, query)
-    await ctx.services.user.giveCanUseDayToCustomers(data)
+    await ctx.services.user.giveVacationCanUseDay(data)
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
