@@ -5,7 +5,7 @@ const UserProxy = Proxy.User
 const UserDayProxy = Proxy.UserDay
 
 exports.getUserStatistics = async function (data) {
-  const users = UserProxy.find({
+  const users = await UserProxy.find({
     roles: {
       $in: ['user']
     }
@@ -38,7 +38,8 @@ exports.getUserStatistics = async function (data) {
     today_query_user: todayQueryUser,
     history_register_user: users.length - 2,
     has_test_user: hasTestUser,
-    can_use_user: canUseUser
+    can_use_user: canUseUser,
+    today_query: todayQuery
   }
 }
 
