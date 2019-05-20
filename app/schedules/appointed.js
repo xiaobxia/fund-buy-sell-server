@@ -15,6 +15,7 @@ const requestLocal = reqlib('/app/util/requestLocal')
  */
 let rule = new schedule.RecurrenceRule()
 
+// 端午节送3天
 rule.year = 2019
 rule.month = 6
 rule.date = 9
