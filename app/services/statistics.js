@@ -5,50 +5,40 @@ const UserProxy = Proxy.User
 const UserDayProxy = Proxy.UserDay
 
 exports.getUserStatistics = async function (data) {
-  const fetchData = await Promise.all([
-    // 今天注册的用户统计
-    UserProxy.count({
-      roles: {
-        $in: ['user']
-      },
-      create_at: {
-        $gte: moment().format('YYYY-MM-DD') + ' 00:00:00'
+  const users = UserProxy.find({
+    roles: {
+      $in: ['user']
+    }
+  })
+  let todayRegisterUser = 0
+  let todayQueryUser = 0
+  let hasTestUser = 0
+  let canUseUser = 0
+  let todayQuery = 0
+  for (let i = 0;i<users.length;i++) {
+    const user = users[i]
+    if (moment(user.create_at).isAfter(moment().format('YYYY-MM-DD') + ' 00:00:00')) {
+      todayRegisterUser ++
+    }
+    if (user.name !== 'wx_4' && user.name !== '17681824125') {
+      if (user.today_query > 0) {
+        todayQueryUser ++
+        todayQuery = todayQuery + user.today_query
       }
-    }),
-    UserProxy.count({
-      roles: {
-        $in: ['user']
-      },
-      today_query: {
-        $gt: 0
+      if (user.if_test === true) {
+        hasTestUser ++
       }
-    }),
-    UserProxy.count({
-      roles: {
-        $in: ['user']
+      if (user.can_use_day > 0) {
+        canUseUser ++
       }
-    }),
-    UserProxy.count({
-      roles: {
-        $in: ['user']
-      },
-      if_test: true
-    }),
-    UserProxy.count({
-      roles: {
-        $in: ['user']
-      },
-      can_use_day: {
-        $gt: 0
-      }
-    })
-  ])
+    }
+  }
   return {
-    today_register_user: fetchData[0],
-    today_query_user: fetchData[1],
-    history_register_user: fetchData[2],
-    has_test_user: fetchData[3],
-    can_use_user: fetchData[4]
+    today_register_user: todayRegisterUser,
+    today_query_user: todayQueryUser,
+    history_register_user: users.length - 2,
+    has_test_user: hasTestUser,
+    can_use_user: canUseUser
   }
 }
 
