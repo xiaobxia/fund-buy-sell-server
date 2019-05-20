@@ -15,21 +15,21 @@ exports.getUserStatistics = async function (data) {
   let hasTestUser = 0
   let canUseUser = 0
   let todayQuery = 0
-  for (let i = 0;i<users.length;i++) {
+  for (let i = 0; i < users.length; i++) {
     const user = users[i]
     if (moment(user.create_at).isAfter(moment().format('YYYY-MM-DD') + ' 00:00:00')) {
-      todayRegisterUser ++
+      todayRegisterUser++
     }
     if (user.name !== 'wx_4' && user.name !== '17681824125') {
       if (user.today_query > 0) {
-        todayQueryUser ++
+        todayQueryUser++
         todayQuery = todayQuery + user.today_query
       }
       if (user.if_test === true) {
-        hasTestUser ++
+        hasTestUser++
       }
       if (user.can_use_day > 0) {
-        canUseUser ++
+        canUseUser++
       }
     }
   }
