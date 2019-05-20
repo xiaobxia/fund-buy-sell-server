@@ -114,6 +114,9 @@ router.get('/schedule/updateBand', controllers.scheduleController.updateBand)
 router.get('/schedule/updateCustomerTodayHistory', controllers.scheduleController.updateCustomerTodayHistory)
 router.get('/schedule/updateCustomerCanUseDay', controllers.scheduleController.updateCustomerCanUseDay)
 router.get('/schedule/clearToday', controllers.scheduleController.clearToday)
+// 送礼的定时任务
+router.post('/schedule/giveGiftCanUseDay', controllers.userController.giveGiftCanUseDay)
+router.post('/schedule/giveVacationCanUseDay', controllers.userController.giveVacationCanUseDay)
 
 /**
  * 数据

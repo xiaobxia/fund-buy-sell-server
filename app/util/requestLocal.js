@@ -22,3 +22,7 @@ exports.get = function (url, query, options) {
   }
   return axios.get(makeUrl(url + (queryString ? '?' + queryString : '')), options).then(data => data.data)
 }
+
+exports.post = function (url, param, options) {
+  return axios.post(makeUrl(url), qs.stringify(param), options).then(data => data.data)
+}
