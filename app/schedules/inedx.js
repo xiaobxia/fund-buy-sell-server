@@ -7,3 +7,5 @@ exports.updateFixedInvestment = require('./updateFixedInvestment')
 exports.updateBand = require('./updateBand')
 exports.clearToday = require('./clearToday')
 exports.updateCustomerCanUseDay = require('./updateCustomerCanUseDay')
+
+exports.appointed = require('./appointed')
