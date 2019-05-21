@@ -113,7 +113,7 @@ exports.getCustomers = async function (query, paging) {
     }
   }
   // 今天请求了
-  if (query.todayQuery === true) {
+  if (query.todayQuery === 'true') {
     queryOption.today_query = {
       $gt: 0
     }
