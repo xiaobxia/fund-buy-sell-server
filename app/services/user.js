@@ -87,6 +87,11 @@ exports.getCustomers = async function (query, paging) {
       create_at: -1
     }
   }
+  if (query.sort === 'activeDay') {
+    opt.sort = {
+      active_days: -1
+    }
+  }
   let queryOption = {
     roles: {
       $in: ['user']
@@ -105,6 +110,12 @@ exports.getCustomers = async function (query, paging) {
     queryOption.create_at = {
       $gte: query.beginTime,
       $lt: query.endTime
+    }
+  }
+  // 今天请求了
+  if (query.todayQuery === true) {
+    queryOption.today_query = {
+      $gt: 0
     }
   }
   const fetchData = await Promise.all([
