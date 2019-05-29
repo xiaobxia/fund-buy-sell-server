@@ -54,6 +54,11 @@ const schema = new Schema({
     type: Boolean,
     default: false
   },
+  // 是否买过
+  if_buy: {
+    type: Boolean,
+    default: false
+  },
   // 是否计算今日
   if_count_day: {
     type: Boolean,

@@ -99,6 +99,7 @@ module.exports = {
       { field: 'reward', type: 'number' },
       { field: 'if_count_day', type: 'boolean' },
       { field: 'if_test', type: 'boolean' },
+      { field: 'if_buy', type: 'boolean' },
       { field: 'wechat', type: 'string' }
     ]
   }
