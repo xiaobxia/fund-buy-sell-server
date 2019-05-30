@@ -14,9 +14,23 @@ const proxys = require('../app/proxy/index')
 // }).then((doc) => {
 //   console.log(doc)
 // })
+// proxys.Dictionary.newAndSave({
+//   'key': 'marketWarn',
+//   'value': ''
+// }).then((doc) => {
+//   console.log(doc)
+// })
+
 proxys.Dictionary.newAndSave({
-  'key': 'marketWarn',
-  'value': ''
+  'key': 'ifUpdateCanUseDay',
+  'value': 'true'
+}).then((doc) => {
+  console.log(doc)
+})
+
+proxys.Dictionary.newAndSave({
+  'key': 'ifAuthBand',
+  'value': 'true'
 }).then((doc) => {
   console.log(doc)
 })
