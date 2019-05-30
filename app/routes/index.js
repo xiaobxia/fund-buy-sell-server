@@ -48,7 +48,7 @@ router.get('/auth/logout', controllers.authController.logout)
 router.post('/auth/customerRegister', controllers.authController.customerRegister)
 router.post('/auth/customerLogin', controllers.authController.customerLogin)
 router.get('/auth/checkCustomer', controllers.authController.checkCustomer)
-
+router.post('/auth/resetPassword', controllers.authController.resetPassword)
 /**
  * 用户模块
  */

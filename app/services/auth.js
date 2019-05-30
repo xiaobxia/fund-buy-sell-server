@@ -24,7 +24,7 @@ exports.login = async function (account, password) {
 exports.customerLogin = async function (data) {
   const user = await UserProxy.findOne({ name: data.name })
   if (!user) {
-    throw new Error('此微信号尚未注册账户')
+    throw new Error('此手机号尚未注册账户')
   }
   if (user.password !== data.password) {
     throw new Error('密码错误')
@@ -40,7 +40,7 @@ exports.customerLogin = async function (data) {
 exports.customerRegister = async function (data) {
   const user = await UserProxy.findOne({ name: data.name })
   if (user) {
-    throw new Error('此微信号已注册账户')
+    throw new Error('此手机号已注册账户')
   } else {
     return UserProxy.newAndSave({
       name: data.name,
@@ -48,7 +48,11 @@ exports.customerRegister = async function (data) {
       roles: ['user'],
       last_device_id: data.device_id,
       // 上一次使用该设备的时间
-      last_device_time: Date.now()
+      last_device_time: Date.now(),
+      // 注册就送
+      buy_type: '波段',
+      can_use_day: 5,
+      if_count_day: false
     })
   }
 }
@@ -56,7 +60,7 @@ exports.customerRegister = async function (data) {
 exports.checkCustomer = async function (data) {
   const user = await UserProxy.findOne({ name: data.name })
   if (!user) {
-    throw new Error('此微信号尚未注册账户')
+    throw new Error('此手机号尚未注册账户')
   }
   if (user.buy_type) {
     if (user.can_use_day > 0) {
@@ -113,4 +117,16 @@ exports.register = async function (data) {
     throw new Error('用户名已存在')
   }
   return UserProxy.newAndSave(data)
+}
+
+exports.resetPassword = async function (data) {
+  const user = await UserProxy.findOne({ name: data.name })
+  if (!user) {
+    throw new Error('不存在该用户')
+  }
+  return UserProxy.update({
+    _id: user._id
+  }, {
+    password: data.password
+  })
 }

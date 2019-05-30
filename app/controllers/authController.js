@@ -206,3 +206,18 @@ exports.addCustomer = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+exports.resetPassword = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      device_id: { required: true, type: 'string' },
+      name: { required: true, type: 'string' },
+      password: { required: true, type: 'string' }
+    }, query)
+    await ctx.services.auth.resetPassword(data)
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
