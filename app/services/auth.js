@@ -51,7 +51,7 @@ exports.customerRegister = async function (data) {
       last_device_time: Date.now(),
       // 注册就送
       buy_type: '波段',
-      can_use_day: 5,
+      can_use_day: 10,
       if_count_day: false
     })
   }
