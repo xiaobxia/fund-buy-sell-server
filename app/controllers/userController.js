@@ -79,6 +79,7 @@ exports.getCustomers = async function (ctx) {
       wechat: { type: 'string', required: false },
       status: { type: 'int', required: false },
       todayQuery: { type: 'boolean', required: false },
+      todayLogin: { type: 'boolean', required: false },
       sort: { type: 'string', required: false },
       beginTime: { required: false, type: 'string' },
       endTime: { required: false, type: 'string' }

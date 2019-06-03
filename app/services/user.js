@@ -118,6 +118,12 @@ exports.getCustomers = async function (query, paging) {
       $gt: 0
     }
   }
+  // 今天登录了
+  if (query.todayLogin === 'true') {
+    queryOption.today_login = {
+      $gt: 0
+    }
+  }
   const fetchData = await Promise.all([
     UserProxy.find(queryOption, opt),
     UserProxy.count(queryOption)
