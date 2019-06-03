@@ -29,11 +29,6 @@ exports.customerLogin = async function (data) {
   if (user.password !== data.password) {
     throw new Error('密码错误')
   }
-  await UserProxy.update({
-    _id: user._id
-  }, {
-    today_login: user.today_login + 1
-  })
   return user
 }
 

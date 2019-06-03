@@ -148,9 +148,16 @@ exports.getCustomer = async function (data) {
 }
 
 exports.getCustomerByName = async function (data) {
-  return UserProxy.findOne({
-    name: data.name
+  const user = await UserProxy.findOne({ name: data.name })
+  if (!user) {
+    throw new Error('此微信号尚未注册账户')
+  }
+  await UserProxy.update({
+    _id: user._id
+  }, {
+    today_login: user.today_login + 1
   })
+  return user
 }
 
 exports.updateCustomer = async function (data) {
