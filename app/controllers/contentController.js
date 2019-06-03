@@ -35,7 +35,8 @@ exports.updateAllContent = async function (ctx) {
     const data = ctx.validateData({
       fixedInvestmentContent: { required: false, type: 'string' },
       positionContent: { required: false, type: 'string' },
-      marketWarn: { required: false, type: 'string' }
+      marketWarn: { required: false, type: 'string' },
+      ifWarnHighBand: { required: false, type: 'string' }
     }, query)
     await ctx.services.dictionary.updateAllContent(data)
     ctx.body = ctx.resuccess()
@@ -47,6 +48,15 @@ exports.updateAllContent = async function (ctx) {
 exports.getBandContent = async function (ctx) {
   try {
     const content = await ctx.services.dictionary.getBandContent()
+    ctx.body = ctx.resuccess(content)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+exports.getIfWarnHighBand = async function (ctx) {
+  try {
+    const content = await ctx.services.dictionary.getIfWarnHighBand()
     ctx.body = ctx.resuccess(content)
   } catch (err) {
     ctx.body = ctx.refail(err)

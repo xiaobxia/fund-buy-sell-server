@@ -81,7 +81,7 @@ router.post('/admin/giveGiftCanUseDay', controllers.userController.giveGiftCanUs
 router.post('/admin/giveVacationCanUseDay', controllers.userController.giveVacationCanUseDay)
 router.get('/admin/getUserStatistics', controllers.statisticsController.getUserStatistics)
 router.get('/admin/getUserDay', controllers.statisticsController.getUserDay)
-
+router.post('/admin/deleteCustomer', controllers.userController.deleteCustomer)
 /**
  * 客户端模块
  */
@@ -91,6 +91,7 @@ router.get('/customer/getBand', controllers.operationController.getBand)
 router.get('/customer/addTodayQuery', controllers.customerController.addTodayQuery)
 router.get('/customer/getFixedInvestmentContent', controllers.contentController.getFixedInvestmentContent)
 router.get('/customer/getBandContent', controllers.contentController.getBandContent)
+router.get('/customer/getIfWarnHighBand', controllers.contentController.getIfWarnHighBand)
 
 /**
  * 定时任务模块
@@ -114,6 +115,7 @@ router.get('/schedule/updateBand', controllers.scheduleController.updateBand)
 router.get('/schedule/updateCustomerTodayHistory', controllers.scheduleController.updateCustomerTodayHistory)
 router.get('/schedule/updateCustomerCanUseDay', controllers.scheduleController.updateCustomerCanUseDay)
 router.get('/schedule/clearToday', controllers.scheduleController.clearToday)
+router.get('/schedule/giveGiftCanUseDay', controllers.userController.giveGiftCanUseDay)
 // 送礼的定时任务
 router.post('/schedule/giveGiftCanUseDay', controllers.userController.giveGiftCanUseDay)
 router.post('/schedule/giveVacationCanUseDay', controllers.userController.giveVacationCanUseDay)

@@ -20,17 +20,24 @@ const proxys = require('../app/proxy/index')
 // }).then((doc) => {
 //   console.log(doc)
 // })
+//
+// proxys.Dictionary.newAndSave({
+//   'key': 'ifUpdateCanUseDay',
+//   'value': 'true'
+// }).then((doc) => {
+//   console.log(doc)
+// })
+//
+// proxys.Dictionary.newAndSave({
+//   'key': 'ifAuthBand',
+//   'value': 'true'
+// }).then((doc) => {
+//   console.log(doc)
+// })
 
 proxys.Dictionary.newAndSave({
-  'key': 'ifUpdateCanUseDay',
-  'value': 'true'
-}).then((doc) => {
-  console.log(doc)
-})
-
-proxys.Dictionary.newAndSave({
-  'key': 'ifAuthBand',
-  'value': 'true'
+  'key': 'ifWarnHighBand',
+  'value': 'false'
 }).then((doc) => {
   console.log(doc)
 })

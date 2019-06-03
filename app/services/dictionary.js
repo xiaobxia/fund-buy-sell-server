@@ -25,12 +25,14 @@ exports.getAllContent = async function () {
   const contents = await Promise.all([
     Dictionary.findOne({ key: 'fixedInvestmentContent' }),
     Dictionary.findOne({ key: 'positionContent' }),
-    Dictionary.findOne({ key: 'marketWarn' })
+    Dictionary.findOne({ key: 'marketWarn' }),
+    Dictionary.findOne({ key: 'ifWarnHighBand' })
   ])
   return {
     fixedInvestmentContent: contents[0] && contents[0].value,
     positionContent: contents[1] && contents[1].value,
-    marketWarn: contents[2] && contents[2].value
+    marketWarn: contents[2] && contents[2].value,
+    ifWarnHighBand: contents[3] && contents[3].value
   }
 }
 
@@ -57,6 +59,13 @@ exports.updateAllContent = async function (data) {
       })
     )
   }
+  if (data.ifWarnHighBand) {
+    opList.push(
+      Dictionary.update({ key: 'ifWarnHighBand' }, {
+        value: data.ifWarnHighBand
+      })
+    )
+  }
   return Promise.all(opList)
 }
 
@@ -69,6 +78,10 @@ exports.getBandContent = async function () {
     positionContent: contents[0] && contents[0].value,
     marketWarn: contents[1] && contents[1].value
   }
+}
+
+exports.getIfWarnHighBand = async function () {
+  return Dictionary.findOne({ key: 'ifWarnHighBand' })
 }
 
 exports.clearToday = async function () {

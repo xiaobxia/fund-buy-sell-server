@@ -106,6 +106,19 @@ exports.addCustomer = async function (ctx) {
   }
 }
 
+exports.deleteCustomer = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      id: { type: 'string', required: true }
+    }, query)
+    await ctx.services.user.deleteCustomer(data)
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
 exports.getCustomer = async function (ctx) {
   const query = ctx.query
   try {

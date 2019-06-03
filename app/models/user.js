@@ -64,6 +64,16 @@ const schema = new Schema({
     type: Boolean,
     default: true
   },
+  // 是否提示过去试用
+  if_warn_test: {
+    type: Boolean,
+    default: false
+  },
+  // 是否提示过去购买
+  if_warn_buy: {
+    type: Boolean,
+    default: false
+  },
   history_login: {
     type: Number,
     default: 0

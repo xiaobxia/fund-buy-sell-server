@@ -135,6 +135,12 @@ exports.addCustomer = async function (data) {
   })
 }
 
+exports.deleteCustomer = async function (data) {
+  return UserProxy.delete({
+    _id: data.id
+  })
+}
+
 exports.getCustomer = async function (data) {
   return UserProxy.findOne({
     _id: data.id
