@@ -158,11 +158,20 @@ exports.getCustomerByName = async function (data) {
   if (!user) {
     throw new Error('此微信号尚未注册账户')
   }
+  let updateData = {
+    today_login: user.today_login + 1
+  }
+  // 注册10天
+  if (moment().diff(user.create_at, 'days') > 10) {
+    // 活跃天数小于5天,剩余天数小于5天
+    if (user.active_days < 5 && user.can_use_day < 5) {
+      // 加10天
+      updateData.can_use_day = user.can_use_day + 10
+    }
+  }
   await UserProxy.update({
     _id: user._id
-  }, {
-    today_login: user.today_login + 1
-  })
+  }, updateData)
   return user
 }
 
