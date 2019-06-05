@@ -1,3 +1,3 @@
 const requestLocal = require('./app/util/requestLocal')
 
-requestLocal.get('schedule/updateFixedInvestment')
+requestLocal.get('schedule/updateMonthRate')

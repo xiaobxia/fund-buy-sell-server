@@ -43,6 +43,7 @@ module.exports = {
   db: dbAddress,
   fundDataAddress: fundDataAddress,
   stockDataAddress: stockDataAddress,
+  fundServerAddress: 'http://47.98.140.76:3020/fundServer',
   qiniu: {
     zone: 'Zone_z2'
   },

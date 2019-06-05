@@ -5,9 +5,14 @@ const qs = require('qs')
 
 const fundAddress = localConfig.fundDataAddress
 const stockAddress = localConfig.stockDataAddress
+const fundServerAddress = localConfig.fundServerAddress
 
 function makeFundUrl (path) {
   return `${fundAddress}/${path}`
+}
+
+function makeFundServerUrl (path) {
+  return `${fundServerAddress}/${path}`
 }
 
 function axiosGetFund (url, query, options) {
@@ -34,6 +39,17 @@ function axiosGetStock (url, query, options) {
     queryString = qs.stringify({ timestamp: new Date().getTime() })
   }
   return axios.get(makeStockUrl(url + (queryString ? '?' + queryString : '')), options).then(data => data.data)
+}
+
+function axiosGetFundServer (url, query, options) {
+  let queryString = ''
+  if (query) {
+    query.timestamp = new Date().getTime()
+    queryString = qs.stringify(query)
+  } else {
+    queryString = qs.stringify({ timestamp: new Date().getTime() })
+  }
+  return axios.get(makeFundServerUrl(url + (queryString ? '?' + queryString : '')), options).then(data => data.data)
 }
 
 exports.getFundBuySellRate = function (data) {
@@ -125,5 +141,11 @@ exports.getStockAllXueqiu = function (data) {
   return axiosGetStock('stockData/getStockAllXueqiu', {
     code: data.code,
     days: data.days
+  })
+}
+
+exports.getStockPriceNowMonthRate = function (data) {
+  return axiosGetFundServer('stock/getStockPriceNowMonthRate', {
+    code: data.code
   })
 }

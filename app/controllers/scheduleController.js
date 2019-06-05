@@ -175,6 +175,19 @@ exports.updateBand = async function (ctx) {
   }
 }
 
+exports.updateMonthRate = async function (ctx) {
+  try {
+    const isOpen = await ctx.services.marketOpen.getTodayMarketOpen()
+    if (isOpen) {
+      await ctx.services.indexFundBand.updateMonthRate()
+    }
+    // await ctx.services.indexFundBand.updateBand()
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
 exports.updateCustomerTodayHistory = async function (ctx) {
   try {
     // 每天都会做

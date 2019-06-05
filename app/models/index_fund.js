@@ -8,6 +8,8 @@ const schema = new Schema({
   type: Number,
   fundCode: String,
   fundName: String,
+  // 月收益
+  month_rate: Number,
   // []
   detail: Object,
   // 排序索引，越大越靠前

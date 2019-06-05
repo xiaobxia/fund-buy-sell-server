@@ -92,7 +92,8 @@ router.get('/customer/addTodayQuery', controllers.customerController.addTodayQue
 router.get('/customer/getFixedInvestmentContent', controllers.contentController.getFixedInvestmentContent)
 router.get('/customer/getBandContent', controllers.contentController.getBandContent)
 router.get('/customer/getIfWarnHighBand', controllers.contentController.getIfWarnHighBand)
-
+router.get('/customer/getTodayRank', controllers.operationController.getTodayRank)
+router.get('/customer/getMonthRank', controllers.operationController.getMonthRank)
 /**
  * 定时任务模块
  */
@@ -112,6 +113,7 @@ router.get('/schedule/verifyMarketOpening', controllers.scheduleController.verif
 router.get('/schedule/openWork', controllers.scheduleController.openWork)
 router.get('/schedule/updateFixedInvestment', controllers.scheduleController.updateFixedInvestment)
 router.get('/schedule/updateBand', controllers.scheduleController.updateBand)
+router.get('/schedule/updateMonthRate', controllers.scheduleController.updateMonthRate)
 router.get('/schedule/updateCustomerTodayHistory', controllers.scheduleController.updateCustomerTodayHistory)
 router.get('/schedule/updateCustomerCanUseDay', controllers.scheduleController.updateCustomerCanUseDay)
 router.get('/schedule/clearToday', controllers.scheduleController.clearToday)

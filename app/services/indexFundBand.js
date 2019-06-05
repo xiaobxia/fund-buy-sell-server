@@ -170,6 +170,40 @@ exports.updateBand = async function () {
   return Promise.all(opList)
 }
 
+exports.updateMonthRate = async function () {
+  let opList = []
+  for (let i = 0; i < codeList.length; i++) {
+    const codeItem = codeList[i]
+    if (codeItem.type === 1) {
+      const res = await webDataUtil.getStockPriceNowMonthRate({
+        code: codeItem.code
+      })
+      opList.push(
+        IndexFund.update({ code: codeItem.code, type: 1 }, {
+          month_rate: res.data.rate
+        })
+      )
+    }
+  }
+  return Promise.all(opList)
+}
+
 exports.getBand = async function () {
   return IndexFund.find({ type: 1 })
+}
+
+exports.getTodayRank = async function () {
+  const indexList = await IndexFund.find({ type: 1 })
+  indexList.sort((a, b)=>{
+    return b.detail.rate - a.detail.rate
+  })
+  return indexList
+}
+
+exports.getMonthRank = async function () {
+  const indexList = await IndexFund.find({ type: 1 })
+  indexList.sort((a, b)=>{
+    return b.month_rate - a.month_rate
+  })
+  return indexList
 }

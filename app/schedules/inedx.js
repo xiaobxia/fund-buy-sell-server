@@ -5,6 +5,7 @@ exports.openWork = require('./openWork')
 exports.updateCustomerTodayHistory = require('./updateCustomerTodayHistory')
 exports.updateFixedInvestment = require('./updateFixedInvestment')
 exports.updateBand = require('./updateBand')
+exports.updateMonthRate = require('./updateMonthRate')
 exports.clearToday = require('./clearToday')
 exports.updateCustomerCanUseDay = require('./updateCustomerCanUseDay')
 
