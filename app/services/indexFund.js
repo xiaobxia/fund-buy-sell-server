@@ -90,9 +90,9 @@ exports.getIndexValuation = async function () {
 exports.updateIndexValuation = async function (data) {
   const updateList = JSON.parse(data.updateJson)
   let opList = []
-  for (let i=0;i<updateList.length;i++) {
+  for (let i = 0; i < updateList.length; i++) {
     const item = updateList[i]
-    opList.push(IndexFund.update({code: item.code, type: 2},{
+    opList.push(IndexFund.update({ code: item.code, type: 2 }, {
       PB: item.PB,
       PE: item.PE,
       guzhi: item.guzhi
