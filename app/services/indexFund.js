@@ -82,3 +82,21 @@ exports.updateFixedInvestment = async function () {
 exports.getFixedInvestment = async function () {
   return IndexFund.find({ type: 2 })
 }
+
+exports.getIndexValuation = async function () {
+  return IndexFund.find({ type: 2 })
+}
+
+exports.updateIndexValuation = async function (data) {
+  const updateList = JSON.parse(data.updateJson)
+  let opList = []
+  for (let i=0;i<updateList.length;i++) {
+    const item = updateList[i]
+    opList.push(IndexFund.update({code: item.code, type: 2},{
+      PB: item.PB,
+      PE: item.PE,
+      guzhi: item.guzhi
+    }))
+  }
+  return Promise.all(opList)
+}

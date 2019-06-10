@@ -194,7 +194,7 @@ exports.getBand = async function () {
 
 exports.getTodayRank = async function () {
   const indexList = await IndexFund.find({ type: 1 })
-  indexList.sort((a, b)=>{
+  indexList.sort((a, b) => {
     return b.detail.rate - a.detail.rate
   })
   return indexList
@@ -202,7 +202,7 @@ exports.getTodayRank = async function () {
 
 exports.getMonthRank = async function () {
   const indexList = await IndexFund.find({ type: 1 })
-  indexList.sort((a, b)=>{
+  indexList.sort((a, b) => {
     return b.month_rate - a.month_rate
   })
   return indexList

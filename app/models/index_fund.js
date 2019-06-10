@@ -12,6 +12,9 @@ const schema = new Schema({
   month_rate: Number,
   // []
   detail: Object,
+  PB: Number,
+  PE: Number,
+  guzhi: String,
   // 排序索引，越大越靠前
   sortIndex: {
     type: Number,

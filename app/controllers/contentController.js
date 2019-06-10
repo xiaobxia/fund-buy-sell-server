@@ -62,3 +62,25 @@ exports.getIfWarnHighBand = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+exports.getIndexValuation = async function (ctx) {
+  try {
+    const res = await ctx.services.indexFund.getIndexValuation()
+    ctx.body = ctx.resuccess(res)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+exports.updateIndexValuation = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      updateJson: { required: true, type: 'string' }
+    }, query)
+    await ctx.services.indexFund.updateIndexValuation(data)
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

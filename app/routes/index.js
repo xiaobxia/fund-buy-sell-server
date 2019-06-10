@@ -82,18 +82,22 @@ router.post('/admin/giveVacationCanUseDay', controllers.userController.giveVacat
 router.get('/admin/getUserStatistics', controllers.statisticsController.getUserStatistics)
 router.get('/admin/getUserDay', controllers.statisticsController.getUserDay)
 router.post('/admin/deleteCustomer', controllers.userController.deleteCustomer)
+router.get('/admin/getIndexValuation', controllers.contentController.getIndexValuation)
+router.post('/admin/updateIndexValuation', controllers.contentController.updateIndexValuation)
 /**
  * 客户端模块
  */
 router.get('/customer/getCustomerByName', controllers.customerController.getCustomerByName)
-router.get('/customer/getFixedInvestment', controllers.operationController.getFixedInvestment)
 router.get('/customer/getBand', controllers.operationController.getBand)
 router.get('/customer/addTodayQuery', controllers.customerController.addTodayQuery)
-router.get('/customer/getFixedInvestmentContent', controllers.contentController.getFixedInvestmentContent)
 router.get('/customer/getBandContent', controllers.contentController.getBandContent)
 router.get('/customer/getIfWarnHighBand', controllers.contentController.getIfWarnHighBand)
-router.get('/customer/getTodayRank', controllers.operationController.getTodayRank)
-router.get('/customer/getMonthRank', controllers.operationController.getMonthRank)
+// 无需登录模块
+router.get('/customerCommon/getIndexValuation', controllers.operationController.getIndexValuation)
+router.get('/customerCommon/getFixedInvestment', controllers.operationController.getFixedInvestment)
+router.get('/customerCommon/getFixedInvestmentContent', controllers.contentController.getFixedInvestmentContent)
+router.get('/customerCommon/getTodayRank', controllers.operationController.getTodayRank)
+router.get('/customerCommon/getMonthRank', controllers.operationController.getMonthRank)
 /**
  * 定时任务模块
  */

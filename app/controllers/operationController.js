@@ -3,11 +3,10 @@ exports.getFixedInvestment = async function (ctx) {
   try {
     const data = ctx.validateData({
       device_id: { required: true, type: 'string' },
-      name: { required: true, type: 'string' },
       type: { required: true, type: 'string' }
     }, query)
     // 定投不用check
-    await ctx.services.user.addCustomerActive(data.name)
+    // await ctx.services.user.addCustomerActive(data.name)
     const res = await ctx.services.indexFund.getFixedInvestment(data)
     ctx.body = ctx.resuccess(res)
   } catch (err) {
@@ -36,8 +35,7 @@ exports.getTodayRank = async function (ctx) {
   const query = ctx.query
   try {
     const data = ctx.validateData({
-      device_id: { required: true, type: 'string' },
-      name: { required: true, type: 'string' }
+      device_id: { required: true, type: 'string' }
     }, query)
     const res = await ctx.services.indexFundBand.getTodayRank(data)
     ctx.body = ctx.resuccess(res)
@@ -50,10 +48,22 @@ exports.getMonthRank = async function (ctx) {
   const query = ctx.query
   try {
     const data = ctx.validateData({
-      device_id: { required: true, type: 'string' },
-      name: { required: true, type: 'string' }
+      device_id: { required: true, type: 'string' }
     }, query)
     const res = await ctx.services.indexFundBand.getMonthRank(data)
+    ctx.body = ctx.resuccess(res)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+exports.getIndexValuation = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      device_id: { required: true, type: 'string' }
+    }, query)
+    const res = await ctx.services.indexFund.getIndexValuation(data)
     ctx.body = ctx.resuccess(res)
   } catch (err) {
     ctx.body = ctx.refail(err)
