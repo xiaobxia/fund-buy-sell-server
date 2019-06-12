@@ -15,6 +15,7 @@ exports.getUserStatistics = async function (data) {
   let hasTestUser = 0
   let canUseUser = 0
   let todayQuery = 0
+  let todayLoginUser = 0
   for (let i = 0; i < users.length; i++) {
     const user = users[i]
     if (moment(user.create_at).isAfter(moment().format('YYYY-MM-DD') + ' 00:00:00')) {
@@ -24,6 +25,9 @@ exports.getUserStatistics = async function (data) {
       if (user.today_query > 0) {
         todayQueryUser++
         todayQuery = todayQuery + user.today_query
+      }
+      if (user.today_login > 0) {
+        todayLoginUser++
       }
       if (user.if_test === true) {
         hasTestUser++
@@ -39,7 +43,8 @@ exports.getUserStatistics = async function (data) {
     history_register_user: users.length - 2,
     has_test_user: hasTestUser,
     can_use_user: canUseUser,
-    today_query: todayQuery
+    today_query: todayQuery,
+    today_login_user: todayLoginUser
   }
 }
 
