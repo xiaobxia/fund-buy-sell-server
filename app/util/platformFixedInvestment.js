@@ -21,13 +21,13 @@ function Util (config) {
 }
 
 Util.prototype = {
-  getFlag: function (record) {
+  getFlag: function (record, lv) {
     let flag = {}
     flag.ifUpOpen = this.ifUpOpen(record)
     flag.ifOpenHigh = this.ifOpenHigh(record)
     flag.ifUpClose = this.ifUpClose(record)
     flag.ifCloseHigh = this.ifCloseHigh(record)
-    flag.ifCloseHigh2 = this.ifCloseHigh2(record)
+    flag.ifCloseHigh2 = this.ifCloseHigh2(record, lv)
     flag.ifSessionDown = this.ifSessionDown(record)
     flag.ifSessionDownHigh = this.ifSessionDownHigh(record)
     flag.ifSessionUpClose = this.ifSessionUpClose(record)
@@ -62,10 +62,10 @@ Util.prototype = {
     const rate = this.rate
     return Math.abs(record.netChangeRatio) >= rate
   },
-  ifCloseHigh2: function (record) {
+  ifCloseHigh2: function (record, lv) {
     const rate = this.rate
     // return Math.abs(record.netChangeRatio) >= 2.25 * rate && Math.abs(record.netChangeRatio) <= 2.5 * rate
-    return Math.abs(record.netChangeRatio) >= 2.5 * rate
+    return Math.abs(record.netChangeRatio) >= (lv || 2.5) * rate
   },
   // 盘中下跌
   ifSessionDown: function (record) {
@@ -118,7 +118,7 @@ Util.prototype = {
     return numberUtil.countDifferenceRate(record.high, record.preClose) < -(2 * rate)
   },
   ifBuyChuangye: function (record, oneDayRecord) {
-    const today = this.getFlag(record)
+    const today = this.getFlag(record, 2.1)
     // 无抵抗下跌的都要
     if (ifMatch(today,
       { 'ifHighPreCloseDown': true }
@@ -149,7 +149,7 @@ Util.prototype = {
     return false
   },
   ifBuyWulin: function (record, oneDayRecord) {
-    const today = this.getFlag(record)
+    const today = this.getFlag(record, 2.1)
     // 无抵抗下跌的都要
     if (ifMatch(today,
       { 'ifHighPreCloseDown': true }
@@ -180,7 +180,7 @@ Util.prototype = {
     return false
   },
   ifBuySanbai: function (record, oneDayRecord) {
-    const today = this.getFlag(record)
+    const today = this.getFlag(record, 1.9)
     // 无抵抗下跌的都要
     if (ifMatch(today,
       { 'ifHighPreCloseDown': true }
@@ -211,7 +211,7 @@ Util.prototype = {
     return false
   },
   ifBuyWubai: function (record, oneDayRecord) {
-    const today = this.getFlag(record)
+    const today = this.getFlag(record, 2.3)
     // 无抵抗下跌的都要
     if (ifMatch(today,
       { 'ifHighPreCloseDown': true }
