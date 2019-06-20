@@ -44,9 +44,9 @@ exports.customerRegister = async function (data) {
       last_device_id: data.device_id,
       // 上一次使用该设备的时间
       last_device_time: Date.now(),
-      // 注册就送,20天
+      // 注册就送,30天
       buy_type: '波段',
-      can_use_day: 20,
+      can_use_day: 40,
       if_count_day: false
     })
   }
