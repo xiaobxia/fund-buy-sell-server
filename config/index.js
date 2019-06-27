@@ -45,7 +45,10 @@ module.exports = {
   stockDataAddress: stockDataAddress,
   fundServerAddress: 'http://47.98.140.76:3020/fundServer',
   qiniu: {
-    zone: 'Zone_z2'
+    zone: 'Zone_z0',
+    accessKey: 'mE_KVunTNvnBqk70urXj6IPwA7AkF0f7n_ge6ljt',
+    secretKey: 'cuRZJGuJ-FaHanoLznTjEypr-_KIRQZHZAkImZlt',
+    bucketCode: 'fbs-img'
   },
   // 邮件配置
   email: {

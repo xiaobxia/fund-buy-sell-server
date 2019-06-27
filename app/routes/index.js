@@ -126,6 +126,13 @@ router.get('/schedule/giveGiftCanUseDay', controllers.userController.giveGiftCan
 router.post('/schedule/giveGiftCanUseDay', controllers.userController.giveGiftCanUseDay)
 router.post('/schedule/giveVacationCanUseDay', controllers.userController.giveVacationCanUseDay)
 
+router.get('/qiniu/getUploadToken', controllers.qiniuController.getUploadToken)
+
+// 广告
+router.get('/advertisement/getAdvertisements', controllers.advertisementController.getAdvertisements)
+router.post('/advertisement/addAdvertisement', controllers.advertisementController.addAdvertisement)
+router.post('/advertisement/updateStatus', controllers.advertisementController.updateStatus)
+
 /**
  * 数据
  */

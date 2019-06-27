@@ -10,25 +10,38 @@ const qiniu = require('qiniu')
  * @returns {{token: *, bucketHost: *, fileName: (*|string)}}
  */
 exports.getUploadToken = function (config) {
+  // // 1.创建鉴权对象
+  // const mac = new qiniu.auth.digest.Mac(config.accessKey, config.secretKey)
+  // // 2.创建上传凭证
+  // const options = {
+  //   // 空间名
+  //   scope: config.bucketCode + ':' + config.fileName,
+  //   expires: 600,
+  //   returnBody: '{"key":"$(key)","hash":"$(etag)","bucket":"$(bucket)","fname":"$(fname)","fsize":"$(fsize)","mimeType":"$(mimeType)"}'
+  //   // callbackBody: '{"key":"$(key)","hash":"$(etag)","bucket":"$(bucket)","fname":"$(fname)","fsize":"$(fsize)","mimeType":"$(mimeType)"}',
+  //   // callbackBodyType: 'application/json'
+  // }
+  // const putPolicy = new qiniu.rs.PutPolicy(options)
+  // const uploadToken = putPolicy.uploadToken(mac)
+  // return {
+  //   token: uploadToken,
+  //   bucketHost: config.bucketHost,
+  //   fileName: config.fileName
+  // }
   // 1.创建鉴权对象
   const mac = new qiniu.auth.digest.Mac(config.accessKey, config.secretKey)
   // 2.创建上传凭证
   const options = {
     // 空间名
-    scope: config.bucketCode + ':' + config.fileName,
-    expires: 600,
-    returnBody: '{"key":"$(key)","hash":"$(etag)","bucket":"$(bucket)","fname":"$(fname)","fsize":"$(fsize)","mimeType":"$(mimeType)"}'
-    // callbackBody: '{"key":"$(key)","hash":"$(etag)","bucket":"$(bucket)","fname":"$(fname)","fsize":"$(fsize)","mimeType":"$(mimeType)"}',
-    // callbackBodyType: 'application/json'
+    scope: config.bucketCode
   }
   const putPolicy = new qiniu.rs.PutPolicy(options)
   const uploadToken = putPolicy.uploadToken(mac)
   return {
-    token: uploadToken,
-    bucketHost: config.bucketHost,
-    fileName: config.fileName
+    token: uploadToken
   }
 }
+
 /**
  * @param config
  * accessKey
