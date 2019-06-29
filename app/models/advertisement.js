@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 const schema = new Schema({
+  // 排序
+  sortIndex: Number,
   // 广告归类
   type: String,
   // 图片的地址

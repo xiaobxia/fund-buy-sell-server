@@ -87,11 +87,11 @@ router.post('/admin/updateIndexValuation', controllers.contentController.updateI
 /**
  * 客户端模块
  */
-router.get('/customer/getCustomerByName', controllers.customerController.getCustomerByName)
-router.get('/customer/getBand', controllers.operationController.getBand)
-router.get('/customer/addTodayQuery', controllers.customerController.addTodayQuery)
-router.get('/customer/getBandContent', controllers.contentController.getBandContent)
-router.get('/customer/getIfWarnHighBand', controllers.contentController.getIfWarnHighBand)
+router.get('/customerCommon/getCustomerByName', controllers.customerController.getCustomerByName)
+router.get('/customerCommon/getBand', controllers.operationController.getBand)
+router.get('/customerCommon/addTodayQuery', controllers.customerController.addTodayQuery)
+router.get('/customerCommon/getBandContent', controllers.contentController.getBandContent)
+router.get('/customerCommon/getIfWarnHighBand', controllers.contentController.getIfWarnHighBand)
 // 无需登录模块
 router.get('/customerCommon/getIndexValuation', controllers.operationController.getIndexValuation)
 router.get('/customerCommon/getFixedInvestment', controllers.operationController.getFixedInvestment)
@@ -132,7 +132,9 @@ router.get('/qiniu/getUploadToken', controllers.qiniuController.getUploadToken)
 router.get('/advertisement/getAdvertisements', controllers.advertisementController.getAdvertisements)
 router.post('/advertisement/addAdvertisement', controllers.advertisementController.addAdvertisement)
 router.post('/advertisement/updateStatus', controllers.advertisementController.updateStatus)
-
+router.post('/advertisement/deleteAdvertisement', controllers.advertisementController.deleteAdvertisement)
+router.post('/advertisement/updateAdvertisement', controllers.advertisementController.updateAdvertisement)
+router.get('/customerCommon/getAdvertisements', controllers.advertisementController.getAdvertisements)
 /**
  * 数据
  */

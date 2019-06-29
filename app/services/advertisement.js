@@ -7,6 +7,7 @@ exports.getAdvertisements = async function (query, paging) {
     skip: paging.start,
     limit: paging.offset,
     sort: {
+      sortIndex: 1,
       status: 1,
       create_at: -1
     }
@@ -30,8 +31,28 @@ exports.addAdvertisement = async function (data) {
   return AdvertisementProxy.newAndSave({
     type: data.type,
     img_url: data.img_url,
-    status: 1
+    status: 1,
+    sortIndex: data.sortIndex
   })
+}
+
+exports.updateAdvertisement = async function (data) {
+  let updateData = {}
+  if (data.type) {
+    updateData.type = data.type
+  }
+  if (data.img_url) {
+    updateData.img_url = data.img_url
+  }
+  if (data.sortIndex) {
+    updateData.sortIndex = data.sortIndex
+  }
+  if (data.status) {
+    updateData.status = data.status
+  }
+  return AdvertisementProxy.update({
+    _id: data._id
+  }, updateData)
 }
 
 exports.updateStatus = async function (data) {
@@ -39,5 +60,11 @@ exports.updateStatus = async function (data) {
     _id: data.id
   }, {
     status: data.status
+  })
+}
+
+exports.deleteAdvertisement = async function (data) {
+  return AdvertisementProxy.delete({
+    _id: data._id
   })
 }
