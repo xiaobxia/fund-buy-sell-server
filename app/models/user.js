@@ -4,8 +4,6 @@ const Schema = mongoose.Schema
 
 const schema = new Schema({
   name: String,
-  // 微信id
-  wechat: String,
   password: String,
   email: String,
   mobile: String,
@@ -23,84 +21,13 @@ const schema = new Schema({
   // 角色 []
   roles: Array,
   last_login_date: Date,
-  // 上一次使用的设备id
-  last_device_id: String,
-  // 上一次使用该设备的时间
-  last_device_time: Date,
-  // 购买的类型
-  buy_type: String,
-  // 剩余可使用日期
-  can_use_day: {
-    type: Number,
-    default: 0
-  },
-  // 状态(1正常，2拉黑)
-  status: {
-    type: Number,
-    default: 1
-  },
-  // 奖励
-  reward: {
-    type: Number,
-    default: 0
-  },
-  // 是否奖励过
-  if_reward: {
-    type: Boolean,
-    default: false
-  },
-  // 是否试用过
-  if_test: {
-    type: Boolean,
-    default: false
-  },
-  // 是否买过
-  if_buy: {
-    type: Boolean,
-    default: false
-  },
-  // 是否计算今日
-  if_count_day: {
-    type: Boolean,
-    default: true
-  },
-  // 是否提示过去试用
-  if_warn_test: {
-    type: Boolean,
-    default: false
-  },
-  // 是否提示过去购买
-  if_warn_buy: {
-    type: Boolean,
-    default: false
-  },
-  history_login: {
-    type: Number,
-    default: 0
-  },
-  history_query: {
-    type: Number,
-    default: 0
-  },
-  today_login: {
-    type: Number,
-    default: 0
-  },
-  today_query: {
-    type: Number,
-    default: 0
-  },
-  active_days: {
-    type: Number,
-    default: 0
-  },
-  last_active_day: Date,
   create_at: {
     type: Date,
     default: Date.now
   }
 })
-// 微信id不可重复
+// 1升序，-1降序。比如积分一般在排序时越大的在越前面，所以用降序
+// 名字不重复
 schema.index({ name: 1 }, { unique: true })
 
 module.exports = mongoose.model('User', schema)

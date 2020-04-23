@@ -20,8 +20,7 @@ exports.importNumbers = async function (ctx) {
   const filePath = getFilePath(ctx)
   const data = await fs.readJson(filePath)
   try {
-    console.log(data.list)
-    ctx.body = ctx.resuccess()
+    ctx.body = ctx.resuccess(data)
   } catch (err) {
     ctx.body = ctx.refail({
       message: 'json数据不正确'

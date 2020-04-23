@@ -27,8 +27,8 @@ exports.find = function (query, opt) {
   return UserModel.find(query, {}, opt)
 }
 
-exports.findOne = function (query, opt) {
-  return UserModel.findOne(query, {}, opt)
+exports.findOne = function (query) {
+  return UserModel.findOne(query, {})
 }
 
 exports.findOneById = function (id) {

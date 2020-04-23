@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs-extra')
 const Parameter = require('./lib/validate')
 const schedules = require('./schedules/inedx')
-const tableFields = require('./models/tableFields')
 
 const parameter = new Parameter()
 
@@ -37,7 +36,7 @@ module.exports = function (app) {
       code: 200,
       success: true,
       message: codeMap['200'],
-      data: data || null
+      data: data
     }
   }
   // 失败
@@ -49,7 +48,7 @@ module.exports = function (app) {
       code: parseInt(code),
       success: false,
       message: message || codeMap[code || '-1'] || codeMap['-1'],
-      data: data || null
+      data: data
     }
   }
   // 过滤请求字段
@@ -67,16 +66,18 @@ module.exports = function (app) {
     let fake = {}
     for (let key in rule) {
       if (rule.hasOwnProperty(key)) {
-        let type = rule[key].type
-        if (type === 'int') {
-          fake[key] = data[key] ? parseInt(data[key], 10) : data[key]
-        } else if (type === 'number') {
-          fake[key] = data[key] ? parseFloat(data[key]) : data[key]
-        } else {
-          if (!type) {
-            rule[key].type = 'string'
+        if (data[key] !== undefined) {
+          let type = rule[key].type
+          if (type === 'int') {
+            fake[key] = data[key] ? parseInt(data[key], 10) : data[key]
+          } else if (type === 'number') {
+            fake[key] = data[key] ? parseFloat(data[key]) : data[key]
+          } else {
+            if (!type) {
+              rule[key].type = 'string'
+            }
+            fake[key] = data[key]
           }
-          fake[key] = data[key]
         }
       }
     }
@@ -170,26 +171,5 @@ module.exports = function (app) {
       start: (index - 1) * size,
       offset: size
     }
-  }
-  // 字段
-  content.tableFields = tableFields
-  function formatFields (fields, rawData) {
-    let data = {}
-    for (let i = 0; i < fields.length; i++) {
-      const key = fields[i].field
-      let alias = fields[i].alias
-      let format = fields[i].format
-      let value = rawData[key]
-      data[alias || key] = format ? format(value) : value
-    }
-    return data
-  }
-  content.formatFields = formatFields
-  content.formatListFields = function (fields, rawList) {
-    let data = []
-    for (let i = 0; i < rawList.length; i++) {
-      data.push(formatFields(fields, rawList[i]))
-    }
-    return data
   }
 }

@@ -5,7 +5,6 @@ const DictionaryModel = models.Dictionary
 /**
  * 基本
  */
-
 exports.DictionaryModel = DictionaryModel
 
 exports.newAndSave = function (data) {

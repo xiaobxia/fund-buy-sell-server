@@ -56,7 +56,6 @@ module.exports = {
     // //强制分号结尾
     // "semi": ['error', "never"],
     // 'no-console': 'off',
-    'no-unused-vars': 'off'
     // 'spaced-comment': ['error', "always"]
   }
 };

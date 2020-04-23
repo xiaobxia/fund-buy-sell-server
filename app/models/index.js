@@ -25,15 +25,11 @@ mongoose.connect(config.db, {
  * Buffer：缓冲区
  */
 
-// 字段
-exports.tableFields = require('./tableFields')
+// 每条记录都会有_id,这是默认的索引
 
 // 模型
 exports.User = require('./user')
 exports.LogAudit = require('./logAudit')
 exports.Dictionary = require('./dictionary')
 exports.Schedule = require('./schedule')
-exports.MarketOpen = require('./market_open')
-exports.IndexFund = require('./index_fund')
-exports.UserDay = require('./user_day')
-exports.Advertisement = require('./advertisement')
+exports.EmailActive = require('./email_active')

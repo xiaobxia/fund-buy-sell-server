@@ -1,7 +1,9 @@
-const Proxy = require('../proxy')
 const moment = require('moment')
+const md5 = require('md5')
+const Proxy = require('../proxy')
 
 const UserProxy = Proxy.User
+const EmailActiveProxy = Proxy.EmailActive
 
 /**
  * 登录
@@ -21,85 +23,6 @@ exports.login = async function (account, password) {
   }
 }
 
-exports.customerLogin = async function (data) {
-  const user = await UserProxy.findOne({ name: data.name })
-  if (!user) {
-    throw new Error('此手机号尚未注册账户')
-  }
-  if (user.password !== data.password) {
-    throw new Error('密码错误')
-  }
-  return user
-}
-
-exports.customerRegister = async function (data) {
-  const user = await UserProxy.findOne({ name: data.name })
-  if (user) {
-    throw new Error('此手机号已注册账户')
-  } else {
-    return UserProxy.newAndSave({
-      name: data.name,
-      password: data.password,
-      roles: ['user'],
-      last_device_id: data.device_id,
-      // 上一次使用该设备的时间
-      last_device_time: Date.now(),
-      // 注册就送,30天
-      buy_type: '波段',
-      can_use_day: 40,
-      if_count_day: false
-    })
-  }
-}
-
-exports.checkCustomer = async function (data) {
-  const user = await UserProxy.findOne({ name: data.name })
-  if (!user) {
-    throw new Error('此手机号尚未注册账户')
-  }
-  if (user.buy_type) {
-    if (user.can_use_day > 0) {
-      if (user.buy_type === '定投' && data.type === 'band') {
-        throw new Error('您尚未拥有波段策略')
-      } else {
-        // 验证设备id
-        if (user.last_device_id) {
-          if (user.last_device_id === data.device_id) {
-            // 是同一个
-            return true
-          } else {
-            // 不是同一个，5分钟以上没问题
-            if (moment().diff(user.last_device_time, 'minutes') > 5) {
-              return true
-            } else {
-              // 5分钟以内就要求重新登录
-              // throw new Error('')
-              return true
-            }
-          }
-        } else {
-          // 没有设备Id，直接用新的
-          return UserProxy.update({ _id: user._id }, {
-            last_device_id: data.device_id,
-            last_device_time: Date.now()
-          })
-        }
-      }
-    } else {
-      if (data.type === 'band') {
-        throw new Error('您的套餐已过期')
-      }
-      // throw new Error('您的套餐已过期')
-    }
-  } else {
-    if (data.type === 'fixedInvestment') {
-      // throw new Error('您尚未拥有定投策略')
-    } else {
-      throw new Error('您尚未拥有波段策略')
-    }
-  }
-}
-
 /**
  * 注册
  * @param name
@@ -114,14 +37,24 @@ exports.register = async function (data) {
   return UserProxy.newAndSave(data)
 }
 
-exports.resetPassword = async function (data) {
-  const user = await UserProxy.findOne({ name: data.name })
-  if (!user) {
-    throw new Error('不存在该用户')
+exports.sendRegisterEmail = async function (email) {
+  const emailActive = await EmailActiveProxy.findOne({ email })
+  if (emailActive && emailActive.active === true) {
+    throw new Error('邮箱已被注册！')
+  } else {
+    // 到天
+    const code = md5(`${email},${moment().format('YYYY-MM-DD')}`)
+    if (emailActive) {
+      // 之前发送过那就更新
+      EmailActiveProxy.update({ email }, {
+        code
+      })
+    } else {
+      // 之前没有发送过那就添加记录
+      EmailActiveProxy.newAndSave({
+        email,
+        code
+      })
+    }
   }
-  return UserProxy.update({
-    _id: user._id
-  }, {
-    password: data.password
-  })
 }

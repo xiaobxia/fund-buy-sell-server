@@ -8,7 +8,6 @@ const LogAuditModel = models.LogAudit
 /**
  * 基本
  */
-
 exports.LogAuditModel = LogAuditModel
 
 exports.newAndSave = function (data) {
@@ -30,8 +29,8 @@ exports.find = function (query, opt) {
   return LogAuditModel.find(query, {}, opt)
 }
 
-exports.findOne = function (query, opt) {
-  return LogAuditModel.findOne(query, {}, opt)
+exports.findOne = function (query) {
+  return LogAuditModel.findOne(query)
 }
 
 exports.findOneById = function (id) {

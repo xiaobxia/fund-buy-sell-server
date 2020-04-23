@@ -1,6 +1,9 @@
 const schedule = require('node-schedule')
 const reqlib = require('app-root-path').require
-const requestLocal = reqlib('/app/util/requestLocal')
+const config = reqlib('/config/index')
+const scheduleService = require('../services/schedule')
+const sendMail = require('../common/email')
+const emailUtil = require('../util/emailUntil')
 /**
  * cron风格的
  *    *    *    *    *    *
@@ -14,16 +17,22 @@ const requestLocal = reqlib('/app/util/requestLocal')
  └───────────────────────── second (0 - 59, OPTIONAL)
  */
 let rule = new schedule.RecurrenceRule()
-/**
- * 每天的9点40
- */
-rule.hour = 9
-rule.minute = 32
 
-function marketOpen () {
-  return requestLocal.get('schedule/verifyMarketOpening')
+// 工作日，打招呼
+rule.dayOfWeek = [new schedule.Range(1, 5)]
+rule.hour = [7]
+rule.minute = 0
+
+function sayHello () {
+  scheduleService.getSchedule('sayHello').then((data) => {
+    if (data.open === 'open') {
+      sendMail(emailUtil.sayHello({
+        userEmail: config.email.adminAccount.user
+      }))
+    }
+  })
 }
 
-const job = schedule.scheduleJob(rule, marketOpen)
+const job = schedule.scheduleJob(rule, sayHello)
 
 module.exports = job

@@ -5,7 +5,6 @@ const ScheduleModel = models.Schedule
 /**
  * 基本
  */
-
 exports.ScheduleModel = ScheduleModel
 
 exports.newAndSave = function (data) {
