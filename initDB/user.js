@@ -1,9 +1,9 @@
 const proxys = require('../app/proxy/index')
-const md5 = require('md5')
 
 proxys.User.newAndSave({
   name: 'xiaobxia',
-  password: md5('xiaobxia'),
+  email: 'xiaobxia',
+  password: 'xiaobxia',
   roles: ['admin']
 }).then((doc) => {
   console.log(doc)
@@ -11,7 +11,8 @@ proxys.User.newAndSave({
 
 proxys.User.newAndSave({
   name: 'test',
-  password: md5('test'),
+  email: 'test',
+  password: 'test',
   roles: ['test']
 }).then((doc) => {
   console.log(doc)
