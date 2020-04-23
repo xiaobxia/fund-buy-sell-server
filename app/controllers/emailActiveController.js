@@ -16,3 +16,16 @@ exports.getRecords = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+exports.getInfo = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      code: { type: 'string', required: true }
+    }, query)
+    const record = await ctx.services.emailActive.getInfo(data)
+    ctx.body = ctx.resuccess(record)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

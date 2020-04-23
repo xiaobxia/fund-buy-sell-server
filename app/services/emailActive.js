@@ -28,3 +28,7 @@ exports.getRecords = async function (query, paging) {
   const list = fetchData[0]
   return { list: list, count: fetchData[1] }
 }
+
+exports.getInfo = async function (data) {
+  return EmailActiveProxy.findOne({code: data.code})
+}
