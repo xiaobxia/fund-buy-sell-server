@@ -43,6 +43,8 @@ router.get('/auth/checkLogin', controllers.authController.checkLogin)
 router.get('/auth/logout', controllers.authController.logout)
 // 退出登录
 router.post('/auth/sendRegisterEmail', controllers.authController.sendRegisterEmail)
+// 邮箱注册
+router.post('/auth/registerWithEmail', controllers.authController.registerWithEmail)
 
 /**
  * 用户模块

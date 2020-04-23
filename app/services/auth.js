@@ -71,3 +71,37 @@ exports.sendRegisterEmail = async function (email) {
     }
   }
 }
+
+/**
+ * 邮箱注册
+ * @param data
+ * @returns {Promise<[(*|undefined), any, any, any, any, any, any, any, any, any]>}
+ */
+exports.registerWithEmail = async function (data) {
+  const email = data.email
+  const code = data.code
+  const password = data.password
+  const emailActive = await EmailActiveProxy.findOne({ email })
+  if (emailActive) {
+    if (emailActive.active === true) {
+      // 有记录但是已激活
+      throw new Error('邮箱已被注册！')
+    } else {
+      if (emailActive.code === code) {
+        // 激活邮箱，添加用户
+        return Promise.all([
+          EmailActiveProxy.update({ email }, {
+            active: true
+          }),
+          UserProxy.newAndSave({ email, password })
+        ])
+      } else {
+        // 秘钥不匹配
+        throw new Error('发生错误，请重新发送注册链接！')
+      }
+    }
+  } else {
+    // 没记录
+    throw new Error('发生错误，请重新发送注册链接！')
+  }
+}
