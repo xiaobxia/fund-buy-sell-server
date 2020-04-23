@@ -30,5 +30,5 @@ exports.getRecords = async function (query, paging) {
 }
 
 exports.getInfo = async function (data) {
-  return EmailActiveProxy.findOne({code: data.code})
+  return EmailActiveProxy.findOne({ code: data.code })
 }
