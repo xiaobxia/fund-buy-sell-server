@@ -1,6 +1,8 @@
 const moment = require('moment')
 const md5 = require('md5')
 const Proxy = require('../proxy')
+const sendMail = require('../common/email')
+const emailUtil = require('../util/emailUntil')
 
 const UserProxy = Proxy.User
 const EmailActiveProxy = Proxy.EmailActive
@@ -44,6 +46,10 @@ exports.sendRegisterEmail = async function (email) {
   } else {
     // 到天
     const code = md5(`${email},${moment().format('YYYY-MM-DD')}`)
+    await sendMail(emailUtil.sendEmailActive({
+      userEmail: email,
+      code
+    }))
     if (emailActive) {
       // 之前发送过那就更新
       EmailActiveProxy.update({ email }, {

@@ -22,7 +22,7 @@ const sayHello = (option) => {
 const sendEmailActive = (option) => {
   let html = `<p>您申请将${option.userEmail}设置为登录邮箱，要完成该操作。</p>`
   html += `<p>请点击该链接注册激活，如果验证链接无法点击，请将链接复制粘贴到浏览器地址栏:</p>`
-  html += `<p><a href="www.xiaobxia.com">www.xiaobxia.com</a></p>`
+  html += `<p><a href="www.xiaobxia.com${option.code}">www.xiaobxia.com${option.code}</a></p>`
   return {
     // 格式 name<mail>,发件人的名字<邮箱>
     from: `"${formName}" <${sender}>`,
