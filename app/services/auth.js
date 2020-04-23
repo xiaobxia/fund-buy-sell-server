@@ -39,6 +39,11 @@ exports.register = async function (data) {
   return UserProxy.newAndSave(data)
 }
 
+/**
+ * 发送注册邮件
+ * @param email
+ * @returns {Promise<void>}
+ */
 exports.sendRegisterEmail = async function (email) {
   const emailActive = await EmailActiveProxy.findOne({ email })
   if (emailActive && emailActive.active === true) {
@@ -52,14 +57,16 @@ exports.sendRegisterEmail = async function (email) {
     }))
     if (emailActive) {
       // 之前发送过那就更新
-      EmailActiveProxy.update({ email }, {
-        code
+      return EmailActiveProxy.update({ email }, {
+        code,
+        active: false
       })
     } else {
       // 之前没有发送过那就添加记录
-      EmailActiveProxy.newAndSave({
+      return EmailActiveProxy.newAndSave({
         email,
-        code
+        code,
+        active: false
       })
     }
   }
