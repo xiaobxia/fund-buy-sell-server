@@ -10,7 +10,7 @@ const emailUtil = require('../util/emailUntil')
  */
 exports.testEmail = async function (ctx) {
   try {
-    await sendMail(emailUtil.sayHello({
+    await sendMail(emailUtil.sendEmailActive({
       userEmail: config.email.adminAccount.user
     }))
     ctx.body = ctx.resuccess()
