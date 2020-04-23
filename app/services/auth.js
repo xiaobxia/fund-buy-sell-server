@@ -9,12 +9,12 @@ const EmailActiveProxy = Proxy.EmailActive
 
 /**
  * 登录
- * @param account
+ * @param email
  * @param password
  * @returns {Promise<void>}
  */
-exports.login = async function (account, password) {
-  const user = await UserProxy.findOne({ name: account })
+exports.login = async function (email, password) {
+  const user = await UserProxy.findOne({ email: email })
   if (!user) {
     throw new Error('用户不存在')
   }

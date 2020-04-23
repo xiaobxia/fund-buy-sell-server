@@ -38,12 +38,12 @@ exports.login = async function (ctx) {
   const query = ctx.request.body
   try {
     const data = ctx.validateData({
-      account: { required: true, type: 'string' },
+      email: { required: true, type: 'string' },
       password: { required: true, type: 'string' }
     }, query)
-    const userRaw = await ctx.services.auth.login(data.account, data.password)
+    const userRaw = await ctx.services.auth.login(data.email, data.password)
     const user = {
-      name: userRaw.name,
+      email: userRaw.email,
       password: userRaw.password,
       roles: userRaw.roles
     }
@@ -70,7 +70,7 @@ exports.checkLogin = async function (ctx) {
     try {
       const tokenRaw = ctx.token.verify(token)
       const user = {
-        name: tokenRaw.name,
+        email: tokenRaw.email,
         password: tokenRaw.password,
         roles: tokenRaw.roles
       }
