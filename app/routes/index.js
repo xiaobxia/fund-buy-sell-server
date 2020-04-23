@@ -79,4 +79,9 @@ router.get('/schedule/one', controllers.scheduleController.getSchedule)
 router.get('/test/testEmail', controllers.testController.testEmail)
 router.get('/test/testResponse', controllers.testController.testResponse)
 
+/**
+ * 邮箱激活
+ */
+router.get('/emailActive/getRecords', controllers.emailActiveController.getRecords)
+
 module.exports = router
