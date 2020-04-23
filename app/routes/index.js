@@ -41,7 +41,7 @@ router.post('/auth/login', controllers.authController.login)
 router.get('/auth/checkLogin', controllers.authController.checkLogin)
 // 退出登录
 router.get('/auth/logout', controllers.authController.logout)
-// 退出登录
+// 发送注册邮件
 router.post('/auth/sendRegisterEmail', controllers.authController.sendRegisterEmail)
 // 邮箱注册
 router.post('/auth/registerWithEmail', controllers.authController.registerWithEmail)
