@@ -5,7 +5,6 @@ const sendMail = require('../common/email')
 const emailUtil = require('../util/emailUntil')
 
 const UserProxy = Proxy.User
-const EmailActiveProxy = Proxy.EmailActive
 
 /**
  * 登录
@@ -45,29 +44,36 @@ exports.register = async function (data) {
  * @returns {Promise<void>}
  */
 exports.sendRegisterEmail = async function (email) {
-  const emailActive = await EmailActiveProxy.findOne({ email })
-  if (emailActive && emailActive.active === true) {
+  const user = await UserProxy.findOne({ email })
+  if (user && user.email_active === true) {
+    // 已激活
     throw new Error('邮箱已被注册！')
   } else {
-    // 到天
-    const code = md5(`${email},${moment().format('YYYY-MM-DD')}`)
-    await sendMail(emailUtil.sendEmailActive({
-      userEmail: email,
-      code
-    }))
-    if (emailActive) {
-      // 之前发送过那就更新
-      return EmailActiveProxy.update({ email }, {
-        code,
-        active: false
-      })
+    // 到小时
+    const code = md5(`${email},${moment().format('YYYY-MM-DD-HH')}`)
+    if (user && user.email_code === code) {
+      // 秘钥相同
+      throw new Error('邮箱已发送请查收！')
     } else {
-      // 之前没有发送过那就添加记录
-      return EmailActiveProxy.newAndSave({
-        email,
-        code,
-        active: false
-      })
+      // 发送一份新的邮件
+      await sendMail(emailUtil.sendEmailActive({
+        userEmail: email,
+        code
+      }))
+      if (user) {
+        // 之前发送过那就更新
+        return UserProxy.update({ email }, {
+          email_code: code,
+          email_active: false
+        })
+      } else {
+        // 之前没有发送过那就添加记录
+        return UserProxy.newAndSave({
+          email,
+          email_code: code,
+          email_active: false
+        })
+      }
     }
   }
 }
@@ -81,27 +87,33 @@ exports.registerWithEmail = async function (data) {
   const email = data.email
   const code = data.code
   const password = data.password
-  const emailActive = await EmailActiveProxy.findOne({ email })
-  if (emailActive) {
-    if (emailActive.active === true) {
+  const user = await UserProxy.findOne({ email })
+  if (user) {
+    if (user.email_active === true) {
       // 有记录但是已激活
       throw new Error('邮箱已被注册！')
     } else {
-      if (emailActive.code === code) {
-        // 激活邮箱，添加用户
-        return Promise.all([
-          EmailActiveProxy.update({ email }, {
-            active: true
-          }),
-          UserProxy.newAndSave({ email, password })
-        ])
+      if (user.email_code === code) {
+        // 激活用户
+        return UserProxy.update({ email}, {
+          email_active: true,
+          password
+        })
       } else {
         // 秘钥不匹配
-        throw new Error('发生错误，请重新发送注册链接！')
+        throw new Error('发生错误，请重新发起邮箱验证！')
       }
     }
   } else {
     // 没记录
-    throw new Error('发生错误，请重新发送注册链接！')
+    throw new Error('发生错误，请重新发起邮箱验证！')
+  }
+}
+
+exports.sendForgetEmail = async function (email) {
+  const user = await UserProxy.findOne({ email })
+  if (user && user.email_active === true) {
+  } else {
+    throw new Error('该邮箱未注册！')
   }
 }

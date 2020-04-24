@@ -4,27 +4,12 @@ exports.getRecords = async function (ctx) {
     const data = ctx.validateData({
       current: { type: 'int', required: true },
       pageSize: { type: 'int', required: true },
-      // 1激活，2未激活
-      active: { type: 'string', required: false },
       beginTime: { required: false, type: 'string' },
       endTime: { required: false, type: 'string' }
     }, query)
     let paging = ctx.paging(data.current, data.pageSize)
     const records = await ctx.services.emailActive.getRecords(data, paging)
     ctx.body = ctx.resuccess(records)
-  } catch (err) {
-    ctx.body = ctx.refail(err)
-  }
-}
-
-exports.getInfo = async function (ctx) {
-  const query = ctx.query
-  try {
-    const data = ctx.validateData({
-      code: { type: 'string', required: true }
-    }, query)
-    const record = await ctx.services.emailActive.getInfo(data)
-    ctx.body = ctx.resuccess(record)
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
