@@ -139,19 +139,15 @@ exports.resetPassword = async function (data) {
   const code = data.code
   const password = data.password
   const user = await UserProxy.findOne({ email })
-  if (user) {
-    if (user.email_active === true) {
-      if (user.email_code === code) {
-        // 更新密码
-        return UserProxy.update({ email }, {
-          password
-        })
-      } else {
-        // 秘钥不匹配
-        throw new Error('发生错误，请重新发起找回密码！')
-      }
+  if (user && user.email_active === true) {
+    if (user.email_code === code) {
+      // 更新密码
+      return UserProxy.update({ email }, {
+        password
+      })
     } else {
-      throw new Error('该邮箱未注册！')
+      // 秘钥不匹配
+      throw new Error('发生错误，请重新发起找回密码！')
     }
   } else {
     // 没记录

@@ -45,6 +45,10 @@ router.get('/auth/logout', controllers.authController.logout)
 router.post('/auth/sendRegisterEmail', controllers.authController.sendRegisterEmail)
 // 邮箱注册
 router.post('/auth/registerWithEmail', controllers.authController.registerWithEmail)
+// 发送忘记密码邮件
+router.post('/auth/sendForgetEmail', controllers.authController.sendForgetEmail)
+// 重设密码
+router.post('/auth/resetPassword', controllers.authController.resetPassword)
 
 /**
  * 用户模块
