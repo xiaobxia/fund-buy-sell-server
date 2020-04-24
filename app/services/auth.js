@@ -133,3 +133,28 @@ exports.sendForgetEmail = async function (email) {
     throw new Error('该邮箱未注册！')
   }
 }
+
+exports.resetPassword = async function (data) {
+  const email = data.email
+  const code = data.code
+  const password = data.password
+  const user = await UserProxy.findOne({ email })
+  if (user) {
+    if (user.email_active === true) {
+      if (user.email_code === code) {
+        // 更新密码
+        return UserProxy.update({ email }, {
+          password
+        })
+      } else {
+        // 秘钥不匹配
+        throw new Error('发生错误，请重新发起找回密码！')
+      }
+    } else {
+      throw new Error('该邮箱未注册！')
+    }
+  } else {
+    // 没记录
+    throw new Error('该邮箱未注册！')
+  }
+}
