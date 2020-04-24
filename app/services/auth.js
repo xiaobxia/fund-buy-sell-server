@@ -50,10 +50,10 @@ exports.sendRegisterEmail = async function (email) {
     throw new Error('邮箱已被注册！')
   } else {
     // 到小时
-    const code = md5(`${email},${moment().format('YYYY-MM-DD-HH')}`)
+    const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
     if (user && user.email_code === code) {
       // 秘钥相同
-      throw new Error('邮箱已发送请查收！')
+      throw new Error('邮箱验证已发送请查收！')
     } else {
       // 发送一份新的邮件
       await sendMail(emailUtil.sendEmailActive({
@@ -95,7 +95,7 @@ exports.registerWithEmail = async function (data) {
     } else {
       if (user.email_code === code) {
         // 激活用户
-        return UserProxy.update({ email}, {
+        return UserProxy.update({ email }, {
           email_active: true,
           password
         })
@@ -113,6 +113,22 @@ exports.registerWithEmail = async function (data) {
 exports.sendForgetEmail = async function (email) {
   const user = await UserProxy.findOne({ email })
   if (user && user.email_active === true) {
+    // 到小时
+    const code = md5(`${email}-f,${moment().format('YYYY-MM-DD-HH')}`)
+    if (user.email_code === code) {
+      // 秘钥相同
+      throw new Error('邮箱验证已发送请查收！')
+    } else {
+      // 发送一份新的邮件
+      await sendMail(emailUtil.sendEmailForget({
+        userEmail: email,
+        code
+      }))
+      // 更新
+      return UserProxy.update({ email }, {
+        email_code: code
+      })
+    }
   } else {
     throw new Error('该邮箱未注册！')
   }
