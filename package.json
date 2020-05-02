@@ -1,28 +1,28 @@
 {
-  "name": "service-base",
+  "name": "fund-buy-sell-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --fix .",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect --debug-port=9220 ./app.js",
-    "prod": "cross-env NODE_ENV=prod pm2 start ./app.js --name=service-base",
+    "prod": "cross-env NODE_ENV=prod pm2 start ./app.js --name=fund-buy-sell-server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "delete": "pm2 delete service-base"
+    "delete": "pm2 delete fund-buy-sell-server"
   },
   "pre-commit": [
     "lint"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xiaobxia/service-base.git"
+    "url": "git+https://github.com/xiaobxia/fund-buy-sell-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xiaobxia/service-base/issues"
+    "url": "https://github.com/xiaobxia/fund-buy-sell-server/issues"
   },
-  "homepage": "https://github.com/xiaobxia/service-base#readme",
+  "homepage": "https://github.com/xiaobxia/fund-buy-sell-server#readme",
   "dependencies": {
     "app-root-path": "^3.0.0",
     "bluebird": "^3.7.2",
