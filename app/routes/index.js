@@ -83,4 +83,11 @@ router.get('/schedule/one', controllers.scheduleController.getSchedule)
 router.get('/test/testEmail', controllers.testController.testEmail)
 router.get('/test/testResponse', controllers.testController.testResponse)
 
+/**
+ * 信号模块
+ */
+
+router.post('/signal/updateSignal', controllers.buySellSignalController.updateSignal)
+router.get('/signal/getLastSignal', controllers.buySellSignalController.getLastSignal)
+
 module.exports = router
