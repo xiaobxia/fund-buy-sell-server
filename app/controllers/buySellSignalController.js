@@ -21,3 +21,29 @@ exports.getLastSignal = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+exports.getSignalsByDays = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      days: { type: 'int', required: true }
+    }, query)
+    const record = await ctx.services.buySellSignal.getSignalsByDays(data)
+    ctx.body = ctx.resuccess(record)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+exports.getSignalsByStart = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      start: { type: 'string', required: true }
+    }, query)
+    const record = await ctx.services.buySellSignal.getSignalsByStart(data)
+    ctx.body = ctx.resuccess(record)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

@@ -89,5 +89,7 @@ router.get('/test/testResponse', controllers.testController.testResponse)
 
 router.post('/signal/updateSignal', controllers.buySellSignalController.updateSignal)
 router.get('/signal/getLastSignal', controllers.buySellSignalController.getLastSignal)
+router.get('/signal/getSignalsByDays', controllers.buySellSignalController.getSignalsByDays)
+router.get('/signal/getSignalsByStart', controllers.buySellSignalController.getSignalsByStart)
 
 module.exports = router
