@@ -6,6 +6,8 @@ const sender = emailConfig.senderAccount.auth.user
 const formName = emailConfig.formName
 const adminEmail = emailConfig.adminAccount.user
 
+const projectUrl = localConfig.projectUrl
+
 const sayHello = (option) => {
   return {
     // 格式 name<mail>,发件人的名字<邮箱>
@@ -20,7 +22,7 @@ const sayHello = (option) => {
 }
 
 const sendEmailActive = (option) => {
-  const activeUrl = `www.xiaobxia.com?activeToken=${option.code}`
+  const activeUrl = `${projectUrl}?activeToken=${option.code}`
   let html = `<p>您申请将${option.userEmail}设置为登录邮箱，要完成该操作。</p>`
   html += `<p>请点击该链接注册激活，如果验证链接无法点击，请将链接复制粘贴到浏览器地址栏:</p>`
   html += `<p><a href="${activeUrl}">${activeUrl}</a></p>`
@@ -37,7 +39,7 @@ const sendEmailActive = (option) => {
 }
 
 const sendEmailForget = (option) => {
-  const activeUrl = `www.xiaobxia.com?activeToken=${option.code}`
+  const activeUrl = `${projectUrl}?activeToken=${option.code}`
   let html = `<p>您将为${option.userEmail}找回密码，要完成该操作。</p>`
   html += `<p>请点击该链接找回密码，如果验证链接无法点击，请将链接复制粘贴到浏览器地址栏:</p>`
   html += `<p><a href="${activeUrl}">${activeUrl}</a></p>`

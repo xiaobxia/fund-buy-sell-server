@@ -1,7 +1,10 @@
 module.exports = {
+  // 项目的地址
+  projectUrl: 'http://funduse.xiaobxia.com/',
   db: 'mongodb://fbsServer:fbsServer@47.92.210.171:27017/fbsServer',
   // 邮件配置
   email: {
+    // 用于发送邮件
     senderAccount: {
       host: 'smtp.163.com',
       secureConnection: false, // use SSL
@@ -14,6 +17,7 @@ module.exports = {
       },
       ignoreTLS: true
     },
+    // 管理员邮箱，用于接收邮件
     adminAccount: {
       user: '673806687@qq.com'
     },
