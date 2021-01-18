@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const schema = new Schema({
   // 邮箱是唯一的
   email: String,
+  // 邮箱是否激活
   email_active: {
     type: Boolean,
     default: false

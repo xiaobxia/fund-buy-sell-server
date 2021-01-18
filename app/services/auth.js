@@ -5,6 +5,7 @@ const sendMail = require('../common/email')
 const emailUtil = require('../util/emailUntil')
 
 const UserProxy = Proxy.User
+const EmailSendLogProxy = Proxy.EmailSendLog
 
 /**
  * 登录
@@ -43,7 +44,9 @@ exports.register = async function (data) {
  * @param email
  * @returns {Promise<void>}
  */
-exports.sendRegisterEmail = async function (email) {
+exports.sendRegisterEmail = async function (data) {
+  const email = data.email
+  const password = data.password
   const user = await UserProxy.findOne({ email })
   if (user && user.email_active === true) {
     // 已激活
@@ -60,18 +63,28 @@ exports.sendRegisterEmail = async function (email) {
         userEmail: email,
         code
       }))
+      EmailSendLogProxy.newAndSave({
+        // 邮箱
+        email: email,
+        // 激活编码
+        code: code,
+        // 业务类型名称
+        type_name: '注册邮件'
+      })
       if (user) {
         // 之前发送过那就更新
         return UserProxy.update({ email }, {
           email_code: code,
-          email_active: false
+          email_active: false,
+          password
         })
       } else {
         // 之前没有发送过那就添加记录
         return UserProxy.newAndSave({
           email,
           email_code: code,
-          email_active: false
+          email_active: false,
+          password
         })
       }
     }
@@ -79,25 +92,23 @@ exports.sendRegisterEmail = async function (email) {
 }
 
 /**
- * 邮箱注册
+ * 邮箱激活
  * @param data
  * @returns {Promise<[(*|undefined), any, any, any, any, any, any, any, any, any]>}
  */
-exports.registerWithEmail = async function (data) {
-  const email = data.email
-  const code = data.code
-  const password = data.password
-  const user = await UserProxy.findOne({ email })
+exports.activeRegister = async function (data) {
+  const activeToken = data.activeToken
+  const user = await UserProxy.findOne({ email_code: activeToken })
   if (user) {
     if (user.email_active === true) {
       // 有记录但是已激活
-      throw new Error('邮箱已被注册！')
+      throw new Error('邮箱已激活！')
     } else {
-      if (user.email_code === code) {
+      if (user.email_code === activeToken) {
         // 激活用户
-        return UserProxy.update({ email }, {
+        return UserProxy.update({ email: user.email }, {
           email_active: true,
-          password
+          email_code: ''
         })
       } else {
         // 秘钥不匹配
@@ -110,6 +121,11 @@ exports.registerWithEmail = async function (data) {
   }
 }
 
+/**
+ * 发送忘记密码邮件
+ * @param email
+ * @returns {Promise<*>}
+ */
 exports.sendForgetEmail = async function (email) {
   const user = await UserProxy.findOne({ email })
   if (user && user.email_active === true) {
@@ -134,6 +150,11 @@ exports.sendForgetEmail = async function (email) {
   }
 }
 
+/**
+ * 重置密码邮件
+ * @param data
+ * @returns {Promise<*>}
+ */
 exports.resetPassword = async function (data) {
   const email = data.email
   const code = data.code

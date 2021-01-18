@@ -1,6 +1,4 @@
 module.exports = {
-  // 项目的地址
-  projectUrl: 'http://funduse.xiaobxia.com/',
   db: 'mongodb://fbsServer:fbsServer@47.92.210.171:27017/fbsServer',
   // 邮件配置
   email: {

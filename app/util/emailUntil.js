@@ -7,6 +7,7 @@ const formName = emailConfig.formName
 const adminEmail = emailConfig.adminAccount.user
 
 const projectUrl = localConfig.projectUrl
+const mobileUrl = localConfig.mobileUrl
 
 const sayHello = (option) => {
   return {
@@ -22,7 +23,7 @@ const sayHello = (option) => {
 }
 
 const sendEmailActive = (option) => {
-  const activeUrl = `${projectUrl}?activeToken=${option.code}`
+  const activeUrl = `${mobileUrl}/activeRegister?activeToken=${option.code}`
   let html = `<p>您申请将${option.userEmail}设置为登录邮箱，要完成该操作。</p>`
   html += `<p>请点击该链接注册激活，如果验证链接无法点击，请将链接复制粘贴到浏览器地址栏:</p>`
   html += `<p><a href="${activeUrl}">${activeUrl}</a></p>`

@@ -43,8 +43,8 @@ router.get('/auth/checkLogin', controllers.authController.checkLogin)
 router.get('/auth/logout', controllers.authController.logout)
 // 发送注册邮件
 router.post('/auth/sendRegisterEmail', controllers.authController.sendRegisterEmail)
-// 邮箱注册
-router.post('/auth/registerWithEmail', controllers.authController.registerWithEmail)
+// 邮箱激活
+router.get('/auth/activeRegister', controllers.authController.activeRegister)
 // 发送忘记密码邮件
 router.post('/auth/sendForgetEmail', controllers.authController.sendForgetEmail)
 // 重设密码

@@ -118,9 +118,10 @@ exports.sendRegisterEmail = async function (ctx) {
   const query = ctx.request.body
   try {
     const data = ctx.validateData({
-      email: { required: true, type: 'string' }
+      email: { required: true, type: 'string' },
+      password: { required: true, type: 'string' }
     }, query)
-    await ctx.services.auth.sendRegisterEmail(data.email)
+    await ctx.services.auth.sendRegisterEmail(data)
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
@@ -132,21 +133,24 @@ exports.sendRegisterEmail = async function (ctx) {
  * @param ctx
  * @returns {Promise<void>}
  */
-exports.registerWithEmail = async function (ctx) {
-  const query = ctx.request.body
+exports.activeRegister = async function (ctx) {
+  const query = ctx.query
   try {
     const data = ctx.validateData({
-      email: { required: true, type: 'string' },
-      code: { required: true, type: 'string' },
-      password: { required: true, type: 'string' }
+      activeToken: { required: true, type: 'string' }
     }, query)
-    await ctx.services.auth.registerWithEmail(data)
+    await ctx.services.auth.activeRegister(data)
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
 }
 
+/**
+ * 发送忘记密码邮件
+ * @param ctx
+ * @returns {Promise<void>}
+ */
 exports.sendForgetEmail = async function (ctx) {
   const query = ctx.request.body
   try {
@@ -160,6 +164,11 @@ exports.sendForgetEmail = async function (ctx) {
   }
 }
 
+/**
+ * 重置密码
+ * @param ctx
+ * @returns {Promise<void>}
+ */
 exports.resetPassword = async function (ctx) {
   const query = ctx.request.body
   try {
