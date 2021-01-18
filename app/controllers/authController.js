@@ -121,8 +121,19 @@ exports.sendRegisterEmail = async function (ctx) {
       email: { required: true, type: 'string' },
       password: { required: true, type: 'string' }
     }, query)
-    await ctx.services.auth.sendRegisterEmail(data)
-    ctx.body = ctx.resuccess()
+    const userRaw = await ctx.services.auth.sendRegisterEmail(data)
+    const user = {
+      email: userRaw.email,
+      password: userRaw.password,
+      roles: userRaw.roles
+    }
+    // 登录在线时间
+    const keepDay = 20
+    const token = ctx.token.sign(user, 60 * 60 * 24 * keepDay)
+    ctx.body = ctx.resuccess({
+      ...user,
+      token
+    })
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
@@ -173,7 +184,6 @@ exports.resetPassword = async function (ctx) {
   const query = ctx.request.body
   try {
     const data = ctx.validateData({
-      email: { required: true, type: 'string' },
       code: { required: true, type: 'string' },
       password: { required: true, type: 'string' }
     }, query)

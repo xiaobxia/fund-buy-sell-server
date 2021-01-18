@@ -56,7 +56,7 @@ exports.sendRegisterEmail = async function (data) {
     const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
     if (user && user.email_code === code) {
       // 秘钥相同
-      throw new Error('邮箱验证已发送请查收！')
+      throw new Error('邮箱验证已发送请查收，或一小时后重试！')
     } else {
       // 发送一份新的邮件
       await sendMail(emailUtil.sendEmailActive({
@@ -126,20 +126,29 @@ exports.activeRegister = async function (data) {
  * @param email
  * @returns {Promise<*>}
  */
-exports.sendForgetEmail = async function (email) {
+exports.sendForgetEmail = async function (data) {
+  const email = data.email
   const user = await UserProxy.findOne({ email })
-  if (user && user.email_active === true) {
+  if (user) {
     // 到小时
     const code = md5(`${email}-f,${moment().format('YYYY-MM-DD-HH')}`)
     if (user.email_code === code) {
       // 秘钥相同
-      throw new Error('邮箱验证已发送请查收！')
+      throw new Error('邮箱验证已发送请查收，或一小时后重试！')
     } else {
       // 发送一份新的邮件
       await sendMail(emailUtil.sendEmailForget({
         userEmail: email,
         code
       }))
+      EmailSendLogProxy.newAndSave({
+        // 邮箱
+        email: email,
+        // 激活编码
+        code: code,
+        // 业务类型名称
+        type_name: '忘记密码邮件'
+      })
       // 更新
       return UserProxy.update({ email }, {
         email_code: code
@@ -156,15 +165,16 @@ exports.sendForgetEmail = async function (email) {
  * @returns {Promise<*>}
  */
 exports.resetPassword = async function (data) {
-  const email = data.email
   const code = data.code
   const password = data.password
-  const user = await UserProxy.findOne({ email })
-  if (user && user.email_active === true) {
+  const user = await UserProxy.findOne({ email_code: code })
+  if (user) {
     if (user.email_code === code) {
       // 更新密码
-      return UserProxy.update({ email }, {
-        password
+      return UserProxy.update({ email_code: code }, {
+        password,
+        email_active: true,
+        email_code: ''
       })
     } else {
       // 秘钥不匹配
