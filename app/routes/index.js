@@ -38,7 +38,7 @@ router.post('/auth/register', controllers.authController.register)
 // 登陆
 router.post('/auth/login', controllers.authController.login)
 // 检查登陆
-router.get('/auth/checkLogin', controllers.authController.checkLogin)
+router.get('/auth/checkToken', controllers.authController.checkToken)
 // 退出登录
 router.get('/auth/logout', controllers.authController.logout)
 // 发送注册邮件

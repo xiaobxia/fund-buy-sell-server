@@ -64,21 +64,13 @@ exports.login = async function (ctx) {
  * @param ctx
  * @returns {Promise<void>}
  */
-exports.checkLogin = async function (ctx) {
+exports.checkToken = async function (ctx) {
   const token = ctx.query.token
   if (token) {
     try {
       const tokenRaw = ctx.token.verify(token)
-      const user = {
-        email: tokenRaw.email,
-        password: tokenRaw.password,
-        roles: tokenRaw.roles
-      }
-      ctx.body = ctx.resuccess({
-        ...user,
-        isLogin: true,
-        token
-      })
+      const user = await ctx.services.user.getUserByEmail(tokenRaw.email)
+      ctx.body = ctx.resuccess(user)
     } catch (err) {
       ctx.body = ctx.resuccess({
         isLogin: false
