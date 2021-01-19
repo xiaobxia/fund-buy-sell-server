@@ -23,6 +23,28 @@ exports.newPassword = async function (ctx) {
 }
 
 /**
+ * 用户分页获取
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getRecords = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      current: { type: 'int', required: true },
+      pageSize: { type: 'int', required: true },
+      beginTime: { required: false, type: 'string' },
+      endTime: { required: false, type: 'string' }
+    }, query)
+    let paging = ctx.paging(data.current, data.pageSize)
+    const records = await ctx.services.user.getRecords(data, paging)
+    ctx.body = ctx.resuccess(records)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
  * 通过邮箱获取用户
  * @param ctx
  * @returns {Promise<void>}
