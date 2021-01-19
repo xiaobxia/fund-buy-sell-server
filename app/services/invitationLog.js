@@ -1,6 +1,6 @@
 const Proxy = require('../proxy')
 
-const EmailActiveProxy = Proxy.EmailActive
+const InvitationLogProxy = Proxy.InvitationLog
 
 /**
  * 分页获取记录
@@ -25,8 +25,8 @@ exports.getRecords = async function (query, paging) {
     }
   }
   const fetchData = await Promise.all([
-    EmailActiveProxy.find(queryOption, opt),
-    EmailActiveProxy.count(queryOption)
+    InvitationLogProxy.find(queryOption, opt),
+    InvitationLogProxy.count(queryOption)
   ])
   const list = fetchData[0]
   return { list: list, count: fetchData[1] }
