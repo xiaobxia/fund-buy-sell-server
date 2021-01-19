@@ -57,6 +57,13 @@ router.post('/auth/resetPassword', controllers.authController.resetPassword)
 router.post('/user/newPassword', controllers.userController.newPassword)
 // 添加vip时间
 router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
+
+/**
+ * 日志模块
+ */
+router.get('/log/emailSendLogGetRecords', controllers.logController.emailSendLogGetRecords)
+router.get('/log/invitationLogGetRecords', controllers.logController.invitationLogGetRecords)
+
 /**
  * 文件上传模块
  */
