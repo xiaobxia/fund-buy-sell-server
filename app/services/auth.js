@@ -29,8 +29,7 @@ exports.login = async function (email, password) {
 
 /**
  * 注册
- * @param name
- * @param password
+ * @param data
  * @returns {Promise<*>}
  */
 exports.register = async function (data) {
@@ -43,122 +42,110 @@ exports.register = async function (data) {
 
 /**
  * 发送注册邮件
- * @param email
- * @returns {Promise<void>}
+ * @param data
+ * @returns {Promise<*>}
  */
 exports.registerWidthEmail = async function (data) {
   const email = data.email
   const password = data.password
   const inviterEmail = data.inviter_email
   const user = await UserProxy.findOne({ email })
-  if (user && user.email_active === true) {
+  if (user) {
     // 已激活
-    throw new Error('邮箱已被注册！')
+    throw new Error('邮箱注册，请直接登录！')
   } else {
     // 到小时
     const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
-    if (user && user.email_code === code) {
-      // 秘钥相同
-      throw new Error('邮箱验证已发送请查收，或一小时后重试！')
-    } else {
-      // 发送一份新的邮件
-      await sendMail(emailUtil.sendEmailActive({
-        userEmail: email,
-        code
-      }))
-      // 添加发送日志
-      EmailSendLogProxy.newAndSave({
-        // 邮箱
-        email: email,
-        // 激活编码
-        code: code,
-        // 业务类型名称
-        type_name: '注册邮件'
+    // 发送一份新的邮件
+    await sendMail(emailUtil.sendEmailActive({
+      userEmail: email,
+      code
+    }))
+    // 添加发送日志
+    EmailSendLogProxy.newAndSave({
+      // 邮箱
+      email: email,
+      // 激活编码
+      code: code,
+      // 业务类型名称
+      type_name: '注册邮件'
+    })
+    const userOtherInfo = {}
+    // 有邀请人
+    if (inviterEmail) {
+      // 填充邀请人
+      userOtherInfo.inviter_email = inviterEmail
+      // 添加邀请记录
+      InvitationLogProxy.newAndSave({
+        // 邀请人
+        inviter_email: inviterEmail,
+        // 被邀请人
+        register_email: email,
+        type_name: '注册'
       })
-      const userOtherInfo = {}
-      // 有邀请人
-      if (inviterEmail) {
-        // 填充邀请人
-        userOtherInfo.inviter_email = inviterEmail
-        // 添加邀请记录
-        InvitationLogProxy.newAndSave({
-          // 邀请人
-          inviter_email: inviterEmail,
-          // 被邀请人
-          register_email: email,
-          type_name: '注册'
-        })
-      }
-      if (user) {
-        // 之前发送过那就更新
-        return UserProxy.update({ email }, {
-          ...userOtherInfo,
-          email_code: code,
-          email_active: false,
-          password
-        })
-      } else {
-        // 之前没有发送过那就添加记录
-        return UserProxy.newAndSave({
-          ...userOtherInfo,
-          email,
-          email_code: code,
-          email_active: false,
-          password
-        })
-      }
     }
+    // 之前没有发送过那就添加记录
+    return UserProxy.newAndSave({
+      ...userOtherInfo,
+      email,
+      email_code: code,
+      email_active: false,
+      password
+    })
   }
 }
 
 /**
  * 发送激活邮件
- * @param email
- * @returns {Promise<void>}
+ * @param data
+ * @returns {Promise<*>}
  */
 exports.sendActiveEmail = async function (data) {
   const email = data.email
   const user = await UserProxy.findOne({ email })
-  if (user && user.email_active === true) {
-    // 已激活
-    throw new Error('邮箱已激活！')
-  } else {
-    // 到小时
-    const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
-    if (user && user.email_code === code) {
-      // 秘钥相同
-      throw new Error('邮箱验证已发送请查收，或一小时后重试！')
+  if (user) {
+    if (user.email_active === true) {
+      // 已激活
+      throw new Error('邮箱已激活！')
     } else {
-      // 发送一份新的邮件
-      await sendMail(emailUtil.sendEmailActive({
-        userEmail: email,
-        code
-      }))
-      // 添加发送日志
-      EmailSendLogProxy.newAndSave({
-        // 邮箱
-        email: email,
-        // 激活编码
-        code: code,
-        // 业务类型名称
-        type_name: '注册邮件'
-      })
-      if (user) {
-        // 之前发送过那就更新
-        return UserProxy.update({ email }, {
-          email_code: code
-        })
+      // 到小时
+      const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
+      if (user.email_code === code) {
+        // 秘钥相同
+        throw new Error('邮箱验证已发送请查收，或一小时后重试！')
       } else {
-        throw new Error('该邮箱未注册！')
+        // 发送一份新的邮件
+        await sendMail(emailUtil.sendEmailActive({
+          userEmail: email,
+          code
+        }))
+        // 添加发送日志
+        EmailSendLogProxy.newAndSave({
+          // 邮箱
+          email: email,
+          // 激活编码
+          code: code,
+          // 业务类型名称
+          type_name: '注册邮件'
+        })
+        if (user) {
+          // 之前发送过那就更新
+          return UserProxy.update({ email }, {
+            email_code: code
+          })
+        }
       }
     }
+  } else {
+    throw new Error('该邮箱未注册！')
   }
 }
 
 /**
  * 邮箱激活
  * @param data
- * @returns {Promise<[(*|undefined), any, any, any, any, any, any, any, any, any]>}
+ * @param services
+ * @returns {Promise<*>}
  */
 exports.activeRegister = async function (data, services) {
   const activeToken = data.activeToken
@@ -179,7 +166,12 @@ exports.activeRegister = async function (data, services) {
             register_email: user.email,
             type_name: '激活'
           })
-          // 分发奖励
+          // 分发本人奖励
+          services.user.addUserVipDays({
+            email: user.email,
+            days: constant.ACTIVE_REWARD_DAYS
+          })
+          // 分发邀请人奖励
           services.user.addUserVipDays({
             email: user.inviter_email,
             days: constant.INVITER_REWARD_DAYS
@@ -203,7 +195,7 @@ exports.activeRegister = async function (data, services) {
 
 /**
  * 发送忘记密码邮件
- * @param email
+ * @param data
  * @returns {Promise<*>}
  */
 exports.sendForgetEmail = async function (data) {
@@ -221,6 +213,7 @@ exports.sendForgetEmail = async function (data) {
         userEmail: email,
         code
       }))
+      // 邮件发送日志
       EmailSendLogProxy.newAndSave({
         // 邮箱
         email: email,
@@ -242,6 +235,7 @@ exports.sendForgetEmail = async function (data) {
 /**
  * 重置密码邮件
  * @param data
+ * @param services
  * @returns {Promise<*>}
  */
 exports.resetPassword = async function (data, services) {
@@ -251,7 +245,7 @@ exports.resetPassword = async function (data, services) {
   if (user) {
     if (user.email_code === code) {
       // 有邀请人
-      if (user.inviter_email) {
+      if (user.inviter_email && user.email_active === false) {
         // 添加邀请记录
         InvitationLogProxy.newAndSave({
           // 邀请人
@@ -259,6 +253,11 @@ exports.resetPassword = async function (data, services) {
           // 被邀请人
           register_email: user.email,
           type_name: '激活'
+        })
+        // 分发本人奖励
+        services.user.addUserVipDays({
+          email: user.email,
+          days: constant.ACTIVE_REWARD_DAYS
         })
         // 分发奖励
         services.user.addUserVipDays({
