@@ -7,6 +7,8 @@ const schema = new Schema({
   inviter_email: String,
   // 被邀请人
   register_email: String,
+  // 类型
+  type_name: String,
   // 创建时间
   create_at: {
     type: Date,

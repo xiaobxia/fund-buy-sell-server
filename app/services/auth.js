@@ -2,6 +2,7 @@ const moment = require('moment')
 const md5 = require('md5')
 const Proxy = require('../proxy')
 const sendMail = require('../common/email')
+const constant = require('../const/constant')
 const emailUtil = require('../util/emailUntil')
 
 const UserProxy = Proxy.User
@@ -65,6 +66,7 @@ exports.sendRegisterEmail = async function (data) {
         userEmail: email,
         code
       }))
+      // 添加发送日志
       EmailSendLogProxy.newAndSave({
         // 邮箱
         email: email,
@@ -76,13 +78,15 @@ exports.sendRegisterEmail = async function (data) {
       const userOtherInfo = {}
       // 有邀请人
       if (inviterEmail) {
+        // 填充邀请人
         userOtherInfo.inviter_email = inviterEmail
         // 添加邀请记录
         InvitationLogProxy.newAndSave({
           // 邀请人
           inviter_email: inviterEmail,
           // 被邀请人
-          register_email: email
+          register_email: email,
+          type_name: '注册'
         })
       }
       if (user) {
@@ -112,7 +116,7 @@ exports.sendRegisterEmail = async function (data) {
  * @param data
  * @returns {Promise<[(*|undefined), any, any, any, any, any, any, any, any, any]>}
  */
-exports.activeRegister = async function (data) {
+exports.activeRegister = async function (data, services) {
   const activeToken = data.activeToken
   const user = await UserProxy.findOne({ email_code: activeToken })
   if (user) {
@@ -123,7 +127,19 @@ exports.activeRegister = async function (data) {
       if (user.email_code === activeToken) {
         // 有邀请人
         if (user.inviter_email) {
-
+          // 添加邀请记录
+          InvitationLogProxy.newAndSave({
+            // 邀请人
+            inviter_email: user.inviter_email,
+            // 被邀请人
+            register_email: user.email,
+            type_name: '激活'
+          })
+          // 分发奖励
+          services.user.addUserVipDays({
+            email: user.inviter_email,
+            days: constant.INVITER_REWARD_DAYS
+          })
         }
         // 激活用户
         return UserProxy.update({ email: user.email }, {

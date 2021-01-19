@@ -32,3 +32,22 @@ exports.getUserByName = async function (name) {
   }
   return user
 }
+
+/**
+ * 添加vip时间
+ * @param name
+ * @returns {Promise<void>}
+ */
+exports.addUserVipDays = async function (data) {
+  const email = data.email
+  const days = data.days
+  const user = await UserProxy.findOne({ email })
+  if (!user) {
+    throw new Error('用户不存在')
+  } else {
+    const rawDays = user.vip_days
+    return UserProxy.update({ email }, {
+      vip_days: rawDays + days
+    })
+  }
+}

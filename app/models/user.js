@@ -34,7 +34,10 @@ const schema = new Schema({
   // 邀请人
   inviter_email: String,
   // vip剩余天数
-  vip_days: Number,
+  vip_days: {
+    type: Number,
+    default: 0
+  },
   create_at: {
     type: Date,
     default: Date.now

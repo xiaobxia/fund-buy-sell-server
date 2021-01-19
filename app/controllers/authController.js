@@ -151,7 +151,7 @@ exports.activeRegister = async function (ctx) {
     const data = ctx.validateData({
       activeToken: { required: true, type: 'string' }
     }, query)
-    await ctx.services.auth.activeRegister(data)
+    await ctx.services.auth.activeRegister(data, ctx.services)
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
