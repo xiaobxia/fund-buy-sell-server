@@ -46,7 +46,7 @@ exports.register = async function (data) {
  * @param email
  * @returns {Promise<void>}
  */
-exports.sendRegisterEmail = async function (data) {
+exports.registerWidthEmail = async function (data) {
   const email = data.email
   const password = data.password
   const inviterEmail = data.inviter_email
@@ -106,6 +106,50 @@ exports.sendRegisterEmail = async function (data) {
           email_active: false,
           password
         })
+      }
+    }
+  }
+}
+
+/**
+ * 发送激活邮件
+ * @param email
+ * @returns {Promise<void>}
+ */
+exports.sendActiveEmail = async function (data) {
+  const email = data.email
+  const user = await UserProxy.findOne({ email })
+  if (user && user.email_active === true) {
+    // 已激活
+    throw new Error('邮箱已激活！')
+  } else {
+    // 到小时
+    const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
+    if (user && user.email_code === code) {
+      // 秘钥相同
+      throw new Error('邮箱验证已发送请查收，或一小时后重试！')
+    } else {
+      // 发送一份新的邮件
+      await sendMail(emailUtil.sendEmailActive({
+        userEmail: email,
+        code
+      }))
+      // 添加发送日志
+      EmailSendLogProxy.newAndSave({
+        // 邮箱
+        email: email,
+        // 激活编码
+        code: code,
+        // 业务类型名称
+        type_name: '注册邮件'
+      })
+      if (user) {
+        // 之前发送过那就更新
+        return UserProxy.update({ email }, {
+          email_code: code
+        })
+      } else {
+        throw new Error('该邮箱未注册！')
       }
     }
   }

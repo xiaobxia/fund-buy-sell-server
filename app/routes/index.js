@@ -42,7 +42,9 @@ router.get('/auth/checkLogin', controllers.authController.checkLogin)
 // 退出登录
 router.get('/auth/logout', controllers.authController.logout)
 // 发送注册邮件
-router.post('/auth/sendRegisterEmail', controllers.authController.sendRegisterEmail)
+router.post('/auth/registerWidthEmail', controllers.authController.registerWidthEmail)
+// 发送激活邮件
+router.post('/auth/sendActiveEmail', controllers.authController.sendActiveEmail)
 // 邮箱激活
 router.get('/auth/activeRegister', controllers.authController.activeRegister)
 // 发送忘记密码邮件
@@ -59,6 +61,8 @@ router.post('/user/newPassword', controllers.userController.newPassword)
 router.get('/user/getRecords', controllers.userController.getRecords)
 // 通过邮箱获取用户
 router.get('/user/getUserByEmail', controllers.userController.getUserByEmail)
+// 通过令牌获取用户
+router.get('/user/getUserByToken', controllers.userController.getUserByToken)
 // 添加vip时间
 router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
 

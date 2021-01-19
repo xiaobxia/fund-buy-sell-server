@@ -45,6 +45,21 @@ exports.getRecords = async function (ctx) {
 }
 
 /**
+ * 通过令牌获取用户
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getUserByToken = async function (ctx) {
+  try {
+    const tokenRaw = ctx.tokenRaw
+    const user = await ctx.services.user.getUserByEmail(tokenRaw.email)
+    ctx.body = ctx.resuccess(user)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
  * 通过邮箱获取用户
  * @param ctx
  * @returns {Promise<void>}
@@ -55,8 +70,8 @@ exports.getUserByEmail = async function (ctx) {
     const data = ctx.validateData({
       email: { required: true, type: 'string' }
     }, query)
-    await ctx.services.user.getUserByEmail(data)
-    ctx.body = ctx.resuccess()
+    const user = await ctx.services.user.getUserByEmail(data)
+    ctx.body = ctx.resuccess(user)
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
