@@ -200,12 +200,28 @@ exports.sendForgetEmail = async function (data) {
  * @param data
  * @returns {Promise<*>}
  */
-exports.resetPassword = async function (data) {
+exports.resetPassword = async function (data, services) {
   const code = data.code
   const password = data.password
   const user = await UserProxy.findOne({ email_code: code })
   if (user) {
     if (user.email_code === code) {
+      // 有邀请人
+      if (user.inviter_email) {
+        // 添加邀请记录
+        InvitationLogProxy.newAndSave({
+          // 邀请人
+          inviter_email: user.inviter_email,
+          // 被邀请人
+          register_email: user.email,
+          type_name: '激活'
+        })
+        // 分发奖励
+        services.user.addUserVipDays({
+          email: user.inviter_email,
+          days: constant.INVITER_REWARD_DAYS
+        })
+      }
       // 更新密码
       return UserProxy.update({ email_code: code }, {
         password,

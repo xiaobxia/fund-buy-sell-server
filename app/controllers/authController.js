@@ -188,7 +188,7 @@ exports.resetPassword = async function (ctx) {
       code: { required: true, type: 'string' },
       password: { required: true, type: 'string' }
     }, query)
-    await ctx.services.auth.resetPassword(data)
+    await ctx.services.auth.resetPassword(data, ctx.services)
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
