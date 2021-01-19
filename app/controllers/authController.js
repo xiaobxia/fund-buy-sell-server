@@ -17,7 +17,7 @@ exports.register = async function (ctx) {
       roles: userRaw.roles
     }
     // 登录在线时间
-    const keepDay = 7
+    const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
     const token = ctx.token.sign(user, 60 * 60 * 24 * keepDay)
     // 添加注册日志
     ctx.body = ctx.resuccess({
@@ -48,7 +48,7 @@ exports.login = async function (ctx) {
       roles: userRaw.roles
     }
     // 登录在线时间
-    const keepDay = 20
+    const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
     const token = ctx.token.sign(user, 60 * 60 * 24 * keepDay)
     ctx.body = ctx.resuccess({
       ...user,
@@ -119,7 +119,8 @@ exports.sendRegisterEmail = async function (ctx) {
   try {
     const data = ctx.validateData({
       email: { required: true, type: 'string' },
-      password: { required: true, type: 'string' }
+      password: { required: true, type: 'string' },
+      inviter_email: { required: false, type: 'string' }
     }, query)
     const userRaw = await ctx.services.auth.sendRegisterEmail(data)
     const user = {
@@ -128,7 +129,7 @@ exports.sendRegisterEmail = async function (ctx) {
       roles: userRaw.roles
     }
     // 登录在线时间
-    const keepDay = 20
+    const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
     const token = ctx.token.sign(user, 60 * 60 * 24 * keepDay)
     ctx.body = ctx.resuccess({
       ...user,

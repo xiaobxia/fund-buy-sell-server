@@ -6,6 +6,7 @@ const emailUtil = require('../util/emailUntil')
 
 const UserProxy = Proxy.User
 const EmailSendLogProxy = Proxy.EmailSendLog
+const InvitationLogProxy = Proxy.InvitationLog
 
 /**
  * 登录
@@ -47,6 +48,7 @@ exports.register = async function (data) {
 exports.sendRegisterEmail = async function (data) {
   const email = data.email
   const password = data.password
+  const inviterEmail = data.inviter_email
   const user = await UserProxy.findOne({ email })
   if (user && user.email_active === true) {
     // 已激活
@@ -71,9 +73,22 @@ exports.sendRegisterEmail = async function (data) {
         // 业务类型名称
         type_name: '注册邮件'
       })
+      const userOtherInfo = {}
+      // 有邀请人
+      if (inviterEmail) {
+        userOtherInfo.inviter_email = inviterEmail
+        // 添加邀请记录
+        InvitationLogProxy.newAndSave({
+          // 邀请人
+          inviter_email: inviterEmail,
+          // 被邀请人
+          register_email: email
+        })
+      }
       if (user) {
         // 之前发送过那就更新
         return UserProxy.update({ email }, {
+          ...userOtherInfo,
           email_code: code,
           email_active: false,
           password
@@ -81,6 +96,7 @@ exports.sendRegisterEmail = async function (data) {
       } else {
         // 之前没有发送过那就添加记录
         return UserProxy.newAndSave({
+          ...userOtherInfo,
           email,
           email_code: code,
           email_active: false,
@@ -105,6 +121,10 @@ exports.activeRegister = async function (data) {
       throw new Error('邮箱已激活！')
     } else {
       if (user.email_code === activeToken) {
+        // 有邀请人
+        if (user.inviter_email) {
+
+        }
         // 激活用户
         return UserProxy.update({ email: user.email }, {
           email_active: true,

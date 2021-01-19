@@ -30,6 +30,11 @@ const schema = new Schema({
   // 角色 []
   roles: Array,
   last_login_date: Date,
+  // 业务数据
+  // 邀请人
+  inviter_email: String,
+  // vip剩余天数
+  vip_days: Number,
   create_at: {
     type: Date,
     default: Date.now
