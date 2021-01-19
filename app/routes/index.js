@@ -55,6 +55,8 @@ router.post('/auth/resetPassword', controllers.authController.resetPassword)
  */
 // 修改用户密码
 router.post('/user/newPassword', controllers.userController.newPassword)
+// 通过邮箱获取用户
+router.get('/user/getUserByEmail', controllers.userController.getUserByEmail)
 // 添加vip时间
 router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
 

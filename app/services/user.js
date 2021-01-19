@@ -34,6 +34,19 @@ exports.getUserByName = async function (name) {
 }
 
 /**
+ * 通过邮箱获取用户
+ * @param email
+ * @returns {Promise<void>}
+ */
+exports.getUserByEmail = async function (email) {
+  const user = await UserProxy.findOne({ email })
+  if (!user) {
+    throw new Error('用户不存在')
+  }
+  return user
+}
+
+/**
  * 添加vip时间
  * @param name
  * @returns {Promise<void>}

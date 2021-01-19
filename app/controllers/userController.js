@@ -23,6 +23,24 @@ exports.newPassword = async function (ctx) {
 }
 
 /**
+ * 通过邮箱获取用户
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getUserByEmail = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      email: { required: true, type: 'string' }
+    }, query)
+    await ctx.services.user.getUserByEmail(data)
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
  * 添加vip时间
  * @param ctx
  * @returns {Promise<void>}
