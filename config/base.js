@@ -9,7 +9,6 @@ module.exports = {
   root: path.resolve(__dirname, '../'),
   // 项目的地址
   projectUrl: 'http://funduse.xiaobxia.com/fbsServer',
-  mobileUrl: 'http://funduse.xiaobxia.com/#',
   project: {
     projectName: 'fbsServer'
   },

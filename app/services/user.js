@@ -36,10 +36,35 @@ exports.getRecords = async function (query, paging) {
   }
   let queryOption = {
   }
+  // 创建时间
   if (query.beginTime) {
     queryOption.create_at = {
       $gte: query.beginTime,
       $lt: query.endTime
+    }
+  }
+  // 模糊匹配
+  if (query.search) {
+    queryOption.email = new RegExp(query.search, 'i')
+  }
+  if (query.hasVip === 1) {
+    queryOption.vip_days = {
+      $gt: 0
+    }
+  }
+  if (query.hasVip === 0) {
+    queryOption.vip_days = {
+      $lt: 1
+    }
+  }
+  if (query.hasInviter === 1) {
+    queryOption.inviter_email = {
+      $exists: true
+    }
+  }
+  if (query.hasInviter === 0) {
+    queryOption.inviter_email = {
+      $exists: false
     }
   }
   const fetchData = await Promise.all([

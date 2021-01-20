@@ -34,7 +34,13 @@ exports.getRecords = async function (ctx) {
       current: { type: 'int', required: true },
       pageSize: { type: 'int', required: true },
       beginTime: { required: false, type: 'string' },
-      endTime: { required: false, type: 'string' }
+      endTime: { required: false, type: 'string' },
+      // 有vip（1：有，0：没有）
+      hasVip: { required: false, type: 'int' },
+      // 有邀请人（1：有，0：没有）
+      hasInviter: { required: false, type: 'int' },
+      // 邮箱搜索
+      search: { required: false, type: 'string' }
     }, query)
     let paging = ctx.paging(data.current, data.pageSize)
     const records = await ctx.services.user.getRecords(data, paging)

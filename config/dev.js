@@ -1,4 +1,5 @@
 module.exports = {
+  mobileUrl: 'http://192.168.21.148:4000/#',
   db: 'mongodb://fbsServer:fbsServer@47.92.210.171:27017/fbsServer',
   // 邮件配置
   email: {

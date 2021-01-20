@@ -23,6 +23,7 @@ const sayHello = (option) => {
 
 const sendEmailActive = (option) => {
   const activeUrl = `${mobileUrl}/activeRegister?activeToken=${option.code}`
+  console.log(activeUrl)
   let html = `<p>您申请将${option.userEmail}设置为登录邮箱，要完成该操作。</p>`
   html += `<p>请点击该链接注册激活，如果验证链接无法点击，请将链接复制粘贴到浏览器地址栏:</p>`
   html += `<p><a href="${activeUrl}">${activeUrl}</a></p>`
@@ -40,6 +41,7 @@ const sendEmailActive = (option) => {
 
 const sendEmailForget = (option) => {
   const activeUrl = `${mobileUrl}/findPassword?activeToken=${option.code}`
+  console.log(activeUrl)
   let html = `<p>您将为${option.userEmail}找回密码，要完成该操作。</p>`
   html += `<p>请点击该链接找回密码，如果验证链接无法点击，请将链接复制粘贴到浏览器地址栏:</p>`
   html += `<p><a href="${activeUrl}">${activeUrl}</a></p>`
