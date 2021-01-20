@@ -102,10 +102,14 @@ router.get('/test/testResponse', controllers.testController.testResponse)
 /**
  * 信号模块
  */
+router.post('/bsSignal/updateSignal', controllers.buySellSignalController.updateSignal)
+router.get('/bsSignal/getLastSignal', controllers.buySellSignalController.getLastSignal)
+router.get('/bsSignal/getSignalsByDays', controllers.buySellSignalController.getSignalsByDays)
+router.get('/bsSignal/getSignalsByStart', controllers.buySellSignalController.getSignalsByStart)
 
-router.post('/signal/updateSignal', controllers.buySellSignalController.updateSignal)
-router.get('/signal/getLastSignal', controllers.buySellSignalController.getLastSignal)
-router.get('/signal/getSignalsByDays', controllers.buySellSignalController.getSignalsByDays)
-router.get('/signal/getSignalsByStart', controllers.buySellSignalController.getSignalsByStart)
+router.post('/riskSignal/updateSignal', controllers.riskController.updateSignal)
+router.get('/riskSignal/getLastSignal', controllers.riskController.getLastSignal)
+router.get('/riskSignal/getSignalsByDays', controllers.riskController.getSignalsByDays)
+router.get('/riskSignal/getSignalsByStart', controllers.riskController.getSignalsByStart)
 
 module.exports = router
