@@ -52,7 +52,7 @@ exports.registerWidthEmail = async function (data) {
   const user = await UserProxy.findOne({ email })
   if (user) {
     // 已激活
-    throw new Error('邮箱注册，请直接登录！')
+    throw new Error('邮箱已注册，请直接登录！')
   } else {
     // 到小时
     const code = md5(`${email}-r,${moment().format('YYYY-MM-DD-HH')}`)
@@ -189,7 +189,7 @@ exports.activeRegister = async function (data, services) {
     }
   } else {
     // 没记录
-    throw new Error('发生错误，请重新发起邮箱验证！')
+    throw new Error('链接已失效，请重新发起邮箱验证！')
   }
 }
 
