@@ -10,7 +10,9 @@ exports.emailSendLogGetRecords = async function (ctx) {
       current: { type: 'int', required: true },
       pageSize: { type: 'int', required: true },
       beginTime: { required: false, type: 'string' },
-      endTime: { required: false, type: 'string' }
+      endTime: { required: false, type: 'string' },
+      typeName: { required: false, type: 'string' },
+      search: { required: false, type: 'string' }
     }, query)
     let paging = ctx.paging(data.current, data.pageSize)
     const records = await ctx.services.emailSendLog.getRecords(data, paging)
@@ -32,7 +34,9 @@ exports.invitationLogGetRecords = async function (ctx) {
       current: { type: 'int', required: true },
       pageSize: { type: 'int', required: true },
       beginTime: { required: false, type: 'string' },
-      endTime: { required: false, type: 'string' }
+      endTime: { required: false, type: 'string' },
+      typeName: { required: false, type: 'string' },
+      search: { required: false, type: 'string' }
     }, query)
     let paging = ctx.paging(data.current, data.pageSize)
     const records = await ctx.services.invitationLog.getRecords(data, paging)

@@ -24,6 +24,13 @@ exports.getRecords = async function (query, paging) {
       $lt: query.endTime
     }
   }
+  // 模糊匹配
+  if (query.search) {
+    queryOption.inviter_email = new RegExp(query.search, 'i')
+  }
+  if (query.typeName) {
+    queryOption.type_name = query.typeName
+  }
   const fetchData = await Promise.all([
     InvitationLogProxy.find(queryOption, opt),
     InvitationLogProxy.count(queryOption)
