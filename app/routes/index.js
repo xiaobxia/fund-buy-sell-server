@@ -112,4 +112,10 @@ router.get('/riskSignal/getLastSignal', controllers.riskController.getLastSignal
 router.get('/riskSignal/getSignalsByDays', controllers.riskController.getSignalsByDays)
 router.get('/riskSignal/getSignalsByStart', controllers.riskController.getSignalsByStart)
 
+/**
+ * 意见反馈
+ */
+router.get('/feedback/getRecords', controllers.feedbackController.getRecords)
+router.post('/feedback/addFeedback', controllers.feedbackController.addFeedback)
+
 module.exports = router
