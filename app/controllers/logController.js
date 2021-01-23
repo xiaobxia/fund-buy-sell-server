@@ -45,3 +45,20 @@ exports.invitationLogGetRecords = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 获取用户所有邀请记录
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getInvitationLogByToken = async function (ctx) {
+  try {
+    const tokenRaw = ctx.tokenRaw
+    const records = await ctx.services.invitationLog.getRecordAll({
+      email: tokenRaw.email
+    })
+    ctx.body = ctx.resuccess(records)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

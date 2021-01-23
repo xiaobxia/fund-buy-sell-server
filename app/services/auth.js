@@ -158,13 +158,11 @@ exports.activeRegister = async function (data, services) {
       if (user.email_code === activeToken) {
         // 有邀请人
         if (user.inviter_email) {
-          // 添加邀请记录
-          InvitationLogProxy.newAndSave({
+          services.invitationLog.activeRecord({
             // 邀请人
             inviter_email: user.inviter_email,
             // 被邀请人
-            register_email: user.email,
-            type_name: '激活'
+            register_email: user.email
           })
           // 分发本人奖励
           services.user.addUserVipDays({
@@ -247,12 +245,11 @@ exports.resetPassword = async function (data, services) {
       // 有邀请人
       if (user.inviter_email && user.email_active === false) {
         // 添加邀请记录
-        InvitationLogProxy.newAndSave({
+        services.invitationLog.activeRecord({
           // 邀请人
           inviter_email: user.inviter_email,
           // 被邀请人
-          register_email: user.email,
-          type_name: '激活'
+          register_email: user.email
         })
         // 分发本人奖励
         services.user.addUserVipDays({

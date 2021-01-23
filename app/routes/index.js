@@ -71,6 +71,7 @@ router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
  */
 router.get('/log/emailSendLogGetRecords', controllers.logController.emailSendLogGetRecords)
 router.get('/log/invitationLogGetRecords', controllers.logController.invitationLogGetRecords)
+router.get('/log/getInvitationLogByToken', controllers.logController.getInvitationLogByToken)
 
 /**
  * 文件上传模块

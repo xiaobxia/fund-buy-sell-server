@@ -38,3 +38,33 @@ exports.getRecords = async function (query, paging) {
   const list = fetchData[0]
   return { list: list, count: fetchData[1] }
 }
+
+/**
+ * 获取用户所有邀请记录
+ * @param data
+ * @returns {Promise<*>}
+ */
+exports.getRecordAll = async function (data) {
+  return InvitationLogProxy.find({email: data.email})
+}
+
+/**
+ * 激活
+ * @param data
+ * @returns {Promise<*>}
+ */
+exports.activeRecord = async function (data) {
+  const record = await InvitationLogProxy.findOne(data)
+  if (record) {
+    // 添加邀请记录
+    return InvitationLogProxy.update({...data}, {
+      type_name: '激活'
+    })
+  } else {
+    // 添加邀请记录
+    return InvitationLogProxy.newAndSave({
+      ...data,
+      type_name: '激活'
+    })
+  }
+}
