@@ -45,7 +45,7 @@ exports.getRecords = async function (query, paging) {
  * @returns {Promise<*>}
  */
 exports.getRecordAll = async function (data) {
-  return InvitationLogProxy.find({email: data.email})
+  return InvitationLogProxy.find({ email: data.email })
 }
 
 /**
@@ -57,7 +57,7 @@ exports.activeRecord = async function (data) {
   const record = await InvitationLogProxy.findOne(data)
   if (record) {
     // 添加邀请记录
-    return InvitationLogProxy.update({...data}, {
+    return InvitationLogProxy.update({ ...data }, {
       type_name: '激活'
     })
   } else {
