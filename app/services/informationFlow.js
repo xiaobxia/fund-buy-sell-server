@@ -44,7 +44,7 @@ exports.updateInfoFlow = async function (data) {
 exports.addLike = async function (data) {
   return InformationFlowProxy.update({
     _id: data.info_id
-  }, {$addToSet: {user_like: data.user_id}})
+  }, { $addToSet: { user_like: data.user_id } })
 }
 
 /**
@@ -55,7 +55,7 @@ exports.addLike = async function (data) {
 exports.disLike = async function (data) {
   return InformationFlowProxy.update({
     _id: data.info_id
-  }, {$pull: {user_like: data.user_id}})
+  }, { $pull: { user_like: data.user_id } })
 }
 
 /**
@@ -79,7 +79,7 @@ exports.getUserInfoFlow = async function (query, paging) {
   ])
   const list = fetchData[0]
   const newList = []
-  list.forEach((v)=>{
+  list.forEach((v) => {
     const newData = {
       content: v.content,
       id: v.id,
@@ -130,5 +130,16 @@ exports.getAdminInfoFlow = async function (query, paging) {
     InformationFlowProxy.count(queryOption)
   ])
   const list = fetchData[0]
-  return { list: list, count: fetchData[1] }
+  const newList = []
+  list.forEach((v) => {
+    const newData = {
+      content: v.content,
+      id: v.id,
+      is_vip: v.is_vip,
+      create_at: v.create_at,
+      like_count: v.user_like.length
+    }
+    newList.push(newData)
+  })
+  return { list: newList, count: fetchData[1] }
 }
