@@ -129,4 +129,12 @@ router.get('/infoFlow/getUserInfoFlow', controllers.informationFlowController.ge
 router.get('/infoFlow/getAdminInfoFlow', controllers.informationFlowController.getAdminInfoFlow)
 router.post('/infoFlow/deleteRecord', controllers.informationFlowController.deleteRecord)
 
+/**
+ * 文章模块
+ */
+router.post('/articleGzh/updateArticleGzh', controllers.articleGzhController.updateArticleGzh)
+router.post('/articleGzh/deleteRecord', controllers.articleGzhController.deleteRecord)
+router.get('/articleGzh/getAdminArticle', controllers.articleGzhController.getAdminArticle)
+router.get('/articleGzh/getUserArticle', controllers.articleGzhController.getUserArticle)
+
 module.exports = router
