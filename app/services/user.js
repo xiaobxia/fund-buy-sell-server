@@ -134,3 +134,20 @@ exports.addUserVipDays = async function (data) {
     })
   }
 }
+
+/**
+ * 减少vip时间
+ * @returns {Promise<*>}
+ */
+exports.deleteVipDays = async function () {
+  const userList = await UserProxy.find({ })
+  let opList = []
+  userList.forEach((user)=>{
+    if (user.vip_days) {
+      opList.push(UserProxy.update({ _id: user._id }, {
+        vip_days: user.vip_days + 1
+      }))
+    }
+  })
+  return Promise.all(opList)
+}

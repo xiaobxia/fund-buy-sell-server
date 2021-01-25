@@ -109,3 +109,20 @@ exports.addUserVipDays = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 减少vip时间
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.deleteVipDays = async function (ctx) {
+  try {
+    const marketOpen = await ctx.services.marketOpen.getMarketOpen()
+    if (marketOpen && marketOpen.open) {
+      await ctx.services.user.deleteVipDays()
+    }
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

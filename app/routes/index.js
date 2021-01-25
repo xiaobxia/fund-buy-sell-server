@@ -137,4 +137,10 @@ router.post('/articleGzh/deleteRecord', controllers.articleGzhController.deleteR
 router.get('/articleGzh/getAdminArticle', controllers.articleGzhController.getAdminArticle)
 router.get('/articleGzh/getUserArticle', controllers.articleGzhController.getUserArticle)
 
+/**
+ * 定时任务请求部分
+ */
+router.get('/schedule/deleteVipDays', controllers.userController.deleteVipDays)
+router.get('/schedule/verifyMarketOpening', controllers.scheduleController.verifyMarketOpening)
+
 module.exports = router

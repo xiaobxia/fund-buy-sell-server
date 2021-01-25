@@ -118,3 +118,17 @@ exports.getSchedule = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 检查开市
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.verifyMarketOpening = async function (ctx) {
+  try {
+    let data = await ctx.services.marketOpen.verifyMarketOpening()
+    ctx.body = ctx.resuccess(data)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
