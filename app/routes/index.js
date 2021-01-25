@@ -127,5 +127,6 @@ router.post('/infoFlow/addLike', controllers.informationFlowController.addLike)
 router.post('/infoFlow/disLike', controllers.informationFlowController.disLike)
 router.get('/infoFlow/getUserInfoFlow', controllers.informationFlowController.getUserInfoFlow)
 router.get('/infoFlow/getAdminInfoFlow', controllers.informationFlowController.getAdminInfoFlow)
+router.post('/infoFlow/deleteRecord', controllers.informationFlowController.deleteRecord)
 
 module.exports = router

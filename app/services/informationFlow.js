@@ -37,6 +37,17 @@ exports.updateInfoFlow = async function (data) {
 }
 
 /**
+ * 删除
+ * @param data
+ * @returns {Promise<*>}
+ */
+exports.deleteRecord = async function (data) {
+  return InformationFlowProxy.delete({
+    _id: data.info_id
+  })
+}
+
+/**
  * 对信息流点赞
  * @param data
  * @returns {Promise<*>}

@@ -108,3 +108,21 @@ exports.getAdminInfoFlow = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 删除
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.deleteRecord = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      info_id: { type: 'string', required: true }
+    }, query)
+    await ctx.services.informationFlow.deleteRecord(data)
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
