@@ -14,7 +14,8 @@ exports.register = async function (ctx) {
     const user = {
       name: userRaw.name,
       password: userRaw.password,
-      roles: userRaw.roles
+      roles: userRaw.roles,
+      id: userRaw._id
     }
     // 登录在线时间
     const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
@@ -45,7 +46,8 @@ exports.login = async function (ctx) {
     const user = {
       email: userRaw.email,
       password: userRaw.password,
-      roles: userRaw.roles
+      roles: userRaw.roles,
+      id: userRaw._id
     }
     // 登录在线时间
     const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
@@ -123,7 +125,8 @@ exports.registerWidthEmail = async function (ctx) {
     const user = {
       email: userRaw.email,
       password: userRaw.password,
-      roles: userRaw.roles
+      roles: userRaw.roles,
+      id: userRaw._id
     }
     // 登录在线时间
     const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS

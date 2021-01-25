@@ -119,4 +119,13 @@ router.get('/riskSignal/getSignalsByStart', controllers.riskController.getSignal
 router.get('/feedback/getRecords', controllers.feedbackController.getRecords)
 router.post('/feedback/addFeedback', controllers.feedbackController.addFeedback)
 
+/**
+ * 信息流
+ */
+router.post('/infoFlow/updateInfoFlow', controllers.informationFlowController.updateInfoFlow)
+router.post('/infoFlow/addLike', controllers.informationFlowController.addLike)
+router.post('/infoFlow/disLike', controllers.informationFlowController.disLike)
+router.get('/infoFlow/getUserInfoFlow', controllers.informationFlowController.getUserInfoFlow)
+router.get('/infoFlow/getAdminInfoFlow', controllers.informationFlowController.getAdminInfoFlow)
+
 module.exports = router
