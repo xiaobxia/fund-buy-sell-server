@@ -58,7 +58,15 @@ exports.getRecords = async function (ctx) {
 exports.getUserByToken = async function (ctx) {
   try {
     const tokenRaw = ctx.tokenRaw
+    const token = ctx.header.token
     const user = await ctx.services.user.getUserByEmail(tokenRaw.email)
+    if (user.token !== token) {
+      ctx.body = ctx.refail({
+        code: '401',
+        message: '该账户已在其他设备登录！'
+      })
+      return
+    }
     ctx.body = ctx.resuccess(user)
   } catch (err) {
     ctx.body = ctx.refail(err)

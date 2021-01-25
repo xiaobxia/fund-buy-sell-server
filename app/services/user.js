@@ -3,6 +3,21 @@ const Proxy = require('../proxy')
 const UserProxy = Proxy.User
 
 /**
+ * 更新token
+ * @param data
+ * @returns {Promise<*>}
+ */
+exports.updateToken = async function (data) {
+  const user = await UserProxy.findOne({ email: data.email })
+  if (!user) {
+    throw new Error('用户不存在')
+  }
+  return UserProxy.update({ email: data.email }, {
+    token: data.token
+  })
+}
+
+/**
  * 修改用户密码
  * @param data
  * @returns {Promise<*>}

@@ -13,6 +13,8 @@ const schema = new Schema({
   email_code: String,
   // 密码
   password: String,
+  // 当前token
+  token: String,
   // -------其他
   name: String,
   mobile: String,
@@ -26,7 +28,6 @@ const schema = new Schema({
   school: String,
   job: String,
   introduce: String,
-  token: String,
   // 角色 []
   roles: Array,
   last_login_date: Date,

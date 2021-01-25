@@ -50,6 +50,11 @@ exports.login = async function (ctx) {
     // 登录在线时间
     const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
     const token = ctx.token.sign(user, 60 * 60 * 24 * keepDay)
+    // 更新token
+    await ctx.services.user.updateToken({
+      email: data.email,
+      token
+    })
     ctx.body = ctx.resuccess({
       ...user,
       token
@@ -123,6 +128,11 @@ exports.registerWidthEmail = async function (ctx) {
     // 登录在线时间
     const keepDay = ctx.localConst.TOKEN_ALIVE_DAYS
     const token = ctx.token.sign(user, 60 * 60 * 24 * keepDay)
+    // 更新token
+    await ctx.services.user.updateToken({
+      email: data.email,
+      token
+    })
     ctx.body = ctx.resuccess({
       ...user,
       token
