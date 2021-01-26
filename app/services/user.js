@@ -142,7 +142,7 @@ exports.addUserVipDays = async function (data) {
 exports.deleteVipDays = async function () {
   const userList = await UserProxy.find({ })
   let opList = []
-  userList.forEach((user)=>{
+  userList.forEach((user) => {
     if (user.vip_days) {
       opList.push(UserProxy.update({ _id: user._id }, {
         vip_days: user.vip_days + 1

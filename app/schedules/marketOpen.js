@@ -17,6 +17,8 @@ let rule = new schedule.RecurrenceRule()
 /**
  * 每天的9点45
  */
+// 工作日
+rule.dayOfWeek = [new schedule.Range(1, 5)]
 rule.hour = 9
 rule.minute = 40
 
