@@ -142,6 +142,7 @@ exports.verifyMarketOpening = async function (ctx) {
 exports.getGzhToken = async function (ctx) {
   try {
     const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6aaf4246b4aec751&secret=388ea16f0ad95fabdc2a756b331932b5`)
+    console.log(res)
     ctx.body = ctx.resuccess(res)
   } catch (err) {
     ctx.body = ctx.refail(err)
