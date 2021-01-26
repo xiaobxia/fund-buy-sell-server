@@ -1,3 +1,4 @@
+const axios = require('axios')
 /**
  * 添加定时任务
  * @param ctx
@@ -128,6 +129,20 @@ exports.verifyMarketOpening = async function (ctx) {
   try {
     let data = await ctx.services.marketOpen.verifyMarketOpening()
     ctx.body = ctx.resuccess(data)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
+ * 获取公众号token
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getGzhToken = async function (ctx) {
+  try {
+    const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6aaf4246b4aec751&secret=388ea16f0ad95fabdc2a756b331932b5`)
+    ctx.body = ctx.resuccess(res)
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
