@@ -136,6 +136,7 @@ router.post('/articleGzh/updateArticleGzh', controllers.articleGzhController.upd
 router.post('/articleGzh/deleteRecord', controllers.articleGzhController.deleteRecord)
 router.get('/articleGzh/getAdminArticle', controllers.articleGzhController.getAdminArticle)
 router.get('/articleGzh/getUserArticle', controllers.articleGzhController.getUserArticle)
+router.post('/articleGzh/getGzhArticle', controllers.articleGzhController.getGzhArticle)
 router.get('/articleGzh/getUserArticleToken', controllers.articleGzhController.getUserArticleToken)
 
 /**

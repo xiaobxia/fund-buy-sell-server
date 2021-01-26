@@ -1,3 +1,4 @@
+const axios = require('axios')
 /**
  * 更新文章信息
  * @param ctx
@@ -96,6 +97,30 @@ exports.getUserArticleToken = async function (ctx) {
     ctx.body = ctx.resuccess({
       accessToken
     })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
+ * 获取用户公众号token
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getGzhArticle = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      offset: { type: 'int', required: true },
+      count: { type: 'int', required: true },
+      type: { required: true, type: 'string' },
+    }, query)
+    const record = await ctx.services.dictionary.getByKey('gzhToken')
+    let accessToken = record.value
+    const weixin = await axios.post(`https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=${accessToken}`, data, {
+      encoding: 'utf-8'
+    })
+    ctx.body = ctx.resuccess(weixin.data)
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
