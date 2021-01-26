@@ -80,3 +80,23 @@ exports.getUserArticle = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 获取用户公众号token
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getUserArticleToken = async function (ctx) {
+  try {
+    const record = await ctx.services.dictionary.getByKey('gzhToken')
+    let accessToken = ''
+    if (record) {
+      accessToken = record.value
+    }
+    ctx.body = ctx.resuccess({
+      accessToken
+    })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

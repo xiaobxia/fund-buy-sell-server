@@ -136,6 +136,7 @@ router.post('/articleGzh/updateArticleGzh', controllers.articleGzhController.upd
 router.post('/articleGzh/deleteRecord', controllers.articleGzhController.deleteRecord)
 router.get('/articleGzh/getAdminArticle', controllers.articleGzhController.getAdminArticle)
 router.get('/articleGzh/getUserArticle', controllers.articleGzhController.getUserArticle)
+router.get('/articleGzh/getUserArticleToken', controllers.articleGzhController.getUserArticleToken)
 
 /**
  * 定时任务请求部分

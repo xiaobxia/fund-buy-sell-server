@@ -143,8 +143,11 @@ exports.getGzhToken = async function (ctx) {
   try {
     const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6aaf4246b4aec751&secret=388ea16f0ad95fabdc2a756b331932b5`)
     const data = res.data
-    // const accessToken = data.access_token
-    ctx.body = ctx.resuccess(data)
+    const accessToken = data.access_token
+    await ctx.services.dictionary.updateByKey('gzhToken', {
+      value: accessToken
+    })
+    ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)
   }

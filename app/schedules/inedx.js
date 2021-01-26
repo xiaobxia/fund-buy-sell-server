@@ -5,3 +5,4 @@
 // }
 exports.deleteVipDays = require('./deleteVipDays')
 exports.marketOpen = require('./marketOpen')
+exports.getGzhToken = require('./getGzhToken')
