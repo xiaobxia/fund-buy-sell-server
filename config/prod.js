@@ -1,6 +1,7 @@
 module.exports = {
   mobileUrl: 'http://funduse.xiaobxia.com/#',
   db: 'mongodb://fbsServer:fbsServer@localhost:27017/fbsServer',
+  serverIp: 'http://localhost',
   // 邮件配置
   email: {
     // 用于发送邮件

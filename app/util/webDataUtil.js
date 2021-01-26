@@ -1,7 +1,9 @@
 const axios = require('axios')
 const qs = require('qs')
+const reqlib = require('app-root-path').require
+const config = reqlib('/config/index')
 
-const stockAddress = 'http://127.0.0.1:3006'
+const stockAddress = `${config.serverIp}:3006`
 
 function makeStockUrl (path) {
   return `${stockAddress}/${path}`
