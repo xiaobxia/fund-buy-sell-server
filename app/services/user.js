@@ -148,6 +148,7 @@ exports.addUserVipDays = async function (data, services) {
     const updateData = {
       vip_days: rawDays + days
     }
+    // 原本是要扣减，现在不用扣减了才更新
     if (!user.vip_no_delete && vipNoDelete) {
       updateData.vip_no_delete = true
     }
