@@ -156,6 +156,11 @@ exports.activeRegister = async function (data, services) {
       throw new Error('邮箱已激活！')
     } else {
       if (user.email_code === activeToken) {
+        // 分发本人奖励
+        await services.user.addUserVipDays({
+          email: user.email,
+          days: constant.ACTIVE_REWARD_DAYS
+        })
         // 有邀请人
         if (user.inviter_email) {
           services.invitationLog.activeRecord({
@@ -163,11 +168,6 @@ exports.activeRegister = async function (data, services) {
             inviter_email: user.inviter_email,
             // 被邀请人
             register_email: user.email
-          })
-          // 分发本人奖励
-          services.user.addUserVipDays({
-            email: user.email,
-            days: constant.ACTIVE_REWARD_DAYS
           })
           // 分发邀请人奖励
           services.user.addUserVipDays({
@@ -242,25 +242,27 @@ exports.resetPassword = async function (data, services) {
   const user = await UserProxy.findOne({ email_code: code })
   if (user) {
     if (user.email_code === code) {
-      // 有邀请人
-      if (user.inviter_email && user.email_active === false) {
-        // 添加邀请记录
-        services.invitationLog.activeRecord({
-          // 邀请人
-          inviter_email: user.inviter_email,
-          // 被邀请人
-          register_email: user.email
-        })
+      if (user.email_active === false) {
         // 分发本人奖励
         services.user.addUserVipDays({
           email: user.email,
           days: constant.ACTIVE_REWARD_DAYS
         })
-        // 分发奖励
-        services.user.addUserVipDays({
-          email: user.inviter_email,
-          days: constant.INVITER_REWARD_DAYS
-        })
+        // 有邀请人
+        if (user.inviter_email) {
+          // 添加邀请记录
+          services.invitationLog.activeRecord({
+            // 邀请人
+            inviter_email: user.inviter_email,
+            // 被邀请人
+            register_email: user.email
+          })
+          // 分发奖励
+          services.user.addUserVipDays({
+            email: user.inviter_email,
+            days: constant.INVITER_REWARD_DAYS
+          })
+        }
       }
       // 更新密码
       return UserProxy.update({ email_code: code }, {
