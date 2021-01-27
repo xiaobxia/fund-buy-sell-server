@@ -103,7 +103,7 @@ exports.addUserVipDays = async function (ctx) {
       email: { required: true, type: 'string' },
       days: { required: true, type: 'int' }
     }, query)
-    await ctx.services.user.addUserVipDays(data)
+    await ctx.services.user.addUserVipDays(data, ctx.services)
     ctx.body = ctx.resuccess()
   } catch (err) {
     ctx.body = ctx.refail(err)

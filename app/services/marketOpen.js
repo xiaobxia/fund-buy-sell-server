@@ -8,7 +8,7 @@ const MarketOpenProxy = Proxy.MarketOpen
  * 检查开市
  * @returns {Promise<*>}
  */
-exports.verifyMarketOpening = async function () {
+exports.verifyMarketOpening = async function (services) {
   const nowDay = moment().format('YYYY-MM-DD')
   const data = await webDataUtil.getStockTodayDongfang({ code: 'sh000001' })
   const record = await MarketOpenProxy.findOne({ date: nowDay })
@@ -18,6 +18,8 @@ exports.verifyMarketOpening = async function () {
       open
     })
   } else {
+    // 立马扣减
+    await services.user.deleteVipDays()
     return MarketOpenProxy.newAndSave({
       date: nowDay,
       open

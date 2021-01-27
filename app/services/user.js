@@ -118,20 +118,40 @@ exports.getUserByEmail = async function (email) {
 
 /**
  * 添加vip时间
- * @param name
- * @returns {Promise<void>}
+ * @param data
+ * @param services
+ * @returns {Promise<*>}
  */
-exports.addUserVipDays = async function (data) {
+exports.addUserVipDays = async function (data, services) {
   const email = data.email
   const days = data.days
   const user = await UserProxy.findOne({ email })
   if (!user) {
     throw new Error('用户不存在')
   } else {
+    // 原本的天数
     const rawDays = user.vip_days
-    return UserProxy.update({ email }, {
+    const marketOpen = await services.marketOpen.getMarketOpen()
+    let vipNoDelete = false
+    // 是新加入的天数，才会有这个判断
+    if (!rawDays) {
+      if (marketOpen && marketOpen.open) {
+        const date = new Date()
+        const hour = date.getHours()
+        if (hour >= 15) {
+          vipNoDelete = true
+        }
+      } else {
+        vipNoDelete = true
+      }
+    }
+    const updateData = {
       vip_days: rawDays + days
-    })
+    }
+    if (!user.vip_no_delete && vipNoDelete) {
+      updateData.vip_no_delete = true
+    }
+    return UserProxy.update({ email }, updateData)
   }
 }
 

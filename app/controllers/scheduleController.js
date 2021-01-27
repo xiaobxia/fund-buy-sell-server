@@ -127,7 +127,7 @@ exports.getSchedule = async function (ctx) {
  */
 exports.verifyMarketOpening = async function (ctx) {
   try {
-    let data = await ctx.services.marketOpen.verifyMarketOpening()
+    let data = await ctx.services.marketOpen.verifyMarketOpening(ctx.services)
     ctx.body = ctx.resuccess(data)
   } catch (err) {
     ctx.body = ctx.refail(err)

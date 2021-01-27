@@ -3,6 +3,7 @@
 // if (!isDev) {
 //
 // }
-exports.deleteVipDays = require('./deleteVipDays')
+// 验证开盘后立马扣减
+// exports.deleteVipDays = require('./deleteVipDays')
 exports.marketOpen = require('./marketOpen')
 exports.getGzhToken = require('./getGzhToken')

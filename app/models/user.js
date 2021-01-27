@@ -39,6 +39,11 @@ const schema = new Schema({
     type: Number,
     default: 0
   },
+  // 下一日不扣减
+  vip_no_delete: {
+    type: Boolean,
+    default: false
+  },
   create_at: {
     type: Date,
     default: Date.now
