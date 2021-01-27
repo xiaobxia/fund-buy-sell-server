@@ -111,7 +111,9 @@ exports.getUserByName = async function (name) {
 exports.getUserByEmail = async function (email) {
   const user = await UserProxy.findOne({ email })
   if (!user) {
-    throw new Error('用户不存在')
+    const err = new Error('用户不存在')
+    err.code = '401'
+    throw err
   }
   return user
 }
