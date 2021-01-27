@@ -163,10 +163,19 @@ exports.deleteVipDays = async function () {
   const userList = await UserProxy.find({ })
   let opList = []
   userList.forEach((user) => {
-    if (user.vip_days) {
-      opList.push(UserProxy.update({ _id: user._id }, {
-        vip_days: user.vip_days - 1
-      }))
+    const updateData = {}
+    if (user.vip_no_delete) {
+      // 清掉
+      updateData.vip_no_delete = false
+    } else {
+      // 需要扣减
+      if (user.vip_days) {
+        updateData.vip_days = user.vip_days - 1
+      }
+    }
+    if (Object.keys(updateData).length !== 0) {
+      // 需要更新数据
+      opList.push(UserProxy.update({ _id: user._id }, updateData))
     }
   })
   return Promise.all(opList)
