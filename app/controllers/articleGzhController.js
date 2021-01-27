@@ -113,7 +113,7 @@ exports.getGzhArticle = async function (ctx) {
     const data = ctx.validateData({
       offset: { type: 'int', required: true },
       count: { type: 'int', required: true },
-      type: { required: true, type: 'string' },
+      type: { required: true, type: 'string' }
     }, query)
     const record = await ctx.services.dictionary.getByKey('gzhToken')
     let accessToken = record.value
