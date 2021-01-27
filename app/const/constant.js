@@ -4,5 +4,5 @@ module.exports = {
   // 邀请奖励天数
   INVITER_REWARD_DAYS: 5,
   // 激活奖励天数
-  ACTIVE_REWARD_DAYS: 20
+  ACTIVE_REWARD_DAYS: 10
 }

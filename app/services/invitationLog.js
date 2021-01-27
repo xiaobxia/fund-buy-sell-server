@@ -45,7 +45,7 @@ exports.getRecords = async function (query, paging) {
  * @returns {Promise<*>}
  */
 exports.getRecordAll = async function (data) {
-  return InvitationLogProxy.find({ email: data.email })
+  return InvitationLogProxy.find({ inviter_email: data.email })
 }
 
 /**

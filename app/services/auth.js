@@ -160,7 +160,7 @@ exports.activeRegister = async function (data, services) {
         await services.user.addUserVipDays({
           email: user.email,
           days: constant.ACTIVE_REWARD_DAYS
-        })
+        }, services)
         // 有邀请人
         if (user.inviter_email) {
           services.invitationLog.activeRecord({
@@ -173,7 +173,7 @@ exports.activeRegister = async function (data, services) {
           services.user.addUserVipDays({
             email: user.inviter_email,
             days: constant.INVITER_REWARD_DAYS
-          })
+          }, services)
         }
         // 激活用户
         return UserProxy.update({ email: user.email }, {
@@ -247,7 +247,7 @@ exports.resetPassword = async function (data, services) {
         services.user.addUserVipDays({
           email: user.email,
           days: constant.ACTIVE_REWARD_DAYS
-        })
+        }, services)
         // 有邀请人
         if (user.inviter_email) {
           // 添加邀请记录
@@ -261,7 +261,7 @@ exports.resetPassword = async function (data, services) {
           services.user.addUserVipDays({
             email: user.inviter_email,
             days: constant.INVITER_REWARD_DAYS
-          })
+          }, services)
         }
       }
       // 更新密码
