@@ -13,6 +13,4 @@ const schema = new Schema({
   }
 })
 
-schema.index({ key: 1 }, { unique: true })
-
 module.exports = mongoose.model('Feedback', schema)
