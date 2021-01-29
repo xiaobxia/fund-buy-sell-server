@@ -204,7 +204,7 @@ exports.sendForgetEmail = async function (data) {
     const code = md5(`${email}-f,${moment().format('YYYY-MM-DD-HH')}`)
     if (user.email_code === code) {
       // 秘钥相同
-      throw new Error('邮箱验证已发送请查收，或一小时后重试！')
+      throw new Error('找回密码邮件已发送请查收，或一小时后重试！')
     } else {
       // 发送一份新的邮件
       await sendMail(emailUtil.sendEmailForget({

@@ -60,7 +60,7 @@ exports.createPayCode = async function (query, services) {
     const now = (new Date()).getTime()
     if (lastOne.create_at) {
       const diff = now - (new Date(lastOne.create_at)).getTime()
-      if (diff <= 1000 * 60 * 60 * 24){
+      if (diff <= 1000 * 60 * 60 * 24) {
         return lastOne.code
       }
     }
