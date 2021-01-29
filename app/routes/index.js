@@ -66,6 +66,7 @@ router.get('/user/getUserByToken', controllers.userController.getUserByToken)
 // 添加vip时间
 router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
 router.get('/user/getMarketOpen', controllers.userController.getMarketOpen)
+router.post('/user/createPayCode', controllers.userController.createPayCode)
 
 /**
  * 日志模块
@@ -73,6 +74,7 @@ router.get('/user/getMarketOpen', controllers.userController.getMarketOpen)
 router.get('/log/emailSendLogGetRecords', controllers.logController.emailSendLogGetRecords)
 router.get('/log/invitationLogGetRecords', controllers.logController.invitationLogGetRecords)
 router.get('/log/getInvitationLogByToken', controllers.logController.getInvitationLogByToken)
+router.get('/log/payCodeGetRecords', controllers.logController.payCodeGetRecords)
 
 /**
  * 文件上传模块

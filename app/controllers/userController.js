@@ -146,3 +146,23 @@ exports.getMarketOpen = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 生成支付码
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.createPayCode = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      email: { required: true, type: 'string' }
+    }, query)
+    const code = await ctx.services.payCode.createPayCode(data, ctx.services)
+    ctx.body = ctx.resuccess({
+      code
+    })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
