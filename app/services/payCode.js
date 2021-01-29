@@ -47,6 +47,24 @@ exports.getRecords = async function (query, paging) {
  */
 exports.createPayCode = async function (query, services) {
   const email = query.email
+  const opt = {
+    sort: {
+      create_at: -1
+    }
+  }
+  const lastOne = await PayCodeProxy.findOne({
+    email: email
+  }, opt)
+  // 如果有24小时以内的数据
+  if (lastOne) {
+    const now = (new Date()).getTime()
+    if (lastOne.create_at) {
+      const diff = now - (new Date(lastOne.create_at)).getTime()
+      if (diff <= 1000 * 60 * 60 * 24){
+        return lastOne.code
+      }
+    }
+  }
   // 6位验证码
   const code = Math.random().toFixed(6).toString().split('.')[1]
   await PayCodeProxy.newAndSave({
