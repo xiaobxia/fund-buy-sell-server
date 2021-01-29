@@ -65,6 +65,7 @@ router.get('/user/getUserByEmail', controllers.userController.getUserByEmail)
 router.get('/user/getUserByToken', controllers.userController.getUserByToken)
 // 添加vip时间
 router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
+router.get('/user/getMarketOpen', controllers.userController.getMarketOpen)
 
 /**
  * 日志模块

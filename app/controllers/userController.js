@@ -126,3 +126,23 @@ exports.deleteVipDays = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 查询开市
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getMarketOpen = async function (ctx) {
+  try {
+    const marketOpen = await ctx.services.marketOpen.getMarketOpen()
+    let open = false
+    if (marketOpen && marketOpen.open) {
+      open = true
+    }
+    ctx.body = ctx.resuccess({
+      open
+    })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
