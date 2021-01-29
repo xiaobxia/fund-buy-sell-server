@@ -52,3 +52,15 @@ exports.createPayCode = async function (query, services) {
   })
   return code
 }
+
+/**
+ * 获取支付码记录
+ * @param query
+ * @returns {Promise<*>}
+ */
+exports.getPayCodeLogByCode = async function (query) {
+  const code = query.code
+  return PayCodeProxy.find({
+    code: code
+  })
+}

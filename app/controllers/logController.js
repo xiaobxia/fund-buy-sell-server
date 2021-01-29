@@ -70,6 +70,24 @@ exports.payCodeGetRecords = async function (ctx) {
 }
 
 /**
+ * 获取支付码记录
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getPayCodeLogByCode = async function (ctx) {
+  const query = ctx.query
+  try {
+    const data = ctx.validateData({
+      code: { type: 'string', required: true }
+    }, query)
+    const records = await ctx.services.payCode.getPayCodeLogByCode(data)
+    ctx.body = ctx.resuccess(records)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
  * 获取用户所有邀请记录
  * @param ctx
  * @returns {Promise<void>}

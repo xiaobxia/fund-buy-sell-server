@@ -75,6 +75,7 @@ router.get('/log/emailSendLogGetRecords', controllers.logController.emailSendLog
 router.get('/log/invitationLogGetRecords', controllers.logController.invitationLogGetRecords)
 router.get('/log/getInvitationLogByToken', controllers.logController.getInvitationLogByToken)
 router.get('/log/payCodeGetRecords', controllers.logController.payCodeGetRecords)
+router.get('/log/getPayCodeLogByCode', controllers.logController.getPayCodeLogByCode)
 
 /**
  * 文件上传模块
