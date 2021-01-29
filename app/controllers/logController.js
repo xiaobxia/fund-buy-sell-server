@@ -59,7 +59,8 @@ exports.payCodeGetRecords = async function (ctx) {
       pageSize: { type: 'int', required: true },
       beginTime: { required: false, type: 'string' },
       endTime: { required: false, type: 'string' },
-      search: { required: false, type: 'string' }
+      search: { required: false, type: 'string' },
+      code: { required: false, type: 'string' }
     }, query)
     let paging = ctx.paging(data.current, data.pageSize)
     const records = await ctx.services.payCode.getRecords(data, paging)

@@ -28,6 +28,9 @@ exports.getRecords = async function (query, paging) {
   if (query.search) {
     queryOption.email = new RegExp(query.search, 'i')
   }
+  if (query.code) {
+    queryOption.code = query.code
+  }
   const fetchData = await Promise.all([
     PayCodeProxy.find(queryOption, opt),
     PayCodeProxy.count(queryOption)
