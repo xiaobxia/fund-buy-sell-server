@@ -72,6 +72,16 @@ module.exports = function (app) {
             fake[key] = data[key] ? parseInt(data[key], 10) : data[key]
           } else if (type === 'number') {
             fake[key] = data[key] ? parseFloat(data[key]) : data[key]
+          } else if (type === 'boolean') {
+            if (typeof data[key] === 'string') {
+              if (data[key] === 'true') {
+                fake[key] = true
+              } else if (data[key] === 'false') {
+                fake[key] = false
+              }
+            } else {
+              fake[key] = data[key]
+            }
           } else {
             if (!type) {
               rule[key].type = 'string'
