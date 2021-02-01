@@ -50,11 +50,16 @@ exports.createPayCode = async function (query, services) {
   const opt = {
     sort: {
       create_at: -1
-    }
+    },
+    limit: 1
   }
-  const lastOne = await PayCodeProxy.findOne({
+  const record = await PayCodeProxy.find({
     email: email
   }, opt)
+  let lastOne = null
+  if (record && record[0]) {
+    lastOne = record[0]
+  }
   // 如果有24小时以内的数据
   if (lastOne) {
     const now = (new Date()).getTime()
