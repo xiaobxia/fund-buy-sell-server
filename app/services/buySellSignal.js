@@ -43,6 +43,14 @@ exports.getLastSignal = async function () {
   }
 }
 
+exports.getLastTSignal = async function () {
+  const opt = {
+    sort: '-trade_date',
+    limit: 2
+  }
+  return BuySellSignalProxy.find({}, opt)
+}
+
 exports.getSignalsByDays = async function (query) {
   const opt = {
     sort: '-trade_date',

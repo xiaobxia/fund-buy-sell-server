@@ -22,6 +22,22 @@ exports.getLastSignal = async function (ctx) {
   }
 }
 
+/**
+ * 获取最近两天的信号，加入鉴权
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getLastTSignal = async function (ctx) {
+  try {
+    const record = await ctx.services.buySellSignal.getLastTSignal()
+    ctx.body = ctx.resuccess({
+      record
+    })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
 exports.getSignalsByDays = async function (ctx) {
   const query = ctx.query
   try {

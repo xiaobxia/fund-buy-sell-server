@@ -68,7 +68,7 @@ router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
 router.get('/user/getMarketOpen', controllers.userController.getMarketOpen)
 router.post('/user/createPayCode', controllers.userController.createPayCode)
 router.get('/user/getLastTSignal', controllers.userController.getLastTSignal)
-
+router.get('/user/getLastBSTSignal', controllers.userController.getLastBSTSignal)
 /**
  * 日志模块
  */
@@ -110,6 +110,7 @@ router.get('/test/testResponse', controllers.testController.testResponse)
  */
 router.post('/bsSignal/updateSignal', controllers.buySellSignalController.updateSignal)
 router.get('/bsSignal/getLastSignal', controllers.buySellSignalController.getLastSignal)
+router.get('/bsSignal/getLastTSignal', controllers.buySellSignalController.getLastTSignal)
 router.get('/bsSignal/getSignalsByDays', controllers.buySellSignalController.getSignalsByDays)
 router.get('/bsSignal/getSignalsByStart', controllers.buySellSignalController.getSignalsByStart)
 
