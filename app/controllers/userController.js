@@ -166,3 +166,24 @@ exports.createPayCode = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 获取最近两天的信号，加入鉴权
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getLastTSignal = async function (ctx) {
+  try {
+    const tokenRaw = ctx.tokenRaw
+    const user = await ctx.services.user.getUserByEmail(tokenRaw.email)
+    let record = []
+    if (user.vip_days) {
+      record = await ctx.services.riskSignal.getLastTSignal()
+    }
+    ctx.body = ctx.resuccess({
+      record
+    })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

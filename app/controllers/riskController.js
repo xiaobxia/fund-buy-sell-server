@@ -32,7 +32,7 @@ exports.getLastSignal = async function (ctx) {
 }
 
 /**
- * 获取最近两天的信号
+ * 获取最近两天的信号，加入鉴权
  * @param ctx
  * @returns {Promise<void>}
  */

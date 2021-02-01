@@ -67,6 +67,7 @@ router.get('/user/getUserByToken', controllers.userController.getUserByToken)
 router.post('/user/addUserVipDays', controllers.userController.addUserVipDays)
 router.get('/user/getMarketOpen', controllers.userController.getMarketOpen)
 router.post('/user/createPayCode', controllers.userController.createPayCode)
+router.get('/user/getLastTSignal', controllers.userController.getLastTSignal)
 
 /**
  * 日志模块
