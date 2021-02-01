@@ -32,6 +32,22 @@ exports.getLastSignal = async function (ctx) {
 }
 
 /**
+ * 获取最近两天的信号
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getLastTSignal = async function (ctx) {
+  try {
+    const record = await ctx.services.riskSignal.getLastTSignal()
+    ctx.body = ctx.resuccess({
+      record
+    })
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
+
+/**
  * 根据天数获取
  * @param ctx
  * @returns {Promise<void>}

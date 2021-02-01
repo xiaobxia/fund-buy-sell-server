@@ -49,6 +49,18 @@ exports.getLastSignal = async function () {
 }
 
 /**
+ * 获取最近两天的信号
+ * @returns {Promise<*>}
+ */
+exports.getLastTSignal = async function () {
+  const opt = {
+    sort: '-trade_date',
+    limit: 2
+  }
+  return RiskSignalProxy.find({}, opt)
+}
+
+/**
  * 根据天数获取
  * @param query
  * @returns {Promise<*>}

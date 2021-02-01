@@ -114,6 +114,7 @@ router.get('/bsSignal/getSignalsByStart', controllers.buySellSignalController.ge
 
 router.post('/riskSignal/updateSignal', controllers.riskController.updateSignal)
 router.get('/riskSignal/getLastSignal', controllers.riskController.getLastSignal)
+router.get('/riskSignal/getLastTSignal', controllers.riskController.getLastTSignal)
 router.get('/riskSignal/getSignalsByDays', controllers.riskController.getSignalsByDays)
 router.get('/riskSignal/getSignalsByStart', controllers.riskController.getSignalsByStart)
 
