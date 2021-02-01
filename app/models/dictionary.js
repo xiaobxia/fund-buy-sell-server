@@ -9,8 +9,8 @@ const schema = new Schema({
   describe: String,
   // 归类
   type: String,
-  // 值
   value: String,
+  // 值
   create_at: {
     type: Date,
     default: Date.now
