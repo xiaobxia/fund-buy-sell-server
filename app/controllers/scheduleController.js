@@ -152,3 +152,20 @@ exports.getGzhToken = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 更新指数涨跌幅记录
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.updateIndexRate = async function (ctx) {
+  try {
+    const marketOpen = await ctx.services.marketOpen.getMarketOpen()
+    if (marketOpen && marketOpen.open) {
+      await ctx.services.indexRate.updateRecord(ctx.services)
+    }
+    ctx.body = ctx.resuccess()
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

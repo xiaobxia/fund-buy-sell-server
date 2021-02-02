@@ -1,20 +1,22 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-// 风控信号记录
+
 const schema = new Schema({
-  // 交易日
-  trade_date: String,
   // 记录
   record: {
     type: Array,
     default: []
   },
-  // 创建时间
+  // 日期
+  trade_date: String,
   create_at: {
     type: Date,
     default: Date.now
   }
 })
 
-module.exports = mongoose.model('RiskSignal', schema)
+// 日期唯一
+schema.index({ trade_date: -1 }, { unique: true })
+
+module.exports = mongoose.model('IndexRate', schema)

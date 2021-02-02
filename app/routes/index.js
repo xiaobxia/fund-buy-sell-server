@@ -153,5 +153,6 @@ router.get('/articleGzh/getUserArticleToken', controllers.articleGzhController.g
 router.get('/schedule/deleteVipDays', controllers.userController.deleteVipDays)
 router.get('/schedule/verifyMarketOpening', controllers.scheduleController.verifyMarketOpening)
 router.get('/schedule/getGzhToken', controllers.scheduleController.getGzhToken)
+router.get('/schedule/updateIndexRate', controllers.scheduleController.updateIndexRate)
 
 module.exports = router
