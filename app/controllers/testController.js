@@ -31,3 +31,20 @@ exports.testResponse = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 测试数组传参
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.testArray = async function (ctx) {
+  const query = ctx.request.body
+  try {
+    const data = ctx.validateData({
+      ac: { required: true, type: 'array' }
+    }, query)
+    ctx.body = ctx.resuccess(data)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}

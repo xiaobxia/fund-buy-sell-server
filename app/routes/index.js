@@ -104,6 +104,7 @@ router.get('/schedule/one', controllers.scheduleController.getSchedule)
  */
 router.get('/test/testEmail', controllers.testController.testEmail)
 router.get('/test/testResponse', controllers.testController.testResponse)
+router.post('/test/testArray', controllers.testController.testArray)
 
 /**
  * 信号模块
