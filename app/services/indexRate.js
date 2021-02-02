@@ -12,7 +12,7 @@ const qUrl = 'http://8.136.27.152:3006/stockData/'
  * @returns {Promise<*>}
  */
 exports.updateRecord = async function () {
-  const codes = indexList.map((v)=>{
+  const codes = indexList.map((v) => {
     return v.code
   })
   const res = await axios.post(`${qUrl}getStockTodayTenxunByCodes`, {
@@ -21,11 +21,11 @@ exports.updateRecord = async function () {
   if (res.data.length) {
     const item = res.data[0]
     const date = moment(item.tradeTime).format('YYYY-MM-DD')
-    const rawRecord = await IndexRateProxy.findOne({trade_date: date})
+    const rawRecord = await IndexRateProxy.findOne({ trade_date: date })
     if (rawRecord) {
       return IndexRateProxy.update({
         trade_date: date
-      }, {record: res.data})
+      }, { record: res.data })
     } else {
       return IndexRateProxy.newAndSave({
         trade_date: date,
