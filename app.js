@@ -33,7 +33,7 @@ app.use(ratelimit({
   driver: 'memory',
   db: db,
   duration: 10 * 1000,
-  errorMessage: 'Sometimes You Just Have to Slow Down.',
+  errorMessage: 'Slow',
   id: (ctx) => ctx.ip,
   headers: {
     remaining: 'Rate-Limit-Remaining',
