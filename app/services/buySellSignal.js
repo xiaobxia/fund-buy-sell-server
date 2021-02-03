@@ -56,19 +56,17 @@ exports.getSignalsByDays = async function (query) {
     sort: '-trade_date',
     limit: query.days
   }
-  const res = await BuySellSignalProxy.find({
+  return BuySellSignalProxy.find({
   }, opt)
-  return res
 }
 
 exports.getSignalsByStart = async function (query) {
   const opt = {
     sort: 'trade_date'
   }
-  const res = await BuySellSignalProxy.find({
+  return BuySellSignalProxy.find({
     trade_date: {
       $gte: moment(query.start).format('YYYY-MM-DD')
     }
   }, opt)
-  return res
 }
