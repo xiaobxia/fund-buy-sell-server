@@ -2,6 +2,7 @@ const Koa = require('koa')
 const bluebird = require('bluebird')
 const cors = require('koa-cors')
 const bodyParser = require('koa-bodyparser')
+const ratelimit = require('koa-ratelimit')
 const base = require('./app/base')
 const checkLogin = require('./app/middlewares/checkLogin')
 const error = require('./app/middlewares/error')
@@ -12,6 +13,10 @@ global.Promise = bluebird
 const env = process.env.NODE_ENV
 
 const app = new Koa()
+
+// apply rate limit
+const db = new Map()
+
 // 加入全局信息
 base(app)
 
@@ -21,6 +26,30 @@ app.use(cors({
   credentials: true,
   maxAge: 2592000
 }))
+
+// 对ip进行限流
+// 10秒内不能超过20次
+app.use(ratelimit({
+  driver: 'memory',
+  db: db,
+  duration: 10 * 1000,
+  errorMessage: 'Sometimes You Just Have to Slow Down.',
+  id: (ctx) => ctx.ip,
+  headers: {
+    remaining: 'Rate-Limit-Remaining',
+    reset: 'Rate-Limit-Reset',
+    total: 'Rate-Limit-Total'
+  },
+  max: 20,
+  disableHeader: false,
+  whitelist: (ctx) => {
+    // some logic that returns a boolean
+  },
+  blacklist: (ctx) => {
+    // some logic that returns a boolean
+  }
+}))
+
 // 每个next都需要await
 // 请求日志
 // app.use(requestLog)

@@ -33,6 +33,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-cors": "^0.0.16",
     "koa-multer": "^1.0.2",
+    "koa-ratelimit": "^5.0.0",
     "koa-router": "^7.4.0",
     "log4js": "^3.0.6",
     "md5": "^2.2.1",
