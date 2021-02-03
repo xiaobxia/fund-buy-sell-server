@@ -84,7 +84,7 @@ exports.getUserByEmail = async function (ctx) {
     const data = ctx.validateData({
       email: { required: true, type: 'string' }
     }, query)
-    const user = await ctx.services.user.getUserByEmail(data)
+    const user = await ctx.services.user.getUserByEmail(data.email)
     ctx.body = ctx.resuccess(user)
   } catch (err) {
     ctx.body = ctx.refail(err)
