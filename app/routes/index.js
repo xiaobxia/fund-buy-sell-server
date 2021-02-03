@@ -69,6 +69,8 @@ router.get('/user/getMarketOpen', controllers.userController.getMarketOpen)
 router.post('/user/createPayCode', controllers.userController.createPayCode)
 router.get('/user/getLastTSignal', controllers.userController.getLastTSignal)
 router.get('/user/getLastBSTSignal', controllers.userController.getLastBSTSignal)
+router.get('/user/getIndexRate', controllers.userController.getIndexRate)
+
 /**
  * 日志模块
  */

@@ -208,3 +208,22 @@ exports.getLastBSTSignal = async function (ctx) {
     ctx.body = ctx.refail(err)
   }
 }
+
+/**
+ * 获取指数涨跌幅，加入鉴权
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+exports.getIndexRate = async function (ctx) {
+  try {
+    const tokenRaw = ctx.tokenRaw
+    const user = await ctx.services.user.getUserByEmail(tokenRaw.email)
+    let record = []
+    if (user.vip_days) {
+      record = await ctx.services.indexRate.getLastRecord()
+    }
+    ctx.body = ctx.resuccess(record)
+  } catch (err) {
+    ctx.body = ctx.refail(err)
+  }
+}
