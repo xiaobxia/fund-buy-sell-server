@@ -15,6 +15,11 @@ const schema = new Schema({
     type: Array,
     default: []
   },
+  // 建议仓位
+  position: {
+    type: Number,
+    default: 0
+  },
   // 创建时间
   create_at: {
     type: Date,

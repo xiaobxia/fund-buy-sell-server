@@ -4,7 +4,8 @@ exports.updateSignal = async function (ctx) {
     const data = ctx.validateData({
       trade_date: { type: 'string', required: true },
       fix_record: { type: 'string', required: false },
-      band_record: { type: 'string', required: false }
+      band_record: { type: 'string', required: false },
+      position: { type: 'number', required: false }
     }, query)
     await ctx.services.buySellSignal.updateSignal(data)
     ctx.body = ctx.resuccess()

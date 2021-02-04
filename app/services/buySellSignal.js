@@ -15,6 +15,9 @@ exports.updateSignal = async function (data) {
   if (data.band_record) {
     updateData.band_record = JSON.parse(data.band_record)
   }
+  if (data.position) {
+    updateData.band_record = data.position
+  }
   const buySellSignal = await BuySellSignalProxy.findOne({
     trade_date: data.trade_date
   })
