@@ -189,7 +189,7 @@ exports.getLastTSignal = async function (ctx) {
 }
 
 /**
- * 获取最近两天的信号，加入鉴权
+ * 获取最新的信号，加入鉴权
  * @param ctx
  * @returns {Promise<void>}
  */
@@ -197,13 +197,11 @@ exports.getLastBSTSignal = async function (ctx) {
   try {
     const tokenRaw = ctx.tokenRaw
     const user = await ctx.services.user.getUserByEmail(tokenRaw.email)
-    let record = []
+    let record = {}
     if (user.vip_days) {
-      record = await ctx.services.buySellSignal.getLastTSignal()
+      record = await ctx.services.buySellSignal.getLastSignal()
     }
-    ctx.body = ctx.resuccess({
-      record
-    })
+    ctx.body = ctx.resuccess(record)
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
