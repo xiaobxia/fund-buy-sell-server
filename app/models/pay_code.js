@@ -7,6 +7,11 @@ const schema = new Schema({
   email: String,
   // 支付编码
   code: String,
+  // 天数
+  days: {
+    type: Number,
+    default: 0
+  },
   // 创建时间
   create_at: {
     type: Date,

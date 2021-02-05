@@ -156,12 +156,11 @@ exports.createPayCode = async function (ctx) {
   const query = ctx.request.body
   try {
     const data = ctx.validateData({
-      email: { required: true, type: 'string' }
+      email: { required: true, type: 'string' },
+      days: { required: true, type: 'int' }
     }, query)
     const code = await ctx.services.payCode.createPayCode(data, ctx.services)
-    ctx.body = ctx.resuccess({
-      code
-    })
+    ctx.body = ctx.resuccess(code)
   } catch (err) {
     ctx.body = ctx.refail(err)
   }
