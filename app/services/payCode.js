@@ -47,7 +47,6 @@ exports.getRecords = async function (query, paging) {
  */
 exports.createPayCode = async function (query, services) {
   const email = query.email
-  const days = query.days
   const opt = {
     sort: {
       create_at: -1
@@ -55,8 +54,7 @@ exports.createPayCode = async function (query, services) {
     limit: 1
   }
   const record = await PayCodeProxy.find({
-    email: email,
-    days: days
+    email: email
   }, opt)
   let lastOne = null
   if (record && record[0]) {
@@ -68,17 +66,17 @@ exports.createPayCode = async function (query, services) {
     if (lastOne.create_at) {
       const diff = now - (new Date(lastOne.create_at)).getTime()
       if (diff <= 1000 * 60 * 60 * 24) {
-        return lastOne
+        return lastOne.code
       }
     }
   }
   // 6位验证码
   const code = Math.random().toFixed(6).toString().split('.')[1]
-  return PayCodeProxy.newAndSave({
+  await PayCodeProxy.newAndSave({
     email: email,
-    code: code,
-    days: days
+    code: code
   })
+  return code
 }
 
 /**
