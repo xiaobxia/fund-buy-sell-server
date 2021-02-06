@@ -44,6 +44,8 @@ const schema = new Schema({
     type: Boolean,
     default: false
   },
+  // 最近活跃日期
+  active_date: String,
   create_at: {
     type: Date,
     default: Date.now

@@ -1,3 +1,4 @@
+const moment = require('moment')
 /**
  * 修改登录密码
  * @param ctx
@@ -66,6 +67,10 @@ exports.getUserByToken = async function (ctx) {
         message: '该账户已在其他设备登录！'
       })
       return
+    }
+    const today = moment().format('YYYY-MM-DD')
+    if (user.active_date !== today) {
+      ctx.services.user.updateActiveDate(tokenRaw.email, today)
     }
     ctx.body = ctx.resuccess(user)
   } catch (err) {

@@ -183,3 +183,15 @@ exports.deleteVipDays = async function () {
   })
   return Promise.all(opList)
 }
+
+/**
+ * 更新活跃日期
+ * @param email
+ * @param today
+ * @returns {Promise<*>}
+ */
+exports.updateActiveDate = async function (email, today) {
+  return UserProxy.update({ email: email }, {
+    active_date: today
+  })
+}
