@@ -1,4 +1,5 @@
 const Proxy = require('../proxy')
+const moment = require('moment')
 
 const PayCodeProxy = Proxy.PayCode
 
@@ -88,5 +89,19 @@ exports.getPayCodeLogByCode = async function (query) {
   const code = query.code
   return PayCodeProxy.find({
     code: code
+  })
+}
+
+/**
+ * 删除过期支付码，暂时用不到
+ * @returns {Promise<*>}
+ */
+exports.deleteOldPayCode = async function () {
+  // 10天
+  const date = moment().subtract(10, "days").format('YYYY-MM-DD')
+  return PayCodeProxy.delete({
+    create_at: {
+      $lt: date
+    }
   })
 }
