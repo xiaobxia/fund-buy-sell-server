@@ -20,7 +20,7 @@ let rule = new schedule.RecurrenceRule()
 // 工作日
 rule.dayOfWeek = [new schedule.Range(1, 5)]
 rule.hour = 9
-rule.minute = 40
+rule.minute = 31
 
 function marketOpen () {
   return requestLocal.get('schedule/verifyMarketOpening')

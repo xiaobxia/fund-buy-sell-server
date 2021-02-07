@@ -158,4 +158,9 @@ router.get('/schedule/verifyMarketOpening', controllers.scheduleController.verif
 router.get('/schedule/getGzhToken', controllers.scheduleController.getGzhToken)
 router.get('/schedule/updateIndexRate', controllers.scheduleController.updateIndexRate)
 
+/**
+ * 统计模块
+ */
+router.get('/analysis/getUserCount', controllers.analysisController.getUserCount)
+
 module.exports = router

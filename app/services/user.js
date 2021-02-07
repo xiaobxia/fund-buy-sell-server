@@ -1,3 +1,4 @@
+const moment = require('moment')
 const Proxy = require('../proxy')
 
 const UserProxy = Proxy.User
@@ -194,4 +195,44 @@ exports.updateActiveDate = async function (email, today) {
   return UserProxy.update({ email: email }, {
     active_date: today
   })
+}
+
+/**
+ * 获取用户统计
+ * @returns {Promise<*>}
+ */
+exports.getUserCount = async function () {
+  const today = moment().format('YYYY-MM-DD')
+  const res = await Promise.all([
+    UserProxy.count({
+      create_at: {
+        $gte: today
+      },
+      roles: {
+        $nin : ["admin"]
+      }
+    }),
+    UserProxy.count({
+      active_date: {
+        $gte: today
+      },
+      roles: {
+        $nin : ["admin"]
+      }
+    }),
+    UserProxy.count({
+      create_at: {
+        $gte: today
+      },
+      email_active: true,
+      roles: {
+        $nin : ["admin"]
+      }
+    })
+  ])
+  return {
+    register: res[0],
+    active: res[1],
+    register_active: res[2]
+  }
 }
