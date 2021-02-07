@@ -98,7 +98,7 @@ exports.getPayCodeLogByCode = async function (query) {
  */
 exports.deleteOldPayCode = async function () {
   // 10天
-  const date = moment().subtract(10, "days").format('YYYY-MM-DD')
+  const date = moment().subtract(10, 'days').format('YYYY-MM-DD')
   return PayCodeProxy.delete({
     create_at: {
       $lt: date
