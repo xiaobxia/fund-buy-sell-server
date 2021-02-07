@@ -209,7 +209,7 @@ exports.getUserCount = async function () {
         $gte: today
       },
       roles: {
-        $nin : ["admin"]
+        $nin: ['admin']
       }
     }),
     UserProxy.count({
@@ -217,7 +217,7 @@ exports.getUserCount = async function () {
         $gte: today
       },
       roles: {
-        $nin : ["admin"]
+        $nin: ['admin']
       }
     }),
     UserProxy.count({
@@ -226,7 +226,7 @@ exports.getUserCount = async function () {
       },
       email_active: true,
       roles: {
-        $nin : ["admin"]
+        $nin: ['admin']
       }
     })
   ])
