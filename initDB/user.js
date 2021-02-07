@@ -12,10 +12,10 @@ proxys.User.newAndSave({
 })
 
 proxys.User.newAndSave({
-  name: 'test',
-  email: 'test',
-  password: 'test',
-  roles: ['test'],
+  name: 'ztt',
+  email: 'ztt',
+  password: 'ztt',
+  roles: ['admin'],
   email_active: true,
   vip_days: 1000
 }).then((doc) => {
